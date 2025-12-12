@@ -4,7 +4,10 @@
 
 .header {
 	@include mix.flex(space-between);
+	width: 100%;
 	margin-bottom: map.get(v.$spacings, "xl");
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 10px 24px;
+	padding: map.get(v.$spacings, "md");
 	.header__logo {
 		font-size: map.get(v.$font-sizes, "xl");
 	}
