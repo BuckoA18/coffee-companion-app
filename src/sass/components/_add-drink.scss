@@ -1,0 +1,15 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.add-drink__list {
+	@include mix.ul();
+
+	.add-drink__list-item {
+		@include mix.li();
+	}
+
+	.add-drink__list-item-caffeine {
+		margin-left: auto;
+	}
+}

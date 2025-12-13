@@ -16,7 +16,7 @@
 		width: 240px;
 		height: 240px;
 		border-radius: 50%;
-		box-shadow: rgba(149, 157, 165, 0.2) 0px 20px 24px;
+		box-shadow: map.get(v.$box-shadows, "lg");
 
 		.intake__progress-value {
 			position: absolute;
@@ -39,25 +39,16 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			box-shadow: inset rgba(149, 157, 165, 0.2) 0px 20px 24px;
+			box-shadow: map.get(v.$box-shadows, "inset");
 		}
 	}
 }
 
 .intake__list {
-	padding: map.get(v.$spacings, "lg");
-	border-radius: 25px;
-	@include mix.flex();
-	flex-direction: column;
-	gap: map.get(v.$spacings, "sm");
-	box-shadow: rgba(149, 157, 165, 0.2) 0px 20px 24px;
+	@include mix.ul();
+
 	.intake__list-item {
-		width: 100%;
-		background-color: map.get(v.$colors, "bg-secondary");
-		padding: map.get(v.$spacings, "lg");
-		@include mix.flex(flex-start);
-		gap: map.get(v.$spacings, "sm");
-		border-radius: 25px;
+		@include mix.li();
 	}
 
 	.intake__list-item-time {

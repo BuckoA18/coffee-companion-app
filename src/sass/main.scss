@@ -6,6 +6,7 @@
 @use "./abstracts/mixins";
 
 // --- Base --- //
+@use "./base/base";
 @use "./base/reset";
 @use "./base/typography";
 
@@ -15,7 +16,9 @@
 // ---  Layout --- //
 @use "./layouts/container";
 @use "./layouts/header";
+@use "./layouts/main-view";
 
 // --- Components --- //
 @use "./components/intake";
 @use "./components/bottom-bar";
+@use "./components/add-drink";
