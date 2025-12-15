@@ -8,7 +8,7 @@ $font-sizes: (
 	"xs": 0.4rem,
 	"sm": 0.6rem,
 	"md": 1rem,
-	"lg": 1.6rem,
+	"lg": 1.2rem,
 	"xl": 2rem,
 );
 
@@ -30,10 +30,25 @@ $colors: (
 	"secondary": #f5f5f5,
 );
 
-// ---Shadows --- //
+// --- Shadows --- //
 $box-shadows: (
 	"sm": 0 1px 3px 0 rgba(0, 0, 0, 0.05),
 	"md": 0 4px 6px -1px rgba(0, 0, 0, 0.1),
 	"lg": 0 10px 15px 10px rgba(0, 0, 0, 0.1),
 	"inset": inset 0 0 10px 10px rgba(0, 0, 0, 0.06),
+);
+
+// --- Border radius //
+
+$border-radius: (
+	"sm": 12px,
+	"md": 25px,
+	"lg": 32px,
+	"round": 50%,
+);
+
+$max-widths: (
+	"sm": 320px,
+	"md": 400px,
+	"lg": 600px,
 );

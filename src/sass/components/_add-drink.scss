@@ -2,8 +2,23 @@
 @use "../abstracts/mixins" as mix;
 @use "../abstracts/variables" as v;
 
-.add-drink__list {
-	@include mix.ul();
+.add-drink {
+	@include mix.flex();
+	flex-direction: column;
+	gap: map.get(v.$spacings, "lg");
+	margin: 0 auto;
+	max-width: map.get(v.$max-widths, "sm");
+
+	.add-drink__input {
+		padding: map.get(v.$spacings, "md");
+		border-radius: map.get(v.$border-radius, "md");
+		font-size: map.get(v.$font-sizes, "lg");
+		width: 100%;
+	}
+
+	.add-drink__list {
+		@include mix.ul();
+	}
 
 	.add-drink__list-item {
 		@include mix.li();

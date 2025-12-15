@@ -6,6 +6,8 @@
 	@include mix.flex();
 	flex-direction: column;
 	gap: map.get(v.$spacings, "xl");
+	max-width: map.get(v.$max-widths, "sm");
+	margin: 0 auto;
 
 	.intake__progress {
 		position: relative;
@@ -15,7 +17,7 @@
 		);
 		width: 240px;
 		height: 240px;
-		border-radius: 50%;
+		border-radius: map.get(v.$border-radius, "round");
 		box-shadow: map.get(v.$box-shadows, "lg");
 
 		.intake__progress-value {
@@ -27,6 +29,10 @@
 			@include mix.flex();
 			flex-direction: column;
 			gap: map.get(v.$spacings, "xs");
+
+			span {
+				font-size: map.get(v.$font-sizes, "xl");
+			}
 		}
 
 		&::before {
@@ -35,7 +41,7 @@
 			height: 180px;
 			position: absolute;
 			background-color: map.get(v.$colors, "bg-primary");
-			border-radius: 50%;
+			border-radius: map.get(v.$border-radius, "round");
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);

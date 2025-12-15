@@ -1,3 +1,8 @@
-.app-view {
-	background-color: #f5f5f5;
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.main-view {
+	background-color: map.get(v.$colors, "bg-secondary");
+	padding: 0 map.get(v.$spacings, "md");
 }

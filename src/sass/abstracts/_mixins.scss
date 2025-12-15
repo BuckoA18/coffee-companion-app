@@ -8,21 +8,19 @@
 }
 
 @mixin ul {
-	background-color: #f5f5f5;
-	padding: map.get(v.$spacings, "sm");
-	border-radius: 25px;
+	background-color: map.get(v.$colors, "bg-secondary");
+	padding: map.get(v.$spacings, "xs");
+	border-radius: map.get(v.$border-radius, "md");
 	@include flex();
 	flex-direction: column;
 	gap: map.get(v.$spacings, "sm");
 	box-shadow: map.get(v.$box-shadows, "lg");
+	width: 100%;
 }
 
 @mixin li {
 	width: 100%;
-	background-color: map.get(v.$colors, "bg-secondary");
 	padding: map.get(v.$spacings, "lg");
 	@include flex(flex-start);
 	gap: map.get(v.$spacings, "md");
-
-	border-radius: 25px;
 }

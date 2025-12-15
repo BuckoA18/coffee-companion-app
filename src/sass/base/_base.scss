@@ -5,24 +5,3 @@
 body {
 	background-color: map.get(v.$colors, "bg-secondary");
 }
-
-// ul {
-// 	background-color: #f5f5f5;
-// 	padding: map.get(v.$spacings, "sm");
-// 	border-radius: 25px;
-// 	@include mix.flex();
-// 	flex-direction: column;
-// 	gap: map.get(v.$spacings, "sm");
-// 	box-shadow: map.get(v.$box-shadows, "lg");
-
-// 	&li {
-// 		width: 100%;
-// 		background-color: map.get(v.$colors, "bg-secondary");
-// 		padding: map.get(v.$spacings, "lg");
-// 		@include mix.flex(flex-start);
-// 		flex-direction: row;
-// 		gap: map.get(v.$spacings, "md");
-
-// 		border-radius: 25px;
-// 	}
-// }
