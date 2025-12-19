@@ -1,5 +1,6 @@
 export const state = {
 	drinks: [],
+	dailyDrinks: [],
 };
 
 export const fetchDrinks = async () => {
@@ -8,7 +9,6 @@ export const fetchDrinks = async () => {
 
 		if (!response.ok) throw new Error(`Error: ${response.status}`);
 		const data = await response.json();
-		console.log(data);
 		state.drinks = data;
 	} catch (error) {
 		console.error(`Could not fetch data: ${error}`);

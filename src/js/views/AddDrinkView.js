@@ -1,9 +1,16 @@
 import View from "./View";
 import { html } from "../helpers";
 
-class AddDinkView extends View {
+class AddDrinkView extends View {
+	_addDrinkButton = document.querySelector(".header__btn-add-drink");
 	_parentElement = document.querySelector(".main-view");
 	_data;
+
+	// addHandlerRenderDrinkView(handler) {
+	// 	this._addDrinkButton.addEventListener("click", (e) => {
+	// 		handler();
+	// 	});
+	// }
 
 	_generateMarkup(data) {
 		this._data = data;
@@ -34,4 +41,4 @@ class AddDinkView extends View {
 			.join("");
 	}
 }
-export default new AddDinkView();
+export default new AddDrinkView();
