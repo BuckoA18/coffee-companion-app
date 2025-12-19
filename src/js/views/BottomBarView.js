@@ -7,6 +7,8 @@ class BottomBarView extends View {
 		this._parentElement.addEventListener("click", (e) => {
 			e.preventDefault();
 
+			if (!e.target.closest(".bottom-bar__link")) return;
+
 			const target = e.target.closest(".bottom-bar__link");
 			const nextView = target.dataset.view;
 			handler(nextView);

@@ -1,3 +1,4 @@
+import * as model from "./model";
 import IntakeView from "./views/IntakeView";
 import AddDrinkView from "./views/AddDrinkView";
 import BottomBarView from "./views/BottomBarView";
@@ -9,10 +10,11 @@ const views = {
 
 const controllPageNav = (nextView) => {
 	const view = views[nextView];
-	view.render();
+	view.render(model.state.drinks);
 };
 
 const init = () => {
+	model.fetchDrinks();
 	BottomBarView.addHandlerClick(controllPageNav);
 };
 
