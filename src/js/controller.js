@@ -30,4 +30,4 @@ const init = async () => {
 	controllRouter();
 };
 
-// init();
+init();

@@ -11,10 +11,16 @@ class IntakeView extends View {
 		this._currentCaffeine = state.caffeine;
 		console.log(this._dailyDrinks);
 		const markup = html`
-			<div class="intake">
-				<div class="intake__progress">
-					<span class="intake__progress-value"
-						><span class="highlight">${this._currentCaffeine}</span>mg</span
+			<header class="header">
+				<div class="header__container container">
+					<h1 class="header__title">Brew</h1>
+					<i class="fa-solid fa-user-circle fa-xl"></i>
+				</div>
+			</header>
+			<div class="intake container">
+				<div class="intake__progress-bar">
+					<span class="intake__progress-bar-value">
+						<span class="highlight">${this._currentCaffeine}</span>mg</span
 					>
 				</div>
 

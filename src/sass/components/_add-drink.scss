@@ -8,20 +8,25 @@
 	flex-direction: column;
 	margin-bottom: map.get(v.$spacings, "xxl");
 
-	&__shortcuts {
+	&__shortcuts-container {
 		width: 100%;
 		display: flex;
 		justify-content: flex-start;
 		flex-wrap: wrap;
+		gap: 0.6rem;
+		margin-bottom: map.get(v.$spacings, "lg");
 
-		& span {
-			padding: 1rem;
-			background-color: antiquewhite;
+		& button {
+			font-size: map.get(v.$font-sizes, "md");
+			padding: 0.6rem 1.6rem;
+			background-color: map.get(v.$colors, "bg-primary");
+			color: map.get(v.$colors, "primary");
+			border: none;
+			border-radius: map.get(v.$border-radius, "md");
+			box-shadow: map.get(v.$box-shadows, "md");
 		}
 	}
 
-	&__input {
-	}
 	&__list {
 		@include mix.ul();
 	}

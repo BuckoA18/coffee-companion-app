@@ -19,7 +19,20 @@ class AddDrinkView extends View {
 	_generateMarkup(state) {
 		this._data = state.drinks;
 		const markup = html`
-			<div class="add-drink">
+			<header class="header">
+				<div class="header__container container">
+					<h1 class="header__title">Log your drink</h1>
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</div>
+			</header>
+			<div class="add-drink container">
+				<div class="add-drink__shortcuts-container">
+					<button class="add-drink__shortcut">Coffee</button>
+					<button class="add-drink__shortcut">Tea</button>
+					<button class="add-drink__shortcut">Chocolate</button>
+					<button class="add-drink__shortcut">Energy drink</button>
+					<button class="add-drink__shortcut">Pills</button>
+				</div>
 				<ul class="add-drink__list">
 					${this._generateListItemsMarkup()}
 				</ul>

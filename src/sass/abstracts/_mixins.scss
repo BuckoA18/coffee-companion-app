@@ -8,13 +8,13 @@
 }
 
 @mixin ul {
-	background-color: map.get(v.$colors, "bg-secondary");
+	background-color: map.get(v.$colors, "bg-primary");
 	padding: map.get(v.$spacings, "xs");
 	border-radius: map.get(v.$border-radius, "md");
 	@include flex();
 	flex-direction: column;
 	gap: map.get(v.$spacings, "sm");
-	box-shadow: map.get(v.$box-shadows, "lg");
+	box-shadow: map.get(v.$box-shadows, "md");
 	width: 100%;
 }
 

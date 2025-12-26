@@ -19,12 +19,12 @@
 		position: relative;
 		background: conic-gradient(
 			map.get(v.$colors, "primary") var(--progress, 0%),
-			map.get(v.$colors, "secondary") 0%
+			map.get(v.$colors, "bg-primary") 0%
 		);
 		width: 280px;
 		height: 280px;
 		border-radius: map.get(v.$border-radius, "round");
-		box-shadow: map.get(v.$box-shadows, "lg");
+		box-shadow: map.get(v.$box-shadows, "inset");
 		margin-bottom: map.get(v.$spacings, "xl");
 
 		&-value {
@@ -43,15 +43,15 @@
 		}
 		&::before {
 			content: "";
-			width: 200px;
-			height: 200px;
+			width: 160px;
+			height: 160px;
 			position: absolute;
 			background-color: map.get(v.$colors, "bg-primary");
 			border-radius: map.get(v.$border-radius, "round");
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			box-shadow: map.get(v.$box-shadows, "inset");
+			box-shadow: map.get(v.$box-shadows, "md");
 		}
 	}
 }
