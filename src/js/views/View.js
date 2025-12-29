@@ -1,9 +1,11 @@
 class View {
-	render(state) {
+	render(data) {
+		const parentElement = this._parentElement;
+		if (!parentElement) return;
 		this._parentElement.innerHTML = "";
 		this._parentElement.insertAdjacentHTML(
 			"afterbegin",
-			this._generateMarkup(state)
+			this._generateMarkup(data)
 		);
 	}
 }

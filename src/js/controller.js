@@ -1,8 +1,10 @@
 import * as model from "./model";
 import IntakeView from "./views/IntakeView";
-import AddDrinkView from "./views/AddDrinkView";
+import LogDrinkView from "./views/LogDrinkView";
 import ProgressBarView from "./views/ProgressBarView";
 import DailyDrinksView from "./views/DailyDrinksView";
+import SearchShortcutsView from "./views/SearchShortcutsView";
+import DrinksListView from "./views/DrinksListView";
 import { initRouter } from "./router";
 
 const controllDashboard = () => {
@@ -11,8 +13,10 @@ const controllDashboard = () => {
 	DailyDrinksView.render(model.state);
 };
 
-const controllAddDrink = () => {
-	AddDrinkView.render(model.state);
+const controllLogDrink = () => {
+	LogDrinkView.render(model.state);
+	SearchShortcutsView.render(model.state);
+	DrinksListView.render(model.state);
 };
 
 const controllRouter = () => {
@@ -23,7 +27,7 @@ const controllRouter = () => {
 			controllDashboard();
 			break;
 		case "/add":
-			controllAddDrink();
+			controllLogDrink();
 			break;
 		default:
 			console.error("404: Page not found");
@@ -31,7 +35,6 @@ const controllRouter = () => {
 };
 
 const init = async () => {
-	// Fetch data
 	await model.fetchDrinks();
 
 	initRouter(controllRouter);

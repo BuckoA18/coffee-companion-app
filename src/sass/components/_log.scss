@@ -2,13 +2,13 @@
 @use "../abstracts/mixins" as mix;
 @use "../abstracts/variables" as v;
 
-.add-drink {
+.log {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	margin-bottom: map.get(v.$spacings, "xxl");
 
-	&__shortcuts-container {
+	&__shortcuts {
 		width: 100%;
 		display: flex;
 		justify-content: flex-start;
@@ -31,11 +31,11 @@
 		@include mix.ul();
 	}
 
-	&__list-item {
+	&__item {
 		@include mix.li();
-	}
 
-	&__list-item-caffeine {
-		margin-left: auto;
+		&-caffeine {
+			margin-left: auto;
+		}
 	}
 }
