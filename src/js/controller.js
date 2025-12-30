@@ -5,18 +5,8 @@ import ProgressBarView from "./views/ProgressBarView";
 import DailyDrinksView from "./views/DailyDrinksView";
 import SearchShortcutsView from "./views/SearchShortcutsView";
 import DrinksListView from "./views/DrinksListView";
+import SearchBarView from "./views/SearchBarView";
 import { initRouter } from "./router";
-
-const handleAddNewLog = async (id) => {
-	try {
-		model.storeDrink(id);
-
-		window.history.pushState({}, "", "/");
-		controllRouter();
-	} catch (error) {
-		console.error(error);
-	}
-};
 
 const controllDashboard = async () => {
 	try {
@@ -32,6 +22,7 @@ const controllDashboard = async () => {
 const controllLogDrink = async () => {
 	try {
 		LogDrinkView.render(model.state);
+		SearchBarView.render();
 		SearchShortcutsView.render(model.state);
 		DrinksListView.render(model.state);
 	} catch (error) {
@@ -54,16 +45,28 @@ const controllRouter = () => {
 	}
 };
 
+const handleAddNewLog = async (id) => {
+	try {
+		model.storeDrink(id);
+
+		window.history.pushState({}, "", "/");
+		controllRouter();
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 const init = async () => {
 	// intial fetch
 	await model.fetchDrinks();
 
 	// Attaching event listeners
 	LogDrinkView.addHandlerNewLog(handleAddNewLog);
+	LogDrinkView.addHandlerToggleSearchBar();
 
 	// Handling router
 	initRouter(controllRouter);
 	controllRouter();
 };
 
-// init();
+init();
