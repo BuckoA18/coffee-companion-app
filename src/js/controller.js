@@ -21,10 +21,17 @@ const controllDashboard = async () => {
 
 const controllLogDrink = async () => {
 	try {
+		// Render
 		LogDrinkView.render(model.state);
 		SearchBarView.render();
 		SearchShortcutsView.render(model.state.search.shortcuts);
 		DrinksListView.render(model.state);
+
+		// Attach listeners
+		SearchBarView.addHandlerToggle();
+		SearchBarView.addHandlerGetQuery(handleSearchDrink);
+		SearchShortcutsView.addHandlerGetShortcutId(handleSearchDrinksShortcuts);
+		DrinksListView.addHandlerNewLog(handleAddNewLog);
 	} catch (error) {
 		console.error(error);
 	}
@@ -62,7 +69,7 @@ const handleSearchDrink = async (query) => {
 };
 
 const handleSearchDrinksShortcuts = (id) => {
-	model.searchDrinksShortcuts(id);
+	model.searchDrinksByShortcuts(id);
 	DrinksListView.render(model.state);
 };
 
@@ -71,10 +78,6 @@ const init = async () => {
 	await model.fetchDrinks();
 
 	// Attaching event listeners
-	LogDrinkView.addHandlerNewLog(handleAddNewLog);
-	LogDrinkView.addHandlerToggleSearchBar();
-	LogDrinkView.addHandlerGetQuery(handleSearchDrink);
-	LogDrinkView.addHandlerGetShortcutId(handleSearchDrinksShortcuts);
 
 	// Handling router
 	initRouter(controllRouter);

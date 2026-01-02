@@ -7,6 +7,15 @@ class DrinksListView extends View {
 		return document.querySelector(".log__list");
 	}
 
+	addHandlerNewLog(handler) {
+		this._parentElement?.addEventListener("click", (e) => {
+			const item = e.target.closest(".log__item");
+			if (!item) return;
+
+			handler(item.dataset.id);
+		});
+	}
+
 	_generateMarkup(state) {
 		this._data = state.search.results;
 		if (this._data.length === 0) this._data = state.drinks;

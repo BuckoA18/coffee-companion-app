@@ -3,7 +3,7 @@ export const state = {
 	search: {
 		query: "",
 		results: [],
-		shortcuts: [""],
+		shortcuts: [],
 	},
 	dailyDrinks: [],
 	caffeine: 0,
@@ -19,6 +19,7 @@ export const fetchDrinks = async () => {
 		const data = await response.json();
 		state.drinks = data;
 		state.search.shortcuts = [
+			"All",
 			...new Set(
 				state.drinks.map((drink) => {
 					return drink.category;
@@ -58,10 +59,14 @@ export const searchDrinks = (query) => {
 	// console.log("results: ", state.search.results);
 };
 
-export const searchDrinksShortcuts = (id) => {
-	state.search.results = state.drinks.filter((drink) => {
-		return drink.category.toLowerCase() === id;
-	});
+export const searchDrinksByShortcuts = (id) => {
+	if (id === "all") {
+		state.search.results = state.drinks;
+	} else {
+		state.search.results = state.drinks.filter((drink) => {
+			return drink.category.toLowerCase() === id;
+		});
+	}
 
 	console.log(state.search.results);
 };
