@@ -2,8 +2,6 @@ import View from "./View";
 import { html } from "../helpers";
 
 class LogDrinkView extends View {
-	_query;
-
 	get _parentElement() {
 		return document.querySelector(".main-view");
 	}

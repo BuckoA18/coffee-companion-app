@@ -2,7 +2,6 @@ import View from "./View";
 import { html } from "../helpers";
 
 class DrinksListView extends View {
-	_data;
 	get _parentElement() {
 		return document.querySelector(".log__list");
 	}
@@ -16,9 +15,9 @@ class DrinksListView extends View {
 		});
 	}
 
-	_generateMarkup(state) {
-		this._data = state.search.results;
-		if (this._data.length === 0) this._data = state.drinks;
+	_generateMarkup(data) {
+		this._data = data.search.results;
+		if (this._data.length === 0) this._data = data.drinks;
 
 		const markup = this._data
 			.map((drink) => {

@@ -13,7 +13,7 @@ const controllDashboard = async () => {
 		IntakeView.render(model.state);
 		ProgressBarView.render(model.state);
 		ProgressBarView.updateProgressBar(model.state.progressPerc);
-		DailyDrinksView.render(model.state);
+		DailyDrinksView.render(model.state.dailyDrinks);
 	} catch (error) {
 		console.error(error);
 	}

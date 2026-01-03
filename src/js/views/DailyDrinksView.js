@@ -2,14 +2,16 @@ import View from "./View";
 import { html } from "../helpers";
 
 class DailyDrinksView extends View {
+	_message = "Here you will see your logged drinks of the day..";
 	get _parentElement() {
 		return document.querySelector(".intake__list");
 	}
 
-	_generateMarkup(state) {
-		this._dailyDrinks = state.dailyDrinks;
-
-		const markup = this._dailyDrinks
+	_generateMarkup() {
+		if (this._data.length === 0) {
+			//render message?
+		}
+		const markup = this._data
 			.map((drink) => {
 				return html`
 					<li class="intake__list-item">

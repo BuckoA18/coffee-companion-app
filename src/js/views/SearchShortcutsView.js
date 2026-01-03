@@ -2,7 +2,6 @@ import View from "./View";
 import { html } from "../helpers";
 
 class SearchShortcutsView extends View {
-	_data;
 	get _parentElement() {
 		return document.querySelector(".log__shortcuts");
 	}
@@ -25,9 +24,7 @@ class SearchShortcutsView extends View {
 		});
 	}
 
-	_generateMarkup(data) {
-		this._data = data;
-
+	_generateMarkup() {
 		const markup = this._data
 			.map((shortcut) => {
 				const isActive =
