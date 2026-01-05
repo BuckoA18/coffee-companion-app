@@ -1,3 +1,5 @@
+import { html } from "../helpers";
+
 class View {
 	_data;
 	_message;
@@ -8,11 +10,15 @@ class View {
 		const parentElement = this._parentElement;
 		if (!parentElement) return;
 
-		this._parentElement.innerHTML = "";
+		this.clear();
 		this._parentElement.insertAdjacentHTML(
 			"afterbegin",
 			this._generateMarkup(data)
 		);
+	}
+
+	clear() {
+		this._parentElement.innerHTML = "";
 	}
 }
 

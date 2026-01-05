@@ -2,14 +2,14 @@ import View from "./View";
 import { html } from "../helpers";
 
 class DailyDrinksView extends View {
-	_message = "Here you will see your logged drinks of the day..";
+	_message = "Your mug is empty. Time for a brew?";
 	get _parentElement() {
 		return document.querySelector(".intake__list");
 	}
 
 	_generateMarkup() {
-		if (this._data.length === 0) {
-			//render message?
+		if (!this._data || this._data.length === 0) {
+			return this._generateMarkupMessage();
 		}
 		const markup = this._data
 			.map((drink) => {
@@ -23,6 +23,12 @@ class DailyDrinksView extends View {
 			})
 			.join("");
 		return markup;
+	}
+
+	_generateMarkupMessage(message = this._message) {
+		return html`<div class="message">
+			<p class="message__text">${message}</p>
+		</div> `;
 	}
 }
 

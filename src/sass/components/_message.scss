@@ -1,0 +1,17 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.message {
+	height: 100px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__text {
+		font-family: var(v.$font-primary);
+		font-size: map.get(v.$font-sizes, "lg");
+		font-weight: 600;
+	}
+}

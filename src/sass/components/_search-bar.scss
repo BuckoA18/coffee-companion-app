@@ -39,3 +39,12 @@
 		border-radius: map.get(v.$border-radius, "round");
 	}
 }
+
+.coffee-cup {
+	width: 150px;
+	height: 150px;
+}
+
+.coffee-cup rect {
+	transition: y 0.8s ease-in-out; /* Makes the coffee rise smoothly */
+}
