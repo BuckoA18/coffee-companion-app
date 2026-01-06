@@ -8,7 +8,6 @@ class SearchBarView extends View {
 
 	addHandlerToggle() {
 		this._parentElement?.addEventListener("click", (e) => {
-			console.log("dd");
 			const button = e.target.closest(".search-bar__button");
 			if (!button) return;
 
@@ -32,12 +31,13 @@ class SearchBarView extends View {
 	}
 
 	_generateMarkup() {
-		const markup = html`
-			<input type="text" class="search-bar__input search-bar__input--closed" />
+		const markup = html`<input
+				type="text"
+				class="search-bar__input search-bar__input--closed"
+			/>
 			<button class="search-bar__button">
 				<i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
-			</button>
-		`;
+			</button> `;
 		return markup;
 	}
 }

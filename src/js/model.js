@@ -15,7 +15,12 @@ export const fetchDrinks = async () => {
 	try {
 		const response = await fetch("http://localhost:3000/drinks");
 
-		if (!response.ok) throw new Error(`Error: ${response.status}`);
+		if (!response.ok) {
+			const error = new Error(
+				`Server responder with ${response.status}: ${response.statusText}`
+			);
+			throw error;
+		}
 		const data = await response.json();
 		state.drinks = data;
 		state.search.shortcuts = [
@@ -28,7 +33,7 @@ export const fetchDrinks = async () => {
 		];
 		// console.log(state.search.shortcuts);
 	} catch (error) {
-		console.error(`Could not fetch data: ${error}`);
+		throw error;
 	}
 };
 
@@ -50,7 +55,10 @@ export const storeDrink = (id) => {
 };
 
 export const searchDrinks = (query) => {
-	if (!query) return;
+	if (!query) {
+		state.search.results = state.search.drinks;
+		state.search.query = "";
+	}
 	state.search.query = query;
 	state.search.results = state.drinks.filter((drink) => {
 		return drink.name.toLowerCase().includes(query.trim().toLowerCase());
@@ -59,14 +67,12 @@ export const searchDrinks = (query) => {
 	// console.log("results: ", state.search.results);
 };
 
-export const searchDrinksByShortcuts = (id) => {
-	if (id === "all") {
+export const getResults = (id) => {
+	if (id === "all" || !id) {
 		state.search.results = state.drinks;
 	} else {
 		state.search.results = state.drinks.filter((drink) => {
 			return drink.category.toLowerCase() === id;
 		});
 	}
-
-	console.log(state.search.results);
 };

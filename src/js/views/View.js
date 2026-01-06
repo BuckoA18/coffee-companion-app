@@ -4,7 +4,7 @@ class View {
 	_data;
 
 	render(data) {
-		if (!data || (Array.isArray(data) && data.length === 0)) return;
+		if (Array.isArray(data) && data.length === 0) return;
 		this._data = data;
 
 		const parentElement = this._parentElement;
@@ -22,6 +22,15 @@ class View {
 	}
 
 	renderMessage(message = this._message) {
+		const markup = html`
+			<div class="message">
+				<p>${message}</p>
+			</div>
+		`;
+		this._parentElement.insertAdjacentHTML("afterbegin", markup);
+	}
+
+	renderError(message = this._error) {
 		const markup = html`
 			<div class="message">
 				<p>${message}</p>

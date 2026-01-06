@@ -10,13 +10,17 @@ import { initRouter } from "./router";
 
 const controllDashboard = async () => {
 	try {
+		// render structure
 		IntakeView.render(model.state);
 		ProgressBarView.render(model.state);
+
+		// update progress bar
 		ProgressBarView.updateProgressBar(model.state.progressPerc);
 
-		// Render message when no logged drink yet
+		// render no-drink message
 		if (model.state.dailyDrinks.length === 0) DailyDrinksView.renderMessage();
 
+		// render drinks
 		DailyDrinksView.render(model.state.dailyDrinks);
 	} catch (error) {
 		console.error(error);
@@ -25,20 +29,27 @@ const controllDashboard = async () => {
 
 const controllLogDrink = async () => {
 	try {
-		// Render
+		// fetch data
+		await model.fetchDrinks();
+
+		// get initial shortcut id
+		model.getResults();
+
+		// render strucure
 		LogDrinkView.render(model.state);
 		SearchBarView.render();
 		SearchShortcutsView.render(model.state.search.shortcuts);
-
-		DrinksListView.render();
+		DrinksListView.render(model.state.search.results);
 
 		// Attach listeners
 		SearchBarView.addHandlerToggle();
-		SearchBarView.addHandlerGetQuery(handleSearchDrink);
-		SearchShortcutsView.addHandlerGetShortcutId(handleSearchDrinksShortcuts);
+		SearchBarView.addHandlerGetQuery(handleSearch);
+		SearchShortcutsView.addHandlerGetShortcutId(handleShortcuts);
 		DrinksListView.addHandlerNewLog(handleAddNewLog);
 	} catch (error) {
 		console.error(error);
+		LogDrinkView.render(model.state);
+		DrinksListView.renderError(`Error: ${error.message}`);
 	}
 };
 
@@ -68,25 +79,26 @@ const handleAddNewLog = async (id) => {
 	}
 };
 
-const handleSearchDrink = async (query) => {
+const handleSearch = async (query) => {
 	model.searchDrinks(query);
-	DrinksListView.render(model.state);
+	DrinksListView.render(model.state.search.results);
 };
 
-const handleSearchDrinksShortcuts = (id) => {
-	model.searchDrinksByShortcuts(id);
-	DrinksListView.render(model.state);
+const handleShortcuts = (id) => {
+	model.getResults(id);
+	DrinksListView.render(model.state.search.results);
 };
 
 const init = async () => {
-	// intial fetch
-	await model.fetchDrinks();
+	try {
+		// intial fetch
 
-	// Attaching event listeners
-
-	// Handling router
-	initRouter(controllRouter);
-	controllRouter();
+		// Handling router
+		initRouter(controllRouter);
+		controllRouter();
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 init();

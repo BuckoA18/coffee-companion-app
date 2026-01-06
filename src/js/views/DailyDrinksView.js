@@ -14,7 +14,7 @@ class DailyDrinksView extends View {
 					<li class="intake__list-item">
 						<i class="intake__list-item-icon fa-solid fa-mug-hot fa-xl"></i>
 						<h2 class="intake__list-item-title">${drink.name}</h2>
-						<span class="intake__list-item-time">9:45 AM</span>
+						<span class="intake__list-item-time">${new Date()}</span>
 					</li>
 				`;
 			})
