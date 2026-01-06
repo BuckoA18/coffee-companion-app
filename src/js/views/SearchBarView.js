@@ -8,15 +8,22 @@ class SearchBarView extends View {
 
 	addHandlerToggle() {
 		this._parentElement?.addEventListener("click", (e) => {
-			const button = e.target.closest(".search-bar__button");
-			if (!button) return;
+			const btn = e.target.closest(".search-bar__button");
+			if (!btn) return;
 
 			const input = this._parentElement.querySelector(".search-bar__input");
-			if (!input) return;
-
 			input.classList.toggle("search-bar__input--closed");
+
 			if (!input.classList.contains("search-bar__input--closed")) input.focus();
 		});
+
+		this._parentElement
+			?.querySelector(".search-bar__input")
+			.addEventListener("blur", (e) => {
+				if (!this._parentElement.contains(e.relatedTarget)) {
+					e.target.classList.add("search-bar__input--closed");
+				}
+			});
 	}
 
 	addHandlerGetQuery(handler) {

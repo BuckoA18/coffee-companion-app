@@ -7,14 +7,14 @@ class DailyDrinksView extends View {
 		return document.querySelector(".intake__list");
 	}
 
-	_generateMarkup() {
+	_generateMarkup(data) {
 		const markup = this._data
 			.map((drink) => {
 				return html`
 					<li class="intake__list-item">
 						<i class="intake__list-item-icon fa-solid fa-mug-hot fa-xl"></i>
 						<h2 class="intake__list-item-title">${drink.name}</h2>
-						<span class="intake__list-item-time">${new Date()}</span>
+						<span class="intake__list-item-time">${drink.time}</span>
 					</li>
 				`;
 			})

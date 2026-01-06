@@ -1,4 +1,5 @@
 export const state = {
+	currentDate: "",
 	drinks: [],
 	search: {
 		query: "",
@@ -45,13 +46,10 @@ export const calcProgress = () => {
 
 export const storeDrink = (id) => {
 	const currentDrink = state.drinks.find((drink) => drink.id === id);
-
+	currentDrink.time = getCurrentDate();
+	console.log(currentDrink);
 	state.caffeine += currentDrink.caffeine_mg;
-	// pushing object at the start of the array
 	state.dailyDrinks.unshift(currentDrink);
-
-	console.log("caffeine:", state.caffeine);
-	calcProgress();
 };
 
 export const searchDrinks = (query) => {
@@ -75,4 +73,11 @@ export const getResults = (id) => {
 			return drink.category.toLowerCase() === id;
 		});
 	}
+};
+
+export const getCurrentDate = () => {
+	const date = new Date();
+	const hours = String(date.getHours()).padStart(2, "0");
+	const minutes = String(date.getMinutes()).padStart(2, "0");
+	return `${hours}:${minutes}`;
 };

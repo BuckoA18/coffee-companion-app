@@ -70,7 +70,9 @@ const controllRouter = () => {
 
 const handleAddNewLog = async (id) => {
 	try {
+		model.getCurrentDate();
 		model.storeDrink(id);
+		model.calcProgress();
 
 		window.history.pushState({}, "", "/");
 		controllRouter();
