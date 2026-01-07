@@ -18,10 +18,11 @@ const controllDashboard = async () => {
 		ProgressBarView.updateProgressBar(model.state.progressPerc);
 
 		// render no-drink message
-		if (model.state.dailyDrinks.length === 0) DailyDrinksView.renderMessage();
+		if (model.state.user.dailyDrinks.length === 0)
+			DailyDrinksView.renderMessage();
 
 		// render drinks
-		DailyDrinksView.render(model.state.dailyDrinks);
+		DailyDrinksView.render(model.state.user.dailyDrinks);
 	} catch (error) {
 		console.error(error);
 	}
@@ -53,21 +54,6 @@ const controllLogDrink = async () => {
 	}
 };
 
-const controllRouter = () => {
-	const path = window.location.pathname;
-
-	switch (path) {
-		case "/":
-			controllDashboard();
-			break;
-		case "/add":
-			controllLogDrink();
-			break;
-		default:
-			console.error("404: Page not found");
-	}
-};
-
 const handleAddNewLog = async (id) => {
 	try {
 		model.getCurrentDate();
@@ -91,6 +77,21 @@ const handleShortcuts = (id) => {
 	DrinksListView.render(model.state.search.results);
 };
 
+const controllRouter = () => {
+	const path = window.location.pathname;
+
+	switch (path) {
+		case "/":
+			controllDashboard();
+			break;
+		case "/add":
+			controllLogDrink();
+			break;
+		default:
+			console.error("404: Page not found");
+	}
+};
+
 const init = async () => {
 	try {
 		// intial fetch
@@ -103,4 +104,4 @@ const init = async () => {
 	}
 };
 
-init();
+// init();

@@ -1,14 +1,18 @@
 export const state = {
-	currentDate: "",
-	drinks: [],
+	user: {
+		username: "",
+		weight: "",
+		sensitivity: "",
+		maxCaffeine: 400,
+		dailyDrinks: [],
+	},
 	search: {
 		query: "",
 		results: [],
 		shortcuts: [],
 	},
-	dailyDrinks: [],
+	drinks: [],
 	caffeine: 0,
-	maxCaffeine: 450,
 	progressPerc: 0,
 };
 
@@ -39,7 +43,9 @@ export const fetchDrinks = async () => {
 };
 
 export const calcProgress = () => {
-	const percentage = Math.round((state.caffeine / state.maxCaffeine) * 100);
+	const percentage = Math.round(
+		(state.caffeine / state.user.maxCaffeine) * 100
+	);
 	state.progressPerc = percentage;
 	console.log("progress:", state.progressPerc);
 };
@@ -47,9 +53,8 @@ export const calcProgress = () => {
 export const storeDrink = (id) => {
 	const currentDrink = state.drinks.find((drink) => drink.id === id);
 	currentDrink.time = getCurrentDate();
-	console.log(currentDrink);
 	state.caffeine += currentDrink.caffeine_mg;
-	state.dailyDrinks.unshift(currentDrink);
+	state.user.dailyDrinks.unshift(currentDrink);
 };
 
 export const searchDrinks = (query) => {
@@ -61,8 +66,6 @@ export const searchDrinks = (query) => {
 	state.search.results = state.drinks.filter((drink) => {
 		return drink.name.toLowerCase().includes(query.trim().toLowerCase());
 	});
-	// console.log("query: ", state.search.query);
-	// console.log("results: ", state.search.results);
 };
 
 export const getResults = (id) => {
@@ -81,3 +84,11 @@ export const getCurrentDate = () => {
 	const minutes = String(date.getMinutes()).padStart(2, "0");
 	return `${hours}:${minutes}`;
 };
+
+export const calcMaxCaffeine = (weight, sensitivity) => {
+	const max = weight * sensitivity;
+	state.user.maxCaffeine = max;
+	console.log(max);
+};
+
+calcMaxCaffeine(80, 5);

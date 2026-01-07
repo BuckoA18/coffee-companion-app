@@ -1,0 +1,38 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.login {
+	&__title {
+		margin: map.get(v.$spacings, "lg");
+		text-align: center;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		padding: map.get(v.$spacings, "md");
+	}
+
+	&__button {
+		padding: map.get(v.$spacings, "md");
+		border-radius: map.get(v.$border-radius, "md");
+	}
+
+	.form-group {
+		margin-bottom: map.get(v.$spacings, "lg");
+
+		.login__input {
+			width: 100%;
+			border: none;
+			border-radius: map.get(v.$border-radius, "sm");
+			padding: map.get(v.$spacings, "md");
+			margin-top: 10px;
+		}
+
+		& select {
+			background-color: map.get(v.$colors, "bg-primary");
+			font-size: 1rem;
+		}
+	}
+}

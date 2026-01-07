@@ -15,7 +15,7 @@
 	<body>
 		<div>
 			<main class="main-view">
-				<header class="header">
+				<!-- <header class="header">
 					<div class="header__container container">
 						<h1 class="header__title">Brew</h1>
 						<i class="fa-solid fa-user-circle fa-xl"></i>
@@ -28,7 +28,7 @@
 						>
 					</div>
 					<ul class="intake__list">
-						<!-- <li class="intake__list-item">
+						<li class="intake__list-item">
 							<i class="intake__list-item-icon fa-solid fa-mug-hot fa-xl"></i>
 							<h2 class="intake__list-item-title">espresso</h2>
 							<span class="intake__list-item-time">9:45 AM</span>
@@ -47,7 +47,7 @@
 							<i class="intake__list-item-icon fa-solid fa-mug-hot fa-xl"></i>
 							<h2 class="intake__list-item-title">decaf filter</h2>
 							<span class="intake__list-item-time">15:45 PM</span>
-						</li> -->
+						</li>
 					</ul>
 				</div>
 
@@ -95,10 +95,55 @@
 							<span class="log__item-caffeine">2 mg</span>
 						</li>
 					</ul>
+				</div> -->
+
+				<div class="login container">
+					<h1 class="login__title">Create Your Profile</h1>
+					<form class="login__form">
+						<div class="form-group">
+							<label class="login__label" for="input-name">Name</label>
+							<input type="text" class="login__input" id="input-name" />
+						</div>
+
+						<div class="form-group">
+							<label class="login__label" for="input-surname">Surname</label>
+							<input type="text" class="login__input" id="input-surname" />
+						</div>
+
+						<div class="form-group">
+							<label class="login__label" for="input-weight">Weight (kg)</label>
+							<input type="number" class="login__input" id="input-weight" />
+						</div>
+
+						<div class="form-group">
+							<label class="login__label" for="input-metabolism"
+								>Metabolism Speed</label
+							>
+							<select id="input-metabolism" class="login__input">
+								<option value="fast">Fast (I can sleep after coffee)</option>
+								<option value="normal" selected>Normal</option>
+								<option value="slow">Slow (Sensitive to caffeine)</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label class="login__label" for="input-bedtime"
+								>Target Bedtime</label
+							>
+							<input
+								type="time"
+								id="input-bedtime"
+								class="login__input"
+								value="22:30"
+							/>
+						</div>
+
+						<button class="login__button button">Set Up Profile</button>
+					</form>
 				</div>
 			</main>
 		</div>
-		<footer class="nav">
+		<!-- <footer class="nav">
 			<nav class="nav__container">
 				<a href="/" class="nav__item" data-link
 					><i class="fa-solid fa-house fa-xl"></i
@@ -110,7 +155,7 @@
 					><i class="fa-regular fa-square fa-xl"></i
 				></a>
 			</nav>
-		</footer>
+		</footer> -->
 	</body>
 	<script type="module" src="./src/js/controller.js"></script>
 </html>
