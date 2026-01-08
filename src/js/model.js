@@ -88,7 +88,4 @@ export const getCurrentDate = () => {
 export const calcMaxCaffeine = (weight, sensitivity) => {
 	const max = weight * sensitivity;
 	state.user.maxCaffeine = max;
-	console.log(max);
 };
-
-calcMaxCaffeine(80, 5);

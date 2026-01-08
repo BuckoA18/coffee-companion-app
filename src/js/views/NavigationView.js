@@ -14,7 +14,7 @@ class NavigationView extends View {
 				<a href="/add" class="nav__item" data-link
 					><i class="fa-solid fa-plus fa-xl"></i
 				></a>
-				<a href="" class="nav__item"
+				<a href="/login" class="nav__item"
 					><i class="fa-regular fa-square fa-xl"></i
 				></a>
 			</nav>

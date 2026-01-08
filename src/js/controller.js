@@ -1,4 +1,6 @@
 import * as model from "./model";
+import LoginView from "./views/LoginView";
+import LoginFormView from "./views/LoginFormView";
 import IntakeView from "./views/IntakeView";
 import LogDrinkView from "./views/LogDrinkView";
 import ProgressBarView from "./views/ProgressBarView";
@@ -59,6 +61,23 @@ const controllLogDrink = async () => {
 	}
 };
 
+const controllLogin = async () => {
+	try {
+		LoginView.render();
+		LoginFormView.render();
+
+		LoginFormView.addHandlerValidate(handleValidate);
+	} catch (error) {
+		console.error("Initialization error: ", error);
+	}
+};
+
+const handleValidate = async () => {
+	console.log("first");
+	window.history.pushState(null, null, "/");
+	controllRouter();
+};
+
 const handleAddNewLog = async (id) => {
 	try {
 		model.getCurrentDate();
@@ -86,6 +105,9 @@ const controllRouter = () => {
 	const path = window.location.pathname;
 
 	switch (path) {
+		case "/login":
+			controllLogin();
+			break;
 		case "/":
 			controllDashboard();
 			break;
@@ -99,7 +121,6 @@ const controllRouter = () => {
 
 const init = async () => {
 	try {
-		// Handling router
 		initRouter(controllRouter);
 		controllRouter();
 	} catch (error) {
