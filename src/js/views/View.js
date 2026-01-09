@@ -1,4 +1,4 @@
-import { html } from "../helpers";
+import { html } from "../utilities/helpers";
 
 class View {
 	_data;

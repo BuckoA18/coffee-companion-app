@@ -1,5 +1,5 @@
 import View from "./View";
-import { html } from "../helpers";
+import { html } from "../utilities/helpers";
 
 class SearchBarView extends View {
 	get _parentElement() {

@@ -1,4 +1,4 @@
-import { html } from "../helpers";
+import { html } from "../utilities/helpers";
 import View from "./View";
 
 class ProgressBarView extends View {

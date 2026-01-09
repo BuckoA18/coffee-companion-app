@@ -1,12 +1,12 @@
+import * as helper from "./utilities/helpers";
+
 export const state = {
 	user: {
 		firstName: "",
-		surName: "",
 		weight: "",
-		metabolismSpeed: "",
+		metabolism: "",
 		maxCaffeine: 400,
 		dailyDrinks: [],
-		profileReady: false,
 	},
 	search: {
 		query: "",
@@ -54,7 +54,7 @@ export const calcProgress = () => {
 
 export const storeDrink = (id) => {
 	const currentDrink = state.drinks.find((drink) => drink.id === id);
-	currentDrink.time = getCurrentDate();
+	currentDrink.time = helper.getCurrentDate();
 	state.caffeine += currentDrink.caffeine_mg;
 	state.user.dailyDrinks.unshift(currentDrink);
 };
@@ -80,14 +80,13 @@ export const getResults = (id) => {
 	}
 };
 
-export const getCurrentDate = () => {
-	const date = new Date();
-	const hours = String(date.getHours()).padStart(2, "0");
-	const minutes = String(date.getMinutes()).padStart(2, "0");
-	return `${hours}:${minutes}`;
-};
+export const setProfile = (data) => {
+	state.user.maxCaffeine = helper.calcMaxCaffeine(data.weight, 1);
+	state.user.firstName = data.firstName.trim();
+	state.user.weight = data.weight;
+	state.user.metabolism = data.metabolism;
+	state.user.bedtime = data.bedtime;
 
-export const calcMaxCaffeine = (weight, sensitivity) => {
-	const max = weight * sensitivity;
-	state.user.maxCaffeine = max;
+	console.log("Succesfull validation");
+	console.log("Ready profile data:", state.user);
 };

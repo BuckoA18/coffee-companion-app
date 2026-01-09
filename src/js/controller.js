@@ -1,4 +1,5 @@
 import * as model from "./model";
+import * as helper from "./utilities/helpers";
 import LoginView from "./views/LoginView";
 import LoginFormView from "./views/LoginFormView";
 import IntakeView from "./views/IntakeView";
@@ -66,23 +67,27 @@ const controllLogin = async () => {
 		LoginView.render();
 		LoginFormView.render();
 
-		LoginFormView.addHandlerValidate(handleValidate);
+		LoginFormView.addHandlerSubmit(handleSubmit);
 	} catch (error) {
 		console.error("Initialization error: ", error);
 	}
 };
 
-const handleValidate = async (data) => {
-	console.log(data);
-	if (model.state.user.profileReady) {
+const handleSubmit = async (data) => {
+	console.log("1. Click detected");
+	try {
+		await helper.validate(data);
+		console.log("2. Validation completed");
 		window.history.pushState(null, null, "/");
 		controllRouter();
+	} catch (error) {
+		console.error("Validation error: ", error);
 	}
 };
 
 const handleAddNewLog = async (id) => {
 	try {
-		model.getCurrentDate();
+		helper.getCurrentDate();
 		model.storeDrink(id);
 		model.calcProgress();
 
@@ -123,6 +128,9 @@ const controllRouter = () => {
 
 const init = async () => {
 	try {
+		if (!model.state.user.profileReady) {
+			window.history.pushState(null, null, "/login");
+		}
 		initRouter(controllRouter);
 		controllRouter();
 	} catch (error) {

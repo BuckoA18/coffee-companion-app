@@ -1,5 +1,5 @@
 import View from "./View";
-import { html } from "../helpers";
+import { html } from "../utilities/helpers";
 
 class LoginFormView extends View {
 	get _parentElement() {
@@ -15,10 +15,12 @@ class LoginFormView extends View {
 		return values;
 	}
 
-	addHandlerValidate(handler) {
+	addHandlerSubmit(handler) {
 		this._parentElement.addEventListener("submit", (e) => {
 			e.preventDefault();
-			handler(this._getInputValues());
+
+			const data = this._getInputValues();
+			handler(data);
 		});
 	}
 
@@ -28,17 +30,14 @@ class LoginFormView extends View {
 				<label class="login__label" for="name">Name</label>
 				<input type="text" class="login__input" id="firstName" />
 			</div>
-			<div class="form-group">
-				<label class="login__label" for="surname">Surname</label>
-				<input type="text" class="login__input" id="surname" />
-			</div>
+
 			<div class="form-group">
 				<label class="login__label" for="weight">Weight (kg)</label>
-				<input type="number" class="login__input" id="weight" />
+				<input type="number" step="any" class="login__input" id="weight" />
 			</div>
 			<div class="form-group">
 				<label class="login__label" for="metabolism">Metabolism Speed</label>
-				<select id="metabolism" class="login__input ">
+				<select id="metabolism" class="login__input  ">
 					<option value="fast">Fast (I can sleep after coffee)</option>
 					<option value="normal" selected>Normal</option>
 					<option value="slow">Slow (Sensitive to caffeine)</option>

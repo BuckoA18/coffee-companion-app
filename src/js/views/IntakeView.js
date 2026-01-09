@@ -1,5 +1,5 @@
 import View from "./View";
-import { html } from "../helpers";
+import { html } from "../utilities/helpers";
 
 class IntakeView extends View {
 	_parentElement = document.querySelector(".main-view");

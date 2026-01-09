@@ -1,5 +1,5 @@
 import View from "./View";
-import { html } from "../helpers";
+import { html } from "../utilities/helpers";
 
 class DailyDrinksView extends View {
 	_message = "Your mug is empty. Time for a brew?";
