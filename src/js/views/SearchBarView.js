@@ -43,7 +43,7 @@ class SearchBarView extends View {
 				class="search-bar__input search-bar__input--closed"
 			/>
 			<button class="search-bar__button">
-				<i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
+				<i class="fa-solid fa-magnifying-glass search-bar__icon fa-xl"></i>
 			</button> `;
 		return markup;
 	}

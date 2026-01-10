@@ -7,6 +7,8 @@ export const state = {
 		metabolism: "",
 		maxCaffeine: 400,
 		dailyDrinks: [],
+		caffeine: 0,
+		progressPerc: 0,
 	},
 	search: {
 		query: "",
@@ -14,8 +16,6 @@ export const state = {
 		shortcuts: [],
 	},
 	drinks: [],
-	caffeine: 0,
-	progressPerc: 0,
 };
 
 export const fetchDrinks = async () => {
@@ -46,16 +46,16 @@ export const fetchDrinks = async () => {
 
 export const calcProgress = () => {
 	const percentage = Math.round(
-		(state.caffeine / state.user.maxCaffeine) * 100
+		(state.user.caffeine / state.user.maxCaffeine) * 100
 	);
-	state.progressPerc = percentage;
-	console.log("progress:", state.progressPerc);
+	state.user.progressPerc = percentage;
+	console.log("progress:", state.user.progressPerc);
 };
 
 export const storeDrink = (id) => {
 	const currentDrink = state.drinks.find((drink) => drink.id === id);
 	currentDrink.time = helper.getCurrentDate();
-	state.caffeine += currentDrink.caffeine_mg;
+	state.user.caffeine += currentDrink.caffeine_mg;
 	state.user.dailyDrinks.unshift(currentDrink);
 };
 
@@ -81,7 +81,7 @@ export const getResults = (id) => {
 };
 
 export const setProfile = (data) => {
-	state.user.maxCaffeine = helper.calcMaxCaffeine(data.weight, 1);
+	state.user.maxCaffeine = helper.calcMaxCaffeine(data.weight, 6);
 	state.user.firstName = data.firstName.trim();
 	state.user.weight = data.weight;
 	state.user.metabolism = data.metabolism;

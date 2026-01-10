@@ -26,4 +26,5 @@ h3 {
 
 a {
 	text-decoration: none;
+	color: map.get(v.$colors, "primary");
 }

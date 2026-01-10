@@ -5,20 +5,19 @@
 	position: relative;
 
 	&__input {
-		background-color: map.get(v.$colors, "bg-primary");
-		width: 180px;
-		height: 37px;
+		background-color: map.get(v.$colors, "bg-secondary");
+		width: 140px;
+		height: 44px;
 		border: none;
+		border-bottom: 1px solid black;
 		padding-left: map.get(v.$spacings, "md");
 		padding-right: 2rem;
-		border-radius: map.get(v.$border-radius, "md");
-		box-shadow: map.get(v.$box-shadows, "md");
 		font-size: map.get(v.$font-sizes, "md");
 
 		transition: width 0.3s ease;
 
 		&--closed {
-			width: 32px;
+			width: 44px;
 			padding: 0;
 		}
 
@@ -28,14 +27,13 @@
 	}
 
 	&__button {
-		background-color: map.get(v.$colors, "bg-primary");
+		background-color: map.get(v.$colors, "bg-secondary");
 		position: absolute;
 		top: 0;
 		right: 0;
-		width: 37px;
-		height: 37px;
+		width: 44px;
+		height: 44px;
 
 		border: none;
-		border-radius: map.get(v.$border-radius, "round");
 	}
 }

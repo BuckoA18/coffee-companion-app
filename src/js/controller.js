@@ -9,7 +9,6 @@ import DailyDrinksView from "./views/DailyDrinksView";
 import SearchShortcutsView from "./views/SearchShortcutsView";
 import DrinksListView from "./views/DrinksListView";
 import SearchBarView from "./views/SearchBarView";
-import NavigationView from "./views/NavigationView";
 import { initRouter } from "./router";
 
 const controllDashboard = async () => {
@@ -18,10 +17,9 @@ const controllDashboard = async () => {
 
 		IntakeView.render(model.state);
 		ProgressBarView.render(model.state);
-		NavigationView.render();
 
 		// update progress bar
-		ProgressBarView.updateProgressBar(model.state.progressPerc);
+		ProgressBarView.updateProgressBar(model.state.user.progressPerc);
 
 		// render no-drink message
 		if (model.state.user.dailyDrinks.length === 0)
@@ -48,7 +46,6 @@ const controllLogDrink = async () => {
 		SearchBarView.render();
 		SearchShortcutsView.render(model.state.search.shortcuts);
 		DrinksListView.render(model.state.search.results);
-		NavigationView.render();
 
 		// Attach listeners
 		SearchBarView.addHandlerToggle();

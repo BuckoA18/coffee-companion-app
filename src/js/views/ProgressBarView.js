@@ -6,13 +6,11 @@ class ProgressBarView extends View {
 		return document.querySelector(".progress-bar__container");
 	}
 
-	_generateMarkup(state) {
-		this._currentCaffeine = state.caffeine;
-
+	_generateMarkup(data) {
 		const markup = html`
 			<div class="intake__progress-bar">
 				<span class="intake__progress-bar-value">
-					<span class="highlight">${this._currentCaffeine}</span>mg
+					<span class="highlight">${data.user.caffeine}</span>mg
 				</span>
 			</div>
 		`;
@@ -20,6 +18,7 @@ class ProgressBarView extends View {
 	}
 
 	updateProgressBar(percentage) {
+		console.log(percentage);
 		const progressBar = document.querySelector(".intake__progress-bar");
 		progressBar?.style.setProperty("--progress", `${percentage}%`);
 	}

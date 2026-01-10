@@ -10,6 +10,11 @@ class LogDrinkView extends View {
 		const markup = html`
 			<header class="header">
 				<div class="header__container container">
+					<button class="btn btn--dashboard">
+						<a href="/" data-link
+							><i class="btn--dashboard__icon fa-solid fa-arrow-left fa-xl"></i
+						></a>
+					</button>
 					<h1 class="header__title">Log your drink</h1>
 					<div class="search-bar"></div>
 				</div>
@@ -18,7 +23,6 @@ class LogDrinkView extends View {
 				<div class="log__shortcuts"></div>
 				<ul class="log__list"></ul>
 			</div>
-			<footer class="nav"</footer>>
 		`;
 		return markup;
 	}
