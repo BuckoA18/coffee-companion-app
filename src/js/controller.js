@@ -63,7 +63,6 @@ const controllLogin = async () => {
 	try {
 		LoginView.render();
 		LoginFormView.render();
-
 		LoginFormView.addHandlerSubmit(handleSubmit);
 	} catch (error) {
 		console.error("Initialization error: ", error);
@@ -71,11 +70,10 @@ const controllLogin = async () => {
 };
 
 const handleSubmit = async (data) => {
-	console.log("1. Click detected");
 	try {
 		await helper.validate(data);
-		console.log("2. Validation completed");
-		window.history.pushState(null, null, "/");
+
+		window.history.replaceState({}, "", "/");
 		controllRouter();
 	} catch (error) {
 		console.error("Validation error: ", error);
@@ -126,8 +124,14 @@ const controllRouter = () => {
 const init = async () => {
 	try {
 		if (!model.state.user.profileReady) {
-			window.history.pushState(null, null, "/login");
+			window.history.replaceState({}, "", "/login");
 		}
+		window.addEventListener("pushstate", () =>
+			console.trace("PushState called from here:")
+		);
+		window.addEventListener("replacestate", () =>
+			console.trace("ReplaceState called from here:")
+		);
 		initRouter(controllRouter);
 		controllRouter();
 	} catch (error) {

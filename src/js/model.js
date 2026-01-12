@@ -9,6 +9,7 @@ export const state = {
 		dailyDrinks: [],
 		caffeine: 0,
 		progressPerc: 0,
+		profileReady: false,
 	},
 	search: {
 		query: "",
@@ -86,6 +87,7 @@ export const setProfile = (data) => {
 	state.user.weight = data.weight;
 	state.user.metabolism = data.metabolism;
 	state.user.bedtime = data.bedtime;
+	state.user.profileReady = true;
 
 	console.log("Succesfull validation");
 	console.log("Ready profile data:", state.user);

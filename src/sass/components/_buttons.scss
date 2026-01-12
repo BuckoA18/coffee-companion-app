@@ -8,7 +8,5 @@
 	align-items: center;
 	background-color: map.get(v.$colors, "bg-secondary");
 	border: none;
-	width: 44px;
-	height: 44px;
-	border-radius: map.get(v.$border-radius, "round");
+	padding: map.get(v.$spacings, md);
 }

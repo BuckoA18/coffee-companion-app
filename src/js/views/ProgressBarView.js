@@ -18,7 +18,6 @@ class ProgressBarView extends View {
 	}
 
 	updateProgressBar(percentage) {
-		console.log(percentage);
 		const progressBar = document.querySelector(".intake__progress-bar");
 		progressBar?.style.setProperty("--progress", `${percentage}%`);
 	}

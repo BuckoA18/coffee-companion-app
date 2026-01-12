@@ -9,9 +9,8 @@ class IntakeView extends View {
 			<header class="header">
 				<div class="header__container container">
 					<h1 class="header__title">Brew</h1>
-					<button class="btn">
-						<a href="/add" data-link><i class="fa-solid fa-plus fa-xl"></i></a>
-					</button>
+
+					<a href="/add" data-link><i class="fa-solid fa-plus fa-xl"></i></a>
 				</div>
 			</header>
 			<div class="intake container">
