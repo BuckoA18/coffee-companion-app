@@ -44,7 +44,9 @@ circle {
 	fill: none;
 	stroke: map.get(v.$colors, "primary");
 	stroke-width: 20px;
-	stroke-dasharray: 400;
-	stroke-dashoffset: 0;
+	stroke-dasharray: 879;
+	stroke-dashoffset: 400;
 	stroke-linecap: round;
+
+	transition: stroke-dashoffset 0.4s ease-in;
 }

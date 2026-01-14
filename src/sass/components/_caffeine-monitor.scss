@@ -1,0 +1,38 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.caffeine-monitor {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 1rem;
+	width: 100%;
+
+	background-color: #fffefc;
+	margin-top: map.get(v.$spacings, "md");
+	border-radius: map.get(v.$border-radius, "md");
+	padding: 1.6rem;
+
+	&__bar {
+		width: 100%;
+		height: 15px;
+		background-color: map.get(v.$colors, "track");
+		position: relative;
+		overflow: hidden;
+		border-radius: 15px;
+	}
+
+	&__bar-svg {
+		height: 15px;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	rect {
+		fill: map.get(v.$colors, "primary");
+		transition: width 0.4s ease-in;
+	}
+}
