@@ -3,5 +3,5 @@
 @use "../abstracts/mixins" as mix;
 
 body {
-	background-color: map.get(v.$colors, "bg-secondary");
+	background-color: map.get(v.$colors, "bg-primary");
 }

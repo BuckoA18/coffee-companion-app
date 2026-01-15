@@ -26,7 +26,7 @@
 		width: 260px;
 		height: 260px;
 		border-radius: 50%;
-		background-color: map.get(v.$colors, "bg");
+		background-color: map.get(v.$colors, "bg-primary");
 	}
 
 	&__label {

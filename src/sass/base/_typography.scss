@@ -7,10 +7,6 @@ body {
 	color: map.get(v.$colors, "text-primary");
 	font-size: 1rem;
 }
-input,
-select {
-	font-size: map.get(v.$font-sizes, "md");
-}
 
 h1 {
 	font-weight: 600;
@@ -20,9 +16,4 @@ h1 {
 h2 {
 	font-weight: 600;
 	font-size: map.get(v.$font-sizes, "lg");
-}
-
-a {
-	text-decoration: none;
-	color: map.get(v.$colors, "primary");
 }

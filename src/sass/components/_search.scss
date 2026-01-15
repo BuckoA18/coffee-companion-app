@@ -1,0 +1,31 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.search {
+	width: 100%;
+	background-color: map.get(v.$colors, "bg-secondary");
+	display: flex;
+	align-items: center;
+	padding: 0.6rem;
+	border-radius: map.get(v.$border-radius, "md");
+	margin-bottom: map.get(v.$spacings, "sm");
+	box-shadow: 0 4px 12px rgba(30, 20, 0, 0.05);
+
+	&:focus-within {
+		border: 1px solid map.get(v.$colors, "primary");
+	}
+
+	&__input {
+		font-size: map.get(v.$font-sizes, "md");
+		margin-left: 0.4rem;
+		text-align: left;
+		background-color: map.get(v.$colors, "bg-secondary");
+		border: none;
+		flex: 1;
+
+		&:focus {
+			outline: none;
+		}
+	}
+}

@@ -4,8 +4,24 @@
 
 .header {
 	width: 100%;
-	height: 60px;
 	margin-bottom: map.get(v.$spacings, "lg");
+	display: flex;
+
+	&__content {
+		width: 100%;
+
+		&--log {
+			position: static;
+			top: 0;
+		}
+	}
+
+	&__container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: map.get(v.$spacings, "lg");
+	}
 
 	&__title {
 		font-weight: 800;
@@ -17,9 +33,8 @@
 	}
 
 	&__back-btn {
-		background-color: map.get(v.$colors, bg);
+		background-color: map.get(v.$colors, "bg-primary");
 		border: none;
-		padding: 1rem 2rem 1rem 0;
 		color: map.get(v.$colors, "text-secondary");
 	}
 }

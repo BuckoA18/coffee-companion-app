@@ -14,13 +14,34 @@
 	</head>
 	<body>
 		<div class="main-view">
-			<!--<header class="header">
-				<h2 class="header__title">Brew</h2>
-				<span class="header__text">Your daily caffeine</span>
+			<header class="header">
+				<!-- <div class="header__content header__content--dashboard">
+					<h2 class="header__title">Brew</h2>
+				</div> -->
+
+				<div class="header__content header__content--log">
+					<div class="header__container">
+						<h2 class="header__title">Log Your Drink</h2>
+						<button class="header__back-btn btn">
+							<i class="fa-solid fa-arrow-left header__icon"></i>
+						</button>
+					</div>
+					<form class="search">
+						<i class="fa-solid fa-magnifying-glass"></i>
+						<input type="text" name="drink-name" class="search__input" />
+					</form>
+
+					<div class="shortcuts">
+						<button class="shortcut-btn">Coffee</button>
+						<button class="shortcut-btn">Tea</button>
+						<button class="shortcut-btn">Chocolate</button>
+						<button class="shortcut-btn">Energy drink</button>
+						<button class="shortcut-btn">Pills</button>
+					</div>
+				</div>
 			</header>
 
-			
-			<div class="intake">
+			<!-- <div class="intake">
 				<div class="progress-bar">
 					<div class="progress-bar__outer">
 						<div class="progress-bar__inner">
@@ -38,7 +59,9 @@
 				</div>
 
 				<div class="caffeine-monitor">
-					<span class="caffeine-monitor__label">~67mg in the system</span>
+					<span class="caffeine-monitor__label subtle"
+						>~67mg in the system</span
+					>
 					<div class="caffeine-monitor__bar">
 						<svg
 							class="caffeine-monitor__bar-svg"
@@ -68,9 +91,11 @@
 							</div>
 							<div class="drink-card__details">
 								<span class="drink-card__details-name">Espresso</span>
-								<span class="drink-card__details-time">09:15</span>
+								<span class="drink-card__details-time subtle">09:15</span>
 							</div>
-							<span class="drink-card__caffeine">+45 mg</span>
+							<span class="drink-card__caffeine subtle"
+								><span class="highlight">+45</span> mg</span
+							>
 						</li>
 						<li class="drink-card">
 							<div class="drink-card__icon">
@@ -78,9 +103,11 @@
 							</div>
 							<div class="drink-card__details">
 								<span class="drink-card__details-name">Espresso</span>
-								<span class="drink-card__details-time">09:15</span>
+								<span class="drink-card__details-time subtle">09:15</span>
 							</div>
-							<span class="drink-card__caffeine">+45 mg</span>
+							<span class="drink-card__caffeine subtle"
+								><span class="highlight">+45</span> mg</span
+							>
 						</li>
 						<li class="drink-card">
 							<div class="drink-card__icon">
@@ -88,70 +115,56 @@
 							</div>
 							<div class="drink-card__details">
 								<span class="drink-card__details-name">Espresso</span>
-								<span class="drink-card__details-time">09:15</span>
+								<span class="drink-card__details-time subtle">09:15</span>
 							</div>
-							<span class="drink-card__caffeine">+45 mg</span>
-						</li>
-						<li class="drink-card">
-							<div class="drink-card__icon">
-								<i class="fa-solid fa-mug-hot fa-xl"></i>
-							</div>
-							<div class="drink-card__details">
-								<span class="drink-card__details-name">Espresso</span>
-								<span class="drink-card__details-time">09:15</span>
-							</div>
-							<span class="drink-card__caffeine">+45 mg</span>
+							<span class="drink-card__caffeine subtle"
+								><span class="highlight">+45</span> mg</span
+							>
 						</li>
 					</ul>
 				</div>
 			</div> -->
 
-			<header class="header">
-				<h2 class="header__title">Log your drink</h2>
-				<button class="header__back-btn">
-					<i class="fa-solid fa-arrow-left"></i>
-				</button>
-			</header>
-			<!-- <div class="search-bar">
-				<input
-					type="text"
-					class="search-bar__input search-bar__input--closed"
-				/>
-				<button class="search-bar__button">
-					<i class="fa-solid fa-magnifying-glass search-bar__icon"></i>
-				</button>
-			</div>
-			<div class="log container">
-				<div class="log__shortcuts">
-					<button class="log__shortcut-btn">Coffee</button>
-					<button class="log__shortcut-btn">Tea</button>
-					<button class="log__shortcut-btn">Chocolate</button>
-					<button class="log__shortcut-btn">Energy drink</button>
-					<button class="log__shortcut-btn">Pills</button>
-				</div>
-				<ul class="log__list">
-					<li class="log__item">
-						<i class="log__item-icon fa-solid fa-mug-hot fa-xl"></i>
-						<h2 class="log__item-title">espresso</h2>
-						<span class="log__item-caffeine">65 mg</span>
+			<div class="log">
+				<ul class="log-list">
+					<li class="drink-card">
+						<div class="drink-card__icon">
+							<i class="fa-solid fa-mug-hot fa-xl"></i>
+						</div>
+						<div class="drink-card__details">
+							<span class="drink-card__details-name">Espresso</span>
+							<span class="drink-card__details-amount subtle">1 shot</span>
+						</div>
+						<span class="drink-card__caffeine subtle"
+							><span class="highlight">+45</span> mg</span
+						>
 					</li>
-					<li class="log__item">
-						<i class="log__item-icon fa-solid fa-mug-hot fa-xl"></i>
-						<h2 class="log__item-title">filter</h2>
-						<span class="log__item-caffeine">120 mg</span>
+					<li class="drink-card">
+						<div class="drink-card__icon">
+							<i class="fa-solid fa-mug-hot fa-xl"></i>
+						</div>
+						<div class="drink-card__details">
+							<span class="drink-card__details-name">Espresso</span>
+							<span class="drink-card__details-amount subtle">1 shot</span>
+						</div>
+						<span class="drink-card__caffeine subtle"
+							><span class="highlight">+45</span> mg</span
+						>
 					</li>
-					<li class="log__item">
-						<i class="log__item-icon fa-solid fa-mug-hot fa-xl"></i>
-						<h2 class="log__item-title">capuccino</h2>
-						<span class="log__item-caffeine">80 mg</span>
-					</li>
-					<li class="log__item">
-						<i class="log__item-icon fa-solid fa-mug-hot fa-xl"></i>
-						<h2 class="log__item-title">decaf filter</h2>
-						<span class="log__item-caffeine">2 mg</span>
+					<li class="drink-card">
+						<div class="drink-card__icon">
+							<i class="fa-solid fa-mug-hot fa-xl"></i>
+						</div>
+						<div class="drink-card__details">
+							<span class="drink-card__details-name">Espresso</span>
+							<span class="drink-card__details-amount subtle">1 shot</span>
+						</div>
+						<span class="drink-card__caffeine subtle"
+							><span class="highlight">+45</span> mg</span
+						>
 					</li>
 				</ul>
-			</div> -->
+			</div>
 
 			<!-- <div class="login container">
 					<h1 class="login__title">Create Your Profile</h1>

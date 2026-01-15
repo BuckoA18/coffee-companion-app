@@ -3,13 +3,11 @@
 @use "../abstracts/variables" as v;
 
 .drink-card {
+	@include mix.card;
 	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	background-color: map.get(v.$colors, "bg-secondary");
-	border-radius: map.get(v.$border-radius, "sm");
-	padding: map.get(v.$spacings, "md");
 	gap: 1rem;
 
 	&__icon {

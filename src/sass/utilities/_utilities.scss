@@ -5,3 +5,11 @@
 .block {
 	display: inline-block;
 }
+
+.highlight {
+	color: map.get(v.$colors, "primary");
+}
+
+.subtle {
+	color: map.get(v.$colors, "text-secondary");
+}

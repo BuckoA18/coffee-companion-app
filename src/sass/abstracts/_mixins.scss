@@ -1,24 +1,11 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
 
-@mixin ul {
-	background-color: map.get(v.$colors, "bg-primary");
-	padding: map.get(v.$spacings, "xs");
-	border-radius: map.get(v.$border-radius, "md");
-
-	display: flex;
-	flex-direction: column;
-	gap: map.get(v.$spacings, "sm");
-	box-shadow: map.get(v.$box-shadows, "md");
+@mixin card {
 	width: 100%;
-}
 
-@mixin li {
-	width: 100%;
-	padding: map.get(v.$spacings, "lg");
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	gap: map.get(v.$spacings, "md");
+	background-color: map.get(v.$colors, "bg-secondary");
+	border-radius: map.get(v.$border-radius, "sm");
+	padding: map.get(v.$spacings, "md");
+	box-shadow: 0 4px 12px rgba(30, 20, 0, 0.05);
 }

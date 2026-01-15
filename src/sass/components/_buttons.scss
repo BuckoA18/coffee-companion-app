@@ -6,7 +6,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: map.get(v.$colors, "bg-secondary");
 	border: none;
 	padding: map.get(v.$spacings, md);
 }

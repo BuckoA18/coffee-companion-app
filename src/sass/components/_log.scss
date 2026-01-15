@@ -3,20 +3,13 @@
 @use "../abstracts/variables" as v;
 
 .log {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
+	width: 100%;
+
 	margin-bottom: map.get(v.$spacings, "xxl");
 
-	&__list {
-		@include mix.ul();
-	}
-
-	&__item {
-		@include mix.li();
-
-		&-caffeine {
-			margin-left: auto;
-		}
+	&-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 }

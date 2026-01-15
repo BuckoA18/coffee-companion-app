@@ -2,27 +2,25 @@
 @use "../abstracts/mixins" as mix;
 @use "../abstracts/variables" as v;
 
-.log__shortcuts {
+.shortcuts {
 	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	flex-wrap: wrap;
-	gap: 0.6rem;
-	margin-bottom: map.get(v.$spacings, "lg");
+	// margin-bottom: map.get(v.$spacings, "lg");
+	padding-bottom: 1rem;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	white-space: nowrap;
 
-	.log__shortcut-btn {
+	.shortcut-btn {
+		box-shadow: 0 4px 12px rgba(30, 20, 0, 0.05);
 		flex-grow: 1;
 		font-size: map.get(v.$font-sizes, "md");
 		padding: 0.6rem 1.6rem;
-		background-color: map.get(v.$colors, "bg-primary");
-		color: map.get(v.$colors, "primary");
+		background-color: map.get(v.$colors, "bg-secondary");
 		border: none;
 		border-radius: map.get(v.$border-radius, "md");
-		box-shadow: map.get(v.$box-shadows, "md");
 
 		&--active {
 			background-color: map.get(v.$colors, "primary");
-			color: map.get(v.$colors, "secondary");
 		}
 	}
 }
