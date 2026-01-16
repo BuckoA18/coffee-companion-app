@@ -28,6 +28,12 @@
 		left: 0;
 	}
 
+	&__sleep {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
 	rect {
 		fill: map.get(v.$colors, "primary");
 		transition: width 0.4s ease-in;

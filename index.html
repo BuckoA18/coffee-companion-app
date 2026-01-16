@@ -7,7 +7,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
 			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="/src/sass/main.scss" />
@@ -15,11 +15,16 @@
 	<body>
 		<div class="main-view">
 			<header class="header">
-				<!-- <div class="header__content header__content--dashboard">
-					<h2 class="header__title">Brew</h2>
-				</div> -->
+				<div class="header__content header__content--dashboard">
+					<h2 class="header__title blur">Brew</h2>
+					<div class="ham-menu ham-menu--open">
+						<span class="ham-menu__line"></span>
+						<span class="ham-menu__line"></span>
+						<span class="ham-menu__line"></span>
+					</div>
+				</div>
 
-				<div class="header__content header__content--log">
+				<!-- <div class="header__content header__content--log">
 					<div class="header__container">
 						<h2 class="header__title">Log Your Drink</h2>
 						<button class="header__back-btn btn">
@@ -38,10 +43,12 @@
 						<button class="shortcut-btn">Energy drink</button>
 						<button class="shortcut-btn">Pills</button>
 					</div>
-				</div>
+				</div> -->
 			</header>
 
-			<!-- <div class="intake">
+			<div class="menu"></div>
+
+			<div class="intake blur">
 				<div class="progress-bar">
 					<div class="progress-bar__outer">
 						<div class="progress-bar__inner">
@@ -55,7 +62,9 @@
 				</div>
 
 				<div class="intake-limit">
-					<span class="intake-limit__label">234 mg untill daily limit </span>
+					<span class="intake-limit__label subtle"
+						>234 mg untill daily limit
+					</span>
 				</div>
 
 				<div class="caffeine-monitor">
@@ -77,7 +86,7 @@
 						</svg>
 					</div>
 					<div class="caffeine-monitor__sleep">
-						<span class="caffeine-monitor__label">Safe to sleep:</span>
+						<span class="caffeine-monitor__label subtle">Safe to sleep at</span>
 						<span class="caffeine-monitor__value">22:30 (1:45)</span>
 					</div>
 				</div>
@@ -123,9 +132,9 @@
 						</li>
 					</ul>
 				</div>
-			</div> -->
+			</div>
 
-			<div class="log">
+			<!-- <div class="log">
 				<ul class="log-list">
 					<li class="drink-card">
 						<div class="drink-card__icon">
@@ -164,7 +173,7 @@
 						>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 
 			<!-- <div class="login container">
 					<h1 class="login__title">Create Your Profile</h1>

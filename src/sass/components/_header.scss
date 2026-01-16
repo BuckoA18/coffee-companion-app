@@ -5,10 +5,12 @@
 .header {
 	width: 100%;
 	margin-bottom: map.get(v.$spacings, "lg");
-	display: flex;
 
 	&__content {
 		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
 		&--log {
 			position: static;
@@ -26,10 +28,6 @@
 	&__title {
 		font-weight: 800;
 		margin-bottom: map.get(v.$spacings, "sm");
-	}
-
-	&__text {
-		color: map.get(v.$colors, "text-secondary");
 	}
 
 	&__back-btn {

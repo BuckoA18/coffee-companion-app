@@ -1,0 +1,13 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.menu {
+	width: 72%;
+	height: 100%;
+	background-color: map.get(v.$colors, "bg-primary");
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+}

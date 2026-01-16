@@ -8,8 +8,14 @@
 
 .highlight {
 	color: map.get(v.$colors, "primary");
+	font-size: map.get(v.$font-sizes, "md");
 }
 
 .subtle {
 	color: map.get(v.$colors, "text-secondary");
+	font-size: map.get(v.$font-sizes, "sm");
+}
+
+.blur {
+	filter: blur(0.2rem);
 }
