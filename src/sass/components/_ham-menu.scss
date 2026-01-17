@@ -3,6 +3,9 @@
 @use "../abstracts/variables" as v;
 
 .ham-menu {
+	border: none;
+	background-color: map.get(v.$colors, "bg-primary");
+
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -11,26 +14,17 @@
 	height: 30px;
 	position: relative;
 	z-index: 2;
+	border: none;
+	background-color: map.get(v.$colors, "bg-primary");
 
 	&__line {
 		width: 30px;
 		height: 4px;
 		background-color: black;
-		transition: transform 0.3s ease, opacity 0.3s ease;
+		transition:
+			transform 0.3s ease,
+			opacity 0.3s ease;
 		transform-origin: center;
 		border-radius: 15px;
-	}
-
-	&--open {
-		.ham-menu__line:nth-child(1) {
-			transform: translateY(9px) rotate(45deg);
-		}
-		.ham-menu__line:nth-child(2) {
-			opacity: 0;
-			transform: translateX(20px);
-		}
-		.ham-menu__line:nth-child(3) {
-			transform: translateY(-9px) rotate(-45deg);
-		}
 	}
 }

@@ -19,3 +19,20 @@
 .blur {
 	filter: blur(0.2rem);
 }
+
+.is-open {
+	.ham-menu__line {
+		position: absolute;
+	}
+
+	.ham-menu__line:nth-child(1) {
+		transform: rotate(45deg);
+	}
+	.ham-menu__line:nth-child(2) {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+	.ham-menu__line:nth-child(3) {
+		transform: rotate(-45deg);
+	}
+}
