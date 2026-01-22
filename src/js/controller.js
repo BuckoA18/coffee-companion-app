@@ -22,7 +22,9 @@ const controllDashboard = async () => {
 
 		model.calcCaffeineLeft();
 		IntakeLimitView.render(model.state.user);
+
 		CaffieneMonitorView.render(model.state);
+		CaffieneMonitorView.updateProgressBar(100);
 		DailyLogView.render(model.state.user.dailyDrinks);
 	} catch (error) {
 		console.error(error);
@@ -80,7 +82,7 @@ const handleSubmit = async (data) => {
 const handleAddNewLog = async (id) => {
 	try {
 		model.storeDrink(id);
-
+		model.startCaffeineMonitor();
 		window.history.pushState({}, "", "/");
 		controllRouter();
 	} catch (error) {
@@ -118,15 +120,10 @@ const controllRouter = () => {
 
 const init = async () => {
 	try {
-		// if (!model.state.user.profileReady) {
-		// 	window.history.replaceState({}, "", "/login");
-		// }
-		// window.addEventListener("pushstate", () =>
-		// 	console.trace("PushState called from here:")
-		// );
-		// window.addEventListener("replacestate", () =>
-		// 	console.trace("ReplaceState called from here:")
-		// );
+		window.addEventListener("caffeineUpdated", () => {
+			CaffieneMonitorView.render(model.state);
+			CaffieneMonitorView.updateProgressBar(100);
+		});
 		initRouter(controllRouter);
 		controllRouter();
 	} catch (error) {

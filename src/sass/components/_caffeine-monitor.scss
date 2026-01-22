@@ -22,6 +22,7 @@
 	}
 
 	&__bar-svg {
+		width: 100%;
 		height: 15px;
 		position: absolute;
 		top: 0;
@@ -34,7 +35,7 @@
 		justify-content: space-between;
 	}
 
-	rect {
+	&__fill {
 		fill: map.get(v.$colors, "primary");
 		transition: width 0.4s ease-in;
 	}

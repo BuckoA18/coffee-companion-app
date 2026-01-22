@@ -10,7 +10,6 @@ class DailyLogView extends View {
 	_generateMarkup() {
 		const markup = this._data
 			.map((drink) => {
-				console.log(drink);
 				return html`
 					<li class="drink-card">
 						<div class="drink-card__icon">
@@ -18,7 +17,12 @@ class DailyLogView extends View {
 						</div>
 						<div class="drink-card__details">
 							<span class="drink-card__details-name">${drink.name}</span>
-							<span class="drink-card__details-time subtle">${drink.time}</span>
+							<span class="drink-card__details-time subtle"
+								>${drink.time.toLocaleTimeString([], {
+									hour: "2-digit",
+									minute: "2-digit",
+								})}</span
+							>
 						</div>
 						<span class="drink-card__caffeine subtle"
 							><span class="highlight">+${drink.caffeine_mg}</span> mg</span

@@ -10,6 +10,11 @@ export const state = {
 		dailyDrinks: [],
 		caffeine: 0,
 		caffeineLeft: "",
+		caffeineInSystem: "",
+		safeSleep: {
+			bedTime: "",
+			hoursToBedTime: "",
+		},
 		progressPerc: 0,
 		profileReady: false,
 	},
@@ -69,18 +74,69 @@ export const calcCaffeineLeft = () => {
 	// console.log("Caffeine left: ", caffeineLeft);
 };
 
+export const calcCaffeineInSystem = () => {
+	const halfLife = 5;
+	const currentTime = new Date();
+	let totalCurrentCaffeine = 0;
+	let hoursUntilSafeSleep = 0;
+	const threshold = 50;
+
+	// Calculate remaining caffeine for every drink logged
+	state.user.dailyDrinks.forEach((drink) => {
+		const elapsedMs = currentTime.getTime() - drink.time.getTime();
+		const elapsedHours = elapsedMs / (1000 * 60 * 60);
+
+		if (elapsedHours >= 0) {
+			const remaining =
+				drink.caffeine_mg * Math.pow(0.5, elapsedHours / halfLife);
+			totalCurrentCaffeine += remaining;
+		}
+	});
+
+	if (totalCurrentCaffeine > threshold) {
+		hoursUntilSafeSleep =
+			halfLife * (Math.log(threshold / totalCurrentCaffeine) / Math.log(0.5));
+	}
+
+	const bedTime = new Date(
+		currentTime.getTime() + hoursUntilSafeSleep * 60 * 60 * 1000,
+	);
+
+	state.user.caffeineInSystem = Math.round(totalCurrentCaffeine);
+	state.user.safeSleep.hoursToBedTime = hoursUntilSafeSleep.toFixed(1);
+	state.user.safeSleep.bedTime = bedTime.toLocaleTimeString([], {
+		hour: "2-digit",
+		minute: "2-digit",
+	});
+	window.dispatchEvent(new CustomEvent("caffeineUpdated"));
+	console.log("caffeine in system: ", totalCurrentCaffeine);
+	console.log("bed time: ", bedTime);
+};
+
 export const storeDrink = (id) => {
 	const currentDrink = state.drinks.find((drink) => drink.id === id);
 	if (!currentDrink) return;
 
 	const newEntry = {
 		...currentDrink,
-		time: helper.getCurrentDate(),
+		time: new Date(),
 	};
 
 	state.user.caffeine += newEntry.caffeine_mg;
 	state.user.dailyDrinks.unshift(newEntry);
-	console.log(state.user.dailyDrinks);
+	// console.log(state.user.dailyDrinks);
+};
+
+let caffeineTimer = null;
+
+export const startCaffeineMonitor = () => {
+	if (caffeineTimer) clearInterval(caffeineTimer);
+
+	calcCaffeineInSystem();
+
+	caffeineTimer = setInterval(() => {
+		calcCaffeineInSystem();
+	}, 10000);
 };
 
 export const searchDrinks = (query) => {

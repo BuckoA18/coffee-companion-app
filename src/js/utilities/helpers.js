@@ -3,7 +3,7 @@ import { setProfile } from "../model";
 
 export const html = String.raw;
 
-export const getCurrentDate = () => {
+export const getCurrentTime = () => {
 	const date = new Date();
 	const hours = String(date.getHours()).padStart(2, "0");
 	const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -24,17 +24,17 @@ export const validate = async (data) => {
 		if (firstName.length === 0) throw new Error("Name can`t be empty");
 		if (firstName.length > VALIDATION_RULES.NAME_CHAR_CAP)
 			throw new Error(
-				`Name is too long, maximum is: ${VALIDATION_RULES.NAME_CHAR_CAP}`
+				`Name is too long, maximum is: ${VALIDATION_RULES.NAME_CHAR_CAP}`,
 			);
 
 		// Weight checks
 		if (data.weight < VALIDATION_RULES.WEIGHT.MIN)
 			throw new Error(
-				`Weight is too low, minimum is: ${VALIDATION_RULES.WEIGHT.MIN}`
+				`Weight is too low, minimum is: ${VALIDATION_RULES.WEIGHT.MIN}`,
 			);
 		if (data.weight > VALIDATION_RULES.WEIGHT.MAX)
 			throw new Error(
-				`Weight is too high, maximum is: ${VALIDATION_RULES.WEIGHT.MAX}`
+				`Weight is too high, maximum is: ${VALIDATION_RULES.WEIGHT.MAX}`,
 			);
 		setProfile({ ...data, firstName, weight });
 	} catch (error) {

@@ -6,24 +6,38 @@ class CaffeineMonitorView extends View {
 		return document.querySelector(".caffeine-monitor");
 	}
 
-	_generateMarkup(data) {
+	_generateMarkup() {
+		const { caffeineInSystem } = this._data.user;
+		const { bedTime } = this._data.user.safeSleep;
+
+		console.log(caffeineInSystem);
+
 		const markup = html`
-			<span class="caffeine-monitor__label subtle">~67mg in the system</span>
+			<span class="caffeine-monitor__label subtle"
+				>~${caffeineInSystem}mg in the system</span
+			>
 			<div class="caffeine-monitor__bar">
 				<svg
 					class="caffeine-monitor__bar-svg"
 					viewBox="0 0 100 10"
 					preserveAspectRatio="none"
 				>
-					<rect class="caffeine-monitor__fill" width="50" height="10" rx="5" />
+					<rect class="caffeine-monitor__fill" width="40" height="10" />
 				</svg>
 			</div>
 			<div class="caffeine-monitor__sleep">
 				<span class="caffeine-monitor__label subtle">Safe to sleep at</span>
-				<span class="caffeine-monitor__value">22:30 (1:45)</span>
+				<span class="caffeine-monitor__value">${bedTime}</span>
 			</div>
 		`;
 		return markup;
+	}
+
+	updateProgressBar(width) {
+		const progressBar = document.querySelector(".caffeine-monitor__fill");
+		if (!progressBar) return;
+		console.log(progressBar, width);
+		progressBar.setAttribute("width", width);
 	}
 }
 
