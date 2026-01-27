@@ -1,5 +1,7 @@
 import * as helper from "./utilities/helpers";
 import * as config from "./utilities/config";
+import { db, seedDatabase } from "./db";
+import { initialDrinks } from "./InitialDrinks";
 
 export const state = {
 	user: {
@@ -28,27 +30,15 @@ export const state = {
 
 let caffeineTimer = null;
 
-export const fetchDrinks = async () => {
+export const fetchInitialDrinks = async () => {
 	try {
-		const response = await fetch("http://localhost:3000/drinks");
+		await seedDatabase(initialDrinks);
+		state.drinks = await db.drinks.toArray();
+		state.user.dailyDrinks = await db.consumption.toArray();
+		console.log(state.drinks);
+		console.log(state.user.dailyDrinks);
 
-		if (!response.ok) {
-			const error = new Error(
-				`Server responder with ${response.status}: ${response.statusText}`,
-			);
-			throw error;
-		}
-		const data = await response.json();
-		state.drinks = data;
-		state.search.shortcuts = [
-			"All",
-			...new Set(
-				state.drinks.map((drink) => {
-					return drink.category;
-				}),
-			),
-		];
-		// console.log(state.search.shortcuts);
+		helper.createShortcuts();
 	} catch (error) {
 		throw error;
 	}
@@ -69,7 +59,6 @@ export const calcCaffeineProgress = () => {
 
 export const calcMonitorProgress = () => {
 	const width = (state.user.caffeineInSystem / state.user.caffeine) * 100;
-	// console.log("width: ", width);
 	return width;
 };
 
@@ -87,7 +76,7 @@ export const calcCaffeineInSystem = () => {
 	let hoursUntilSafeSleep = 0;
 
 	//Calculate remaining caffeine for every drink logged
-	state.user.dailyDrinks.forEach((drink) => {
+	state.user.dailyDrinks?.forEach((drink) => {
 		const elapsedMs = currentTime.getTime() - drink.time.getTime();
 		const elapsedHours = elapsedMs / (1000 * 60 * 60);
 
@@ -99,6 +88,7 @@ export const calcCaffeineInSystem = () => {
 	});
 
 	//Calculate how many hours until safe sleep (for furute features?)
+	if (totalCurrentCaffeine <= 0) clearInterval(caffeineTimer);
 	if (totalCurrentCaffeine > threshold) {
 		hoursUntilSafeSleep =
 			halfLife * (Math.log(threshold / totalCurrentCaffeine) / Math.log(0.5));
@@ -115,10 +105,7 @@ export const calcCaffeineInSystem = () => {
 		minute: "2-digit",
 	});
 	window.dispatchEvent(new CustomEvent("caffeineUpdated"));
-
-	if (totalCurrentCaffeine <= 0) {
-		clearInterval(caffeineTimer);
-	}
+	console.log(totalCurrentCaffeine);
 };
 
 export const storeDrink = (id) => {
@@ -129,6 +116,9 @@ export const storeDrink = (id) => {
 		...currentDrink,
 		time: new Date(),
 	};
+
+	db.consumption.add(newEntry);
+	console.log(db.consumption.toArray());
 
 	state.user.caffeine += newEntry.caffeine_mg;
 	state.user.dailyDrinks.unshift(newEntry);
@@ -141,18 +131,18 @@ export const startCaffeineMonitor = () => {
 
 	caffeineTimer = setInterval(() => {
 		calcCaffeineInSystem();
-	}, 10000);
+	}, 5000);
 };
 
 export const searchDrinks = (query) => {
-	if (!query) {
-		state.search.results = state.search.drinks;
-		state.search.query = "";
-	}
-	state.search.query = query;
-	state.search.results = state.drinks.filter((drink) => {
-		return drink.name.toLowerCase().includes(query.trim().toLowerCase());
+	const searchQuery = query;
+	const results = state.drinks.filter((drink) => {
+		return drink.name.toLowerCase().includes(searchQuery.trim().toLowerCase());
 	});
+	console.log("results:", results);
+
+	state.user.results = results;
+	state.search.query = searchQuery;
 };
 
 export const getResults = (id) => {

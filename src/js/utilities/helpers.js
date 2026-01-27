@@ -1,5 +1,6 @@
 import { VALIDATION_RULES } from "./config";
 import { setProfile } from "../model";
+import * as model from "../model";
 
 export const html = String.raw;
 
@@ -40,4 +41,23 @@ export const validate = async (data) => {
 	} catch (error) {
 		throw error;
 	}
+};
+
+export const createShortcuts = () => {
+	model.state.search.shortcuts = [
+		"All",
+		...new Set(
+			model.state.drinks.map((drink) => {
+				return drink.category;
+			}),
+		),
+	];
+};
+
+export const calcCaffeine = () => {
+	const caffeine = model.state.user.dailyDrinks.reduce(
+		(accumulator, currentValue) => accumulator + currentValue.caffeine_mg,
+		0,
+	);
+	model.state.user.caffeine = caffeine;
 };

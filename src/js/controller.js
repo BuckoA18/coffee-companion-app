@@ -12,11 +12,14 @@ import SearchShortcutsView from "./views/SearchShortcutsView";
 import DrinksListView from "./views/DrinksListView";
 import SearchBarView from "./views/SearchBarView";
 import { initRouter } from "./router";
+import { clearTable, db } from "./db";
 
 const controllDashboard = async () => {
 	try {
+		model.startCaffeineMonitor();
+		// clearTable(db.consumption);
 		IntakeView.render(model.state);
-
+		helper.calcCaffeine();
 		ProgressBarView.render(model.state);
 		ProgressBarView.updateProgressBar(model.calcCaffeineProgress());
 
@@ -24,7 +27,7 @@ const controllDashboard = async () => {
 		IntakeLimitView.render(model.state.user);
 
 		CaffieneMonitorView.render(model.state);
-		CaffieneMonitorView.updateProgressBar(100);
+		CaffieneMonitorView.updateProgressBar(model.calcMonitorProgress());
 		DailyLogView.render(model.state.user.dailyDrinks);
 	} catch (error) {
 		console.error(error);
@@ -33,21 +36,15 @@ const controllDashboard = async () => {
 
 const controllLogDrink = async () => {
 	try {
-		// fetch data
-		await model.fetchDrinks();
-
-		// get initial shortcut id
 		model.getResults();
 
 		// render strucure
-
 		LogDrinkView.render(model.state);
 		SearchBarView.render();
 		SearchShortcutsView.render(model.state.search.shortcuts);
 		DrinksListView.render(model.state.search.results);
 
 		// Attach listeners
-
 		SearchBarView.addHandlerGetQuery(handleSearch);
 		SearchShortcutsView.addHandlerGetShortcutId(handleShortcuts);
 		DrinksListView.addHandlerNewLog(handleAddNewLog);
@@ -120,6 +117,7 @@ const controllRouter = () => {
 
 const init = async () => {
 	try {
+		await model.fetchInitialDrinks();
 		window.addEventListener("caffeineUpdated", () => {
 			CaffieneMonitorView.render(model.state);
 			CaffieneMonitorView.updateProgressBar(model.calcMonitorProgress());

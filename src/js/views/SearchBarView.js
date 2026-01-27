@@ -12,6 +12,9 @@ class SearchBarView extends View {
 
 		this._parentElement.addEventListener("input", (e) => {
 			const query = this._parentElement.querySelector(".search__input").value;
+			console.log(query);
+			if (query.length === 0) return;
+
 			handler(query);
 		});
 	}

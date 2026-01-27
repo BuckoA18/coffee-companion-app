@@ -9,7 +9,6 @@ class CaffeineMonitorView extends View {
 	_generateMarkup() {
 		const { caffeineInSystem } = this._data.user;
 		const { bedTime } = this._data.user.safeSleep;
-
 		const markup = html`
 			<span class="caffeine-monitor__label subtle"
 				>~${caffeineInSystem}mg in the system</span
@@ -33,7 +32,6 @@ class CaffeineMonitorView extends View {
 
 	updateProgressBar(width) {
 		const progressBar = document.querySelector(".caffeine-monitor__fill");
-
 		progressBar?.style.setProperty("--monitor-progress", `${width}%`);
 	}
 }
