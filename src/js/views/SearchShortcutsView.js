@@ -11,7 +11,7 @@ class SearchShortcutsView extends View {
 			const btn = e.target.closest(".shortcut-btn");
 			if (!btn) return;
 
-			const id = btn.dataset.id;
+			const id = btn.dataset.id || "all";
 			if (!id) return;
 
 			this._parentElement
@@ -22,6 +22,15 @@ class SearchShortcutsView extends View {
 
 			handler(id);
 		});
+	}
+
+	setActiveShortcut(id) {
+		this._parentElement
+			.querySelectorAll(".shortcut-btn")
+			.forEach((el) => el.classList.remove("shortcut-btn--active"));
+
+		const shortcut = document.querySelector(`[data-id=${id}]`);
+		shortcut.classList.add("shortcut-btn--active");
 	}
 
 	_generateMarkup() {

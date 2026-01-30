@@ -1,5 +1,6 @@
 import * as model from "./model";
 import * as helper from "./utilities/helpers";
+import * as db from "./db";
 import LoginView from "./views/LoginView";
 import LoginFormView from "./views/LoginFormView";
 import IntakeView from "./views/IntakeView";
@@ -12,12 +13,11 @@ import SearchShortcutsView from "./views/SearchShortcutsView";
 import DrinksListView from "./views/DrinksListView";
 import SearchBarView from "./views/SearchBarView";
 import { initRouter } from "./router";
-import { clearTable, db } from "./db";
 
 const controllDashboard = async () => {
 	try {
 		model.startCaffeineMonitor();
-		// clearTable(db.consumption);
+
 		IntakeView.render(model.state);
 		helper.calcCaffeine();
 		ProgressBarView.render(model.state);
@@ -36,9 +36,7 @@ const controllDashboard = async () => {
 
 const controllLogDrink = async () => {
 	try {
-		model.getResults();
-
-		// render strucure
+		await model.searchShortcuts();
 		LogDrinkView.render(model.state);
 		SearchBarView.render();
 		SearchShortcutsView.render(model.state.search.shortcuts);
@@ -46,6 +44,7 @@ const controllLogDrink = async () => {
 
 		// Attach listeners
 		SearchBarView.addHandlerGetQuery(handleSearch);
+		SearchBarView.addHandlerOnActiveInput(handleActiveInput);
 		SearchShortcutsView.addHandlerGetShortcutId(handleShortcuts);
 		DrinksListView.addHandlerNewLog(handleAddNewLog);
 	} catch (error) {
@@ -87,14 +86,29 @@ const handleAddNewLog = async (id) => {
 	}
 };
 
-const handleSearch = async (query) => {
-	model.searchDrinks(query);
-	DrinksListView.render(model.state.search.results);
+const handleActiveInput = async () => {
+	try {
+		await model.searchShortcuts();
+		console.log(model.state.search.results);
+		SearchShortcutsView.setActiveShortcut("all");
+		DrinksListView.render(model.state.search.results);
+	} catch (error) {}
 };
 
-const handleShortcuts = (id) => {
-	model.getResults(id);
-	DrinksListView.render(model.state.search.results);
+const handleSearch = async (query) => {
+	try {
+		await model.searchDrinks(query);
+		DrinksListView.render(model.state.results);
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+const handleShortcuts = async (id) => {
+	try {
+		await model.searchShortcuts(id);
+		DrinksListView.render(model.state.search.results);
+	} catch (error) {}
 };
 
 const controllRouter = () => {
@@ -117,7 +131,7 @@ const controllRouter = () => {
 
 const init = async () => {
 	try {
-		await model.fetchInitialDrinks();
+		await model.setInitialState();
 		window.addEventListener("caffeineUpdated", () => {
 			CaffieneMonitorView.render(model.state);
 			CaffieneMonitorView.updateProgressBar(model.calcMonitorProgress());

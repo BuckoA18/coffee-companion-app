@@ -6,15 +6,16 @@ class SearchBarView extends View {
 		return document.querySelector(".search");
 	}
 
+	addHandlerOnActiveInput(handler) {
+		const input = this._parentElement?.querySelector(".search__input");
+		input.addEventListener("focus", () => {
+			handler();
+		});
+	}
+
 	addHandlerGetQuery(handler) {
-		const parentElement = this._parentElement;
-		if (!parentElement) return;
-
-		this._parentElement.addEventListener("input", (e) => {
+		this._parentElement?.addEventListener("input", () => {
 			const query = this._parentElement.querySelector(".search__input").value;
-			console.log(query);
-			if (query.length === 0) return;
-
 			handler(query);
 		});
 	}
