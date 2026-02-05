@@ -10,6 +10,14 @@
 	padding: map.get(v.$spacings, md);
 }
 
+.btn--save {
+	width: 100%;
+	background-color: #63bf3c;
+	color: white;
+	border-radius: map.get(v.$border-radius, "md");
+	font-size: 1rem;
+}
+
 .login__button {
 	background-color: map.get(v.$colors, "primary");
 	border-radius: map.get(v.$border-radius, "md");

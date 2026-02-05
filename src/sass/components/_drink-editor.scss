@@ -1,0 +1,86 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.drink-editor {
+	@include mix.card;
+
+	box-shadow: 0 -5px 5px map.get(v.$colors, "shadow");
+	border-radius: 40px 40px 0 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transition: all 0.5s ease-in-out;
+
+	&--closed {
+		transform: translateY(500px);
+		opacity: 0%;
+	}
+
+	&__grabber {
+		margin: auto;
+		width: 50px;
+		border-radius: 25px;
+		border: 2px solid map.get(v.$colors, "text-secondary");
+	}
+
+	&__header {
+		gap: map.get(v.$spacings, "md");
+		display: flex;
+		align-items: center;
+		margin-bottom: map.get(v.$spacings, "md");
+		margin-top: map.get(v.$spacings, "md");
+	}
+
+	&__caffeine {
+		margin-left: auto;
+	}
+
+	&__fields {
+		padding: map.get(v.$spacings, "md");
+		display: flex;
+		flex-direction: column;
+		gap: map.get(v.$spacings, "md");
+	}
+
+	&__field {
+		padding: map.get(v.$spacings, "md");
+		display: flex;
+
+		align-items: center;
+		border-top: 1px solid map.get(v.$colors, "track");
+	}
+
+	&__label {
+		margin-right: map.get(v.$spacings, "md");
+		font-size: map.get(v.$spacings, "md");
+	}
+
+	&__input {
+		margin-left: auto;
+		font-size: map.get(v.$spacings, "md");
+		background-color: map.get(v.$colors, "bg-secondary");
+		border: none;
+
+		&--amount {
+			width: 2rem;
+		}
+	}
+
+	&__wrapper {
+		display: flex;
+		gap: 0.4rem;
+	}
+
+	&__button {
+		background-color: map.get(v.$colors, "btn-secondary");
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		font-size: 1.2rem;
+		width: 30px;
+		height: 30px;
+		border-radius: map.get(v.$border-radius, "round");
+	}
+}
