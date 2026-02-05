@@ -159,8 +159,8 @@ export const searchShortcuts = async (shortcutId) => {
 	if (id === "all" || !id) {
 		const results = await db.drinks.toArray();
 		state.search.results = results;
-		console.log("All");
-		console.log("results: ", results);
+		// console.log("All");
+		// console.log("results: ", results);
 	} else {
 		const results = await db.drinks
 			.filter((drink) => {
@@ -201,23 +201,23 @@ export const checkDate = async () => {
 	}
 };
 
-export const registerServiceWorker = async () => {
-	if ("serviceWorker" in navigator) {
-		try {
-			const registration = await navigator.serviceWorker.register("/sw.js", {
-				scope: "/",
-			});
-			if (registration.installing) {
-				console.log("Service worker installing");
-			}
-			if (registration.waiting) {
-				console.log("Service worker installed");
-			}
-			if (registration.active) {
-				console.log("Service worker active");
-			}
-		} catch (error) {
-			throw error;
-		}
-	}
-};
+// export const registerServiceWorker = async () => {
+// 	if ("serviceWorker" in navigator) {
+// 		try {
+// 			const registration = await navigator.serviceWorker.register("/sw.js", {
+// 				scope: "/",
+// 			});
+// 			if (registration.installing) {
+// 				console.log("Service worker installing");
+// 			}
+// 			if (registration.waiting) {
+// 				console.log("Service worker installed");
+// 			}
+// 			if (registration.active) {
+// 				console.log("Service worker active");
+// 			}
+// 		} catch (error) {
+// 			throw error;
+// 		}
+// 	}
+// };

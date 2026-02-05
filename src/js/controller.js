@@ -44,7 +44,7 @@ const controllLogDrink = async () => {
 
 		// Attach listeners
 		SearchBarView.addHandlerGetQuery(handleSearch);
-		SearchBarView.addHandlerOnActiveInput(handleActiveInput);
+		SearchBarView.addHandlerOnFocus(handleActiveInput);
 		SearchBarView.addHandlerClearSearchBar(handleSearch);
 		SearchShortcutsView.addHandlerGetShortcutId(handleShortcuts);
 		DrinksListView.addHandlerNewLog(handleAddNewLog);
@@ -90,7 +90,7 @@ const handleAddNewLog = async (id) => {
 const handleActiveInput = async () => {
 	try {
 		await model.searchShortcuts();
-		console.log(model.state.search.results);
+		// console.log(model.state.search.results);
 		SearchShortcutsView.setActiveShortcut("all");
 		DrinksListView.render(model.state.search.results);
 	} catch (error) {}
@@ -132,7 +132,7 @@ const controllRouter = () => {
 
 const init = async () => {
 	try {
-		model.registerServiceWorker();
+		// model.registerServiceWorker();
 		await model.checkDate();
 		await model.setInitialState();
 		window.addEventListener("caffeineUpdated", () => {
@@ -146,4 +146,4 @@ const init = async () => {
 	}
 };
 
-// init();
+init();

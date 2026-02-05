@@ -16,7 +16,6 @@ class DrinksListView extends View {
 	}
 
 	_generateMarkup() {
-		console.log(this._data);
 		const markup = this._data
 			.map((drink) => {
 				return html`

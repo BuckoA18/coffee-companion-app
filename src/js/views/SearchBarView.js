@@ -6,9 +6,10 @@ class SearchBarView extends View {
 		return document.querySelector(".search");
 	}
 
-	addHandlerOnActiveInput(handler) {
-		const input = this._parentElement?.querySelector(".search__input");
-		input.addEventListener("focus", () => {
+	addHandlerOnFocus(handler) {
+		this._parentElement?.addEventListener("click", () => {
+			const input = this._parentElement.querySelector(".search__input");
+
 			handler();
 		});
 	}
@@ -21,11 +22,13 @@ class SearchBarView extends View {
 	}
 
 	addHandlerClearSearchBar(handler) {
-		const clearBtn = this._parentElement?.querySelector(".search__icon-clear");
-		const input = this._parentElement.querySelector(".search__input");
-		clearBtn?.addEventListener("click", () => {
+		this._parentElement?.addEventListener("click", (e) => {
+			const clearBtn = this._parentElement?.querySelector(
+				".search__icon-clear",
+			);
+			if (e.target !== clearBtn) return;
+			const input = this._parentElement.querySelector(".search__input");
 			input.value = "";
-			input.focus();
 
 			handler();
 		});
