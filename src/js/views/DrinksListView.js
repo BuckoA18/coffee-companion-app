@@ -15,6 +15,15 @@ class DrinksListView extends View {
 		});
 	}
 
+	addHandlerToggleDrinkEdit(handler) {
+		this._parentElement?.addEventListener("click", (e) => {
+			const item = e.target.closest(".drink-card");
+			if (!item) return;
+
+			handler(item.dataset.id);
+		});
+	}
+
 	_generateMarkup() {
 		const markup = this._data
 			.map((drink) => {

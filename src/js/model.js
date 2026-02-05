@@ -137,14 +137,12 @@ export const searchDrinks = async (drinkQuery) => {
 	try {
 		const query = drinkQuery?.toLowerCase().trim();
 
-		const results = await db.drinks
-			.filter((drink) => {
-				return drink.name.toLowerCase().includes(query);
-			})
-			.toArray();
+		const results = state.search.results.filter((drink) => {
+			return drink.name.toLowerCase().includes(query);
+		});
 
 		if (results.length === 0) {
-			throw new Error("No drink under this name..");
+			throw new Error("Invalid name");
 		}
 
 		state.results = results;
@@ -159,8 +157,6 @@ export const searchShortcuts = async (shortcutId) => {
 	if (id === "all" || !id) {
 		const results = await db.drinks.toArray();
 		state.search.results = results;
-		// console.log("All");
-		// console.log("results: ", results);
 	} else {
 		const results = await db.drinks
 			.filter((drink) => {
@@ -168,8 +164,6 @@ export const searchShortcuts = async (shortcutId) => {
 			})
 			.toArray();
 		state.search.results = results;
-		// console.log("results: ", results);
-		// console.log(id);
 	}
 };
 

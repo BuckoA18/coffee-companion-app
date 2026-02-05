@@ -4,17 +4,18 @@
 
 .drink-editor {
 	@include mix.card;
-
+	height: 50%;
 	box-shadow: 0 -5px 5px map.get(v.$colors, "shadow");
 	border-radius: 40px 40px 0 0;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	left: 0;
-	transition: all 0.5s ease-in-out;
+	transition: all 0.4s ease-in;
+	z-index: 999;
+	opacity: 100%;
 
 	&--closed {
-		transform: translateY(500px);
-		opacity: 0%;
+		transform: translateY(555px);
 	}
 
 	&__grabber {

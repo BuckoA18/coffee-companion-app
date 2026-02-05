@@ -1,8 +1,6 @@
 import * as model from "./model";
 import * as helper from "./utilities/helpers";
 import * as db from "./db";
-import LoginView from "./views/LoginView";
-import LoginFormView from "./views/LoginFormView";
 import IntakeView from "./views/IntakeView";
 import LogDrinkView from "./views/LogDrinkView";
 import ProgressBarView from "./views/ProgressBarView";
@@ -13,6 +11,7 @@ import SearchShortcutsView from "./views/SearchShortcutsView";
 import DrinksListView from "./views/DrinksListView";
 import SearchBarView from "./views/SearchBarView";
 import { initRouter } from "./router";
+import DrinkEditorView from "./views/DrinkEditorView";
 
 const controllDashboard = async () => {
 	try {
@@ -41,60 +40,36 @@ const controllLogDrink = async () => {
 		SearchBarView.render();
 		SearchShortcutsView.render(model.state.search.shortcuts);
 		DrinksListView.render(model.state.search.results);
+		DrinkEditorView.render();
 
 		// Attach listeners
 		SearchBarView.addHandlerGetQuery(handleSearch);
-		SearchBarView.addHandlerOnFocus(handleActiveInput);
 		SearchBarView.addHandlerClearSearchBar(handleSearch);
 		SearchShortcutsView.addHandlerGetShortcutId(handleShortcuts);
-		DrinksListView.addHandlerNewLog(handleAddNewLog);
-	} catch (error) {
-		console.error(error);
-		LogDrinkView.render(model.state);
-		DrinksListView.renderError(`Error: ${error.message}`);
-	}
-};
-
-const controllLogin = async () => {
-	try {
-		LoginView.render();
-		LoginFormView.render();
-		LoginFormView.addHandlerSubmit(handleSubmit);
-	} catch (error) {
-		console.error("Initialization error: ", error);
-	}
-};
-
-const handleSubmit = async (data) => {
-	try {
-		await helper.validate(data);
-
-		window.history.replaceState({}, "", "/");
-		controllRouter();
-	} catch (error) {
-		console.error("Validation error: ", error);
-	}
-};
-
-const handleAddNewLog = async (id) => {
-	try {
-		model.storeDrink(id);
-		model.startCaffeineMonitor();
-		window.history.pushState({}, "", "/");
-		controllRouter();
+		DrinksListView.addHandlerToggleDrinkEdit(handleToggleDrinkEdit);
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-const handleActiveInput = async () => {
+const handleToggleDrinkEdit = async () => {
 	try {
-		await model.searchShortcuts();
-		// console.log(model.state.search.results);
-		SearchShortcutsView.setActiveShortcut("all");
-		DrinksListView.render(model.state.search.results);
-	} catch (error) {}
+		DrinkEditorView.toggleDrinkEditor();
+	} catch (error) {
+		console.error(error);
+	}
 };
+
+// const handleAddNewLog = async (id) => {
+// 	try {
+// 		model.storeDrink(id);
+// 		model.startCaffeineMonitor();
+// 		window.history.pushState({}, "", "/");
+// 		controllRouter();
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// };
 
 const handleSearch = async (query) => {
 	try {

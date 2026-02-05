@@ -6,6 +6,8 @@ class DrinkEditorView extends View {
 		return document.querySelector(".drink-editor");
 	}
 
+	toggleDrinkEditor() {}
+
 	_generateMarkup() {
 		const markup = html`
 			<div class="drink-editor__grabber"></div>

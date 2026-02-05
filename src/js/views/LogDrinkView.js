@@ -27,7 +27,7 @@ class LogDrinkView extends View {
 				<ul class="log-list"></ul>
 			</div>
 
-			<div class="drink-editor"></div>
+			<div class="drink-editor drink-editor--closed"></div>
 		`;
 		return markup;
 	}
