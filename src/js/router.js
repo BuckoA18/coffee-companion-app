@@ -12,8 +12,9 @@ export const initRouter = (navigate) => {
 
 		e.preventDefault();
 		const url = link.getAttribute("href");
-		window.history.pushState(null, null, url);
-
-		navigate();
+		setTimeout(() => {
+			window.history.pushState(null, null, url);
+			navigate();
+		}, 10);
 	});
 };

@@ -6,11 +6,36 @@ class DrinkEditorView extends View {
 		return document.querySelector(".drink-editor");
 	}
 
-	toggleDrinkEditor() {}
+	toggleDrinkEditor() {
+		if (!this._parentElement.classList.contains("drink-editor--closed")) return;
+
+		this._parentElement.classList.remove("drink-editor--closed");
+		console.log(this._parentElement);
+
+		setTimeout(() => {
+			this._addOutsideClickListener();
+		}, 10);
+	}
+
+	_addOutsideClickListener() {
+		this._outsideClickRef = (e) => {
+			if (this._parentElement.contains(e.target)) return;
+			this._closeEditor();
+		};
+
+		window.addEventListener("click", this._outsideClickRef);
+	}
+
+	_closeEditor() {
+		this._parentElement.classList.add("drink-editor--closed");
+		window.removeEventListener("click", this._outsideClickRef);
+		console.log(this._parentElement);
+	}
 
 	_generateMarkup() {
 		const markup = html`
 			<div class="drink-editor__grabber"></div>
+
 			<div class="drink-editor__header">
 				<div class="drink-editor__icon">
 					<i class="fa-solid fa-mug-hot fa-xl"></i>
