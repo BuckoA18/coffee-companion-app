@@ -16,7 +16,7 @@ class SearchBarView extends View {
 	addHandlerClearSearchBar(handler) {
 		this._parentElement?.addEventListener("click", (e) => {
 			const clearBtn = this._parentElement?.querySelector(
-				".search__icon-clear",
+				".search__icon--clear",
 			);
 			if (e.target !== clearBtn) return;
 			const input = this._parentElement.querySelector(".search__input");
@@ -26,9 +26,11 @@ class SearchBarView extends View {
 	}
 
 	_generateMarkup() {
-		const markup = html`<i class="fa-solid fa-magnifying-glass"></i>
+		const markup = html`<i
+				class="fa-solid fa-magnifying-glass search__icon search__icon--glass"
+			></i>
 			<input type="text" name="drink-name" class="search__input" />
-			<i class="fa-solid fa-xmark search__icon-clear"></i>`;
+			<i class="fa-solid fa-xmark search__icon search__icon--clear"></i>`;
 		return markup;
 	}
 }

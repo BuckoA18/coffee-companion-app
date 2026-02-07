@@ -7,19 +7,23 @@
 	background-color: map.get(v.$colors, "bg-secondary");
 	display: flex;
 	align-items: center;
-	padding: 0.6rem;
+	justify-content: space-around;
+	padding: 0 8px;
+	height: 40px;
 	border-radius: map.get(v.$border-radius, "md");
 	margin-bottom: map.get(v.$spacings, "sm");
 	box-shadow: 0 4px 12px rgba(30, 20, 0, 0.05);
+	border: 1px solid transparent;
 
 	&:focus-within {
 		border: 1px solid map.get(v.$colors, "primary");
 	}
 
 	&__input {
+		height: 100%;
 		font-size: map.get(v.$font-sizes, "md");
 		margin-left: 0.4rem;
-		text-align: left;
+
 		background-color: map.get(v.$colors, "bg-secondary");
 		border: none;
 		flex: 1;
@@ -27,5 +31,11 @@
 		&:focus {
 			outline: none;
 		}
+	}
+
+	&__icon {
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
 	}
 }

@@ -7,24 +7,35 @@ class DrinkEditorView extends View {
 	}
 	addHandlerSaveLog(handler) {
 		this._parentElement?.addEventListener("click", (e) => {
-			e.preventDefault();
 			const saveButton = this._parentElement.querySelector(
 				".drink-editor__button--save",
 			);
-			if (!e.target.contains(saveButton)) return;
+			if (e.target !== saveButton) return;
 
-			const amount = +document.querySelector(".drink-editor__input--amount")
-				.value;
-			const time = document.querySelector(".drink-editor__input--time").value;
-
-			const drinkDate = new Date();
-			const [hours, minutes] = time.split(":");
-
-			drinkDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+			const amount = this._getCustomDrinkAmount();
+			const drinkDate = this._getCustomDrinkDate();
 
 			this._closeEditor();
 			handler(this._id, amount, drinkDate);
 		});
+	}
+
+	_getCustomDrinkAmount() {
+		const amount = +document.querySelector(".drink-editor__input--amount")
+			.value;
+		return amount;
+	}
+
+	_getCustomDrinkDate() {
+		const time = this._parentElement.querySelector(
+			".drink-editor__input--time",
+		).value;
+
+		const drinkDate = new Date();
+		const [hours, minutes] = time.split(":");
+
+		drinkDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+		return drinkDate;
 	}
 
 	toggleDrinkEditor(id) {
@@ -71,11 +82,13 @@ class DrinkEditorView extends View {
 
 			<div class="drink-editor__fields">
 				<div class="drink-editor__field">
-					<label for="amount" class="drink-editor__label">Shots:</label>
+					<label for="${drink.id}" class="drink-editor__label"
+						>${drink.serving_style}s:</label
+					>
 					<input
 						type="number"
 						name="amount"
-						id="amount"
+						id="${drink.id}"
 						class="drink-editor__input drink-editor__input--amount"
 						value="1"
 					/>

@@ -108,10 +108,14 @@ export const calcCaffeineInSystem = () => {
 };
 
 export const storeDrink = async (id, amount, newTime) => {
-	// console.log(amount, newTime);
-
 	const baseDrink = await getDrinkData(id);
-	const currentDrink = { ...baseDrink, time: newTime };
+	const newCaffeineValue = amount * baseDrink.caffeine_mg;
+	const currentDrink = {
+		...baseDrink,
+		caffeine_mg: !newCaffeineValue ? baseDrink.caffeine_mg : newCaffeineValue,
+		time: newTime,
+		servings: amount,
+	};
 
 	db.consumption.add(currentDrink);
 

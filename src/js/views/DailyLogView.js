@@ -8,6 +8,7 @@ class DailyLogView extends View {
 	}
 
 	_generateMarkup() {
+		console.log(this._data);
 		const markup = this._data
 			.map((drink) => {
 				return html`
@@ -22,6 +23,12 @@ class DailyLogView extends View {
 									hour: "2-digit",
 									minute: "2-digit",
 								})}</span
+							>
+							<span class="drink-card__details-time subtle"
+								>${drink.servings}
+								${drink.servings > 1
+									? drink.serving_style + "s"
+									: drink.serving_style}</span
 							>
 						</div>
 						<span class="drink-card__caffeine subtle"
