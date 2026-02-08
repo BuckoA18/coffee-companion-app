@@ -38,6 +38,16 @@ class DrinkEditorView extends View {
 		return drinkDate;
 	}
 
+	_setDrinkTime() {
+		const now = new Date();
+		const hours = now.getHours();
+		const minutes = now.getMinutes();
+
+		const currentTime = `${hours}:${minutes}`;
+		console.log(currentTime);
+		return currentTime;
+	}
+
 	toggleDrinkEditor(id) {
 		this._id = id;
 		if (!this._parentElement.classList.contains("drink-editor--closed")) return;
@@ -64,8 +74,8 @@ class DrinkEditorView extends View {
 	}
 
 	_generateMarkup() {
+		console.log(this._data);
 		const drink = this._data;
-
 		const markup = html`
 			<div class="drink-editor__grabber"></div>
 
@@ -109,10 +119,7 @@ class DrinkEditorView extends View {
 						name="consumption"
 						id="consumption"
 						class="drink-editor__input drink-editor__input--time"
-						value=${drink.time.toLocaleTimeString("en-GB", {
-							hours: "2-digit",
-							minutes: "2-digit",
-						})}
+						value=${this._setDrinkTime()}
 					/>
 				</div>
 				<div class="drink-editor__field">
