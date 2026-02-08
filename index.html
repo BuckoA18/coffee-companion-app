@@ -16,11 +16,11 @@
 	</head>
 	<body>
 		<div class="main-view">
-			<!-- <header class="header">
-				 <div class="header__content header__content--login">
+			<header class="header">
+				<div class="header__content header__content--login">
 					<h2 class="header__title">Welcome to Brew</h2>
-				</div> -->
-			<!-- 
+				</div>
+				<!-- 
 				<div class="header__content header__content--dashboard">
 					<h2 class="header__title">Brew</h2>
 					<div class="header__toggle">
@@ -32,7 +32,7 @@
 					</div>
 				</div> -->
 
-			<!-- <div class="header__content header__content--log">
+				<!-- <div class="header__content header__content--log">
 					<div class="header__container">
 						<h2 class="header__title">Log Your Drink</h2>
 						<button class="header__back-btn btn">
@@ -50,9 +50,8 @@
 						<button class="shortcut-btn">Chocolate</button>
 						<button class="shortcut-btn">Energy drink</button>
 						<button class="shortcut-btn">Pills</button>
-					</div>
-				</header> 
-			</div> -->
+					</div> -->
+			</header>
 
 			<!-- <div class="side-menu"></div> -->
 
@@ -238,49 +237,38 @@
 				</div>
 			</div> -->
 
-			<!-- <div class="login container">
+			<div class="login">
 				<form class="login__form">
 					<div class="form-group">
-						<label class="login__label" for="input-name">Name</label>
-						<input type="text" class="login__input" id="input-name" />
+						<label for="bodyweight" class="login__label">Bodyweight</label>
+						<input type="number" id="bodyweight" class="login__input" />
+					</div>
+					<div class="form-group">
+						<label for="age" class="login__label">Age</label>
+						<input type="number" id="age" class="login__input" />
 					</div>
 
 					<div class="form-group">
-						<label class="login__label" for="input-surname">Surname</label>
-						<input type="text" class="login__input" id="input-surname" />
+						<label for="smoker" class="login__label">Smoker</label>
+						<input type="checkbox" name="smoker" id="smoker" />
 					</div>
-
 					<div class="form-group">
-						<label class="login__label" for="input-weight">Weight (kg)</label>
-						<input type="number" class="login__input" id="input-weight" />
-					</div>
-
-					<div class="form-group">
-						<label class="login__label" for="input-metabolism"
-							>Metabolism Speed</label
-						>
-						<select id="input-metabolism" class="login__input">
-							<option value="fast">Fast (I can sleep after coffee)</option>
-							<option value="normal" selected>Normal</option>
-							<option value="slow">Slow (Sensitive to caffeine)</option>
-						</select>
-					</div>
-
-					<div class="form-group">
-						<label class="login__label" for="input-bedtime"
-							>Target Bedtime</label
+						<label for="oral-contraceptives" class="login__label"
+							>Oral contraceptives</label
 						>
 						<input
-							type="time"
-							id="input-bedtime"
-							class="login__input"
-							value="22:30"
+							type="checkbox"
+							name="oral-contraceptives"
+							id="oral-contraceptives"
 						/>
 					</div>
-
-					<button class="login__button btn">Set Up Profile</button>
+					<div class="form-group">
+						<label for="pregnancy" class="login__label">Pregnancy</label>
+						<input type="checkbox" name="pregnancy" id="pregnancy" />
+					</div>
+					<button class="login__button login__button--save">Save</button>
 				</form>
-			</div>  -->
+			</div>
 		</div>
 	</body>
 	<script type="module" src="./src/js/controller.js"></script>

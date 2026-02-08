@@ -92,7 +92,7 @@ class DrinkEditorView extends View {
 
 			<div class="drink-editor__fields">
 				<div class="drink-editor__field">
-					<label for="${drink.id}" class="drink-editor__label"
+					<label for="${drink.id}" class="drin k-editor__label"
 						>${drink.serving_style}s:</label
 					>
 					<input
