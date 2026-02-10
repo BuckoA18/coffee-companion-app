@@ -1,0 +1,19 @@
+@use "sass:map";
+@use "../abstracts/mixins" as mix;
+@use "../abstracts/variables" as v;
+
+.factors {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	&__card {
+		@include mix.card;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		&--selected {
+			background-color: map.get(v.$colors, "primary");
+		}
+	}
+}

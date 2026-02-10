@@ -20,6 +20,16 @@
 	font-size: 1rem;
 }
 
+@mixin button-next {
+	border: none;
+	padding: 1.4rem;
+	width: 100%;
+	background-color: map.get(v.$colors, "primary");
+	color: black;
+	border-radius: map.get(v.$border-radius, "md");
+	font-size: 1rem;
+}
+
 @mixin input {
 	border-radius: map.get(v.$border-radius, "sm");
 	padding: map.get(v.$spacings, "md");

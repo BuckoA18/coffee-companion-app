@@ -16,11 +16,11 @@
 	</head>
 	<body>
 		<div class="main-view">
-			<header class="header">
+			<!-- <header class="header">
 				<div class="header__content header__content--login">
 					<h2 class="header__title">Welcome to Brew</h2>
 				</div>
-				<!-- 
+				
 				<div class="header__content header__content--dashboard">
 					<h2 class="header__title">Brew</h2>
 					<div class="header__toggle">
@@ -32,7 +32,7 @@
 					</div>
 				</div> -->
 
-				<!-- <div class="header__content header__content--log">
+			<!-- <div class="header__content header__content--log">
 					<div class="header__container">
 						<h2 class="header__title">Log Your Drink</h2>
 						<button class="header__back-btn btn">
@@ -50,8 +50,8 @@
 						<button class="shortcut-btn">Chocolate</button>
 						<button class="shortcut-btn">Energy drink</button>
 						<button class="shortcut-btn">Pills</button>
-					</div> -->
-			</header>
+					</div> 
+			</header> -->
 
 			<!-- <div class="side-menu"></div> -->
 
@@ -237,73 +237,62 @@
 				</div>
 			</div> -->
 
-			<div class="login">
+			<!-- <main class="login">
 				<img
-					src="./public/images/undraw_coffee-with-friends_ocg2 (1).svg"
-					alt=""
+					src="/images/undraw_coffee-with-friends_ocg2 (1).svg"
+					alt="Friends sharing coffee"
 					class="login__image"
 				/>
 				<div class="login__container">
-					<p class="login__text">
-						Help me calculate your metabolism. Everyone processes caffeine
-						differently. I need a few variables—like your body weight and
-						lifestyle factors—to accurately track the caffeine in your
-						bloodstream and set your daily max. It’s a quick "digital fitting
-						room" to ensure my calculations are tailored specifically to your
-						body, not just a "standard" user.
-					</p>
+					<div class="login__group login__group--info">
+						<h1 class="login__title">Welcome to Brew</h1>
+						<p class="login__description">Caffeine tracking made simple</p>
+					</div>
+					<div class="login__group login__group--actions">
+						<button class="login__button">Get Started</button>
+						<a href="/" class="login__link subtle">Skip</a>
+					</div>
 				</div>
-				<button class="login__button">Get Started</button>
-			</div>
-			<!-- <div class="survey">
+			</main> -->
+			<main class="survey">
 				<div class="survey__container">
-					<div class="survey__progress">
-						<div class="survey__progress-box"></div>
-					</div>
-					<div class="survey__card">
-						<h2 class="survey__title">
-							Welcome! Let's personalize your experience
-						</h2>
-					</div>
-					<div class="survey__card">
-						<h2 class="survey__title">What is your current weight?</h2>
-					</div>
-					<div class="survey__card">
-						<h2 class="survey__title">What is your age?</h2>
-					</div>
-					<div class="survey__card">
-						<h2 class="survey__title">Metabolic Profile</h2>
+					<div class="survey__progress-bar"></div>
+
+					<!-- <div class="survey__card">
+						<h2 class="survey__title">Let's personalize your experience</h2>
+					</div> -->
+					<!-- <div class="survey__card">
+						<h1 class="survey__title">
+							<label for="bodyweight">What is your current weight?</label>
+						</h1>
+						<input type="number" id="bodyweight" class="survey__input" />
+					</div> -->
+					<!-- <div class="survey__card">
+						<h1 class="survey__title">
+							<label for="age">How old are you?</label>
+						</h1>
+						<input type="number" id="age" class="survey__input" />
+					</div> -->
+					<!-- <div class="survey__card">
+						<h1 class="survey__title">Metabolic Profile</h1>
 						<div class="factors">
-							<div class="factors__card">
-								<h3 class="factors__title">Smoking</h3>
-								<p class="factors__info">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Architecto modi quasi natus iusto quidem dolores.
-								</p>
+							<div class="factors__card factors__card--selected">
+								<h2 class="factors__title">Smoking</h2>
 							</div>
 							<div class="factors__card">
-								<h3 class="factors__title">Pregnancy</h3>
-								<p class="factors__info">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Architecto modi quasi natus iusto quidem dolores.
-								</p>
+								<h2 class="factors__title">Pregnancy</h2>
 							</div>
-							<div class="factors__card">
-								<h3 class="factors__title">Contraceptives</h3>
-								<p class="factors__info">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Architecto modi quasi natus iusto quidem dolores.
-								</p>
+							<div class="factors__card factors__card--selected">
+								<h2 class="factors__title">Contraceptives</h2>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="survey__card">
 						<h2 class="survey__title">You're all set! Let's go</h2>
 					</div>
-
-					<button>Next</button> 
-				</div> 
-			</div> -->
+					<button class="survey__button survey__button--next">Next</button>
+				</div>
+			</main>
 		</div>
 	</body>
 	<script type="module" src="./src/js/controller.js"></script>
