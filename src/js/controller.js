@@ -67,10 +67,13 @@ const controllWelcome = async () => {
 const controllSurvey = async () => {
 	try {
 		// Render
-		SurveyView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
+		SurveyView.render();
+		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
 
 		// Handlers
 		SurveyView.addHandlerSurveyNav(handleSurveyNav);
+
+		model.plusStep();
 	} catch (error) {
 		console.error(error);
 	}
@@ -78,10 +81,21 @@ const controllSurvey = async () => {
 
 const handleSurveyNav = async () => {
 	try {
+		if (model.state.survey.currentStep === model.state.survey.maxSteps) {
+			window.history.pushState(null, null, "/");
+			controllRouter();
+			return;
+		}
 		// Render
 		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
 
-		// Logic
+		//Logic
+		window.history.pushState(
+			null,
+			null,
+			`/survey/step-${model.state.survey.currentStep}`,
+		);
+		controllRouter();
 		model.plusStep();
 	} catch (error) {}
 };
@@ -125,6 +139,15 @@ const handleShortcuts = async (id) => {
 
 const controllRouter = () => {
 	const path = window.location.pathname;
+	if (path.startsWith("/survey/step-")) {
+		const step = +path.split("-").pop();
+
+		model.state.survey.currentStep = step;
+
+		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
+		return;
+	}
+	console.log(path);
 
 	switch (path) {
 		case "/survey":

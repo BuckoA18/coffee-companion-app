@@ -11,7 +11,6 @@ class Survey extends View {
 		nextButton.addEventListener("click", () => {
 			handler();
 		});
-		handler();
 	}
 
 	_generateMarkup() {

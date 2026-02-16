@@ -6,17 +6,6 @@ class StepsView extends View {
 		return document.querySelector(".steps");
 	}
 
-	navigateSurvey(currentStep) {
-		const steps = Array.from(
-			this._parentElement.querySelectorAll(".steps__card"),
-		);
-		if (!steps) return;
-		steps.forEach((step) => {
-			if (+step.dataset.step === currentStep) return;
-			step.classList.add("steps__card--hidden");
-		});
-	}
-
 	_generateFactorsMarkup(data) {
 		const markup = data
 			.map((option) => {
@@ -31,13 +20,13 @@ class StepsView extends View {
 
 	_generateMarkup(schema, currentStep) {
 		const currStepData = schema.find((step) => step.step === currentStep);
-		console.log(currStepData);
 
 		if (currStepData.options) {
 			const markup = html`
 			<div class="steps__card data-step="${currStepData.id}">
 				<h1 class="steps__title">${currStepData.title}</h1>
 				 <div class="factors">${this._generateFactorsMarkup(currStepData.options)}</div>
+				
 			</div>
 			`;
 
@@ -53,6 +42,7 @@ class StepsView extends View {
 		`;
 			return markup;
 		}
+
 		const markup = html`
 			<div class="steps__card data-step="${currStepData.id}">
 				<h1 class="steps__title">${currStepData.title}</h1>
