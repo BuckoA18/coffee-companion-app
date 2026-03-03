@@ -1,6 +1,6 @@
 import * as model from "./model";
 import * as helper from "./utilities/helpers";
-import * as cfg from "./utilities/config";
+import * as config from "./utilities/config";
 import IntakeView from "./views/IntakeView";
 import LogDrinkView from "./views/LogDrinkView";
 import ProgressBarView from "./views/ProgressBarView";
@@ -60,7 +60,6 @@ const controllLogDrink = async () => {
 const controllWelcome = async () => {
 	try {
 		WelcomeView.render();
-		model.state.survey.currentStep = 1;
 	} catch (error) {
 		console.error(error);
 	}
@@ -68,54 +67,63 @@ const controllWelcome = async () => {
 
 const controllSurvey = async () => {
 	try {
-		// Render
+		console.log(model.state.survey.currentStep);
+		// Render shell
 		SurveyView.render();
-		// Handlers
+
 		SurveyView.addHandlerSurveyNav(handleSurveyNav);
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-const handleSurveyNav = async () => {
-	try {
-		const data = StepsView.getInputValues();
-		if (data) {
-			console.log(data);
-			await helper.validateSurvey(data);
-		}
-		// add +1 step before checking
-		model.plusStep();
-		console.log(model.state.survey.currentStep);
-
-		if (model.state.survey.currentStep === model.state.survey.maxSteps) {
-			window.history.pushState(null, null, "/");
-			controllRouter();
-			return;
-		}
-		// Render
-		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
-
-		// Call router to render step based on url
-		window.history.pushState(
-			null,
-			null,
-			`/survey/step-${model.state.survey.currentStep}`,
-		);
-		controllRouter();
-	} catch (error) {
-		ErrorView.renderError(error);
-		ErrorView.addHandlerCloseError(handleCloseError);
-	}
+const handleSurveyNav = () => {
+	console.log("click");
+	const { currentStep } = model.state.survey;
+	StepsView.render(config.SURVEY_SCHEMA[currentStep - 1]);
+	model.plusStep();
 };
+
+// const handleSurveyNav = async () => {
+// 	try {
+// 		const data = StepsView.getInputValues();
+// 		if (data) {
+// 			const { type, value } = data;
+// 			await helper.validateSurvey(data);
+// 			model.state.user[type] = value;
+// 			console.log(model.state.user);
+// 		}
+// 		// add +1 step before checking
+// 		model.plusStep();
+
+// 		if (model.state.survey.currentStep === model.state.survey.maxSteps) {
+// 			window.history.pushState(null, null, "/");
+// 			controllRouter();
+// 			return;
+// 		}
+// 		// Render
+// 		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
+
+// 		// Call router to render step based on url
+// 		window.history.pushState(
+// 			null,
+// 			null,
+// 			`/survey/step-${model.state.survey.currentStep}`,
+// 		);
+// 		controllRouter();
+// 	} catch (error) {
+// 		ErrorView.renderError(error);
+// 		ErrorView.addHandlerCloseError(handleCloseError);
+// 	}
+// };
 
 const handleCloseError = () => {
 	ErrorView.closeError();
 };
 
-const handleMultipliers = (value) => {
-	console.log(value);
-};
+// const handleMultipliers = async (values) => {
+// 	model.state.user.halfLifeMultiplier = await helper.getMultiplierValue(values);
+// };
 
 const handleToggleDrinkEdit = async (id) => {
 	try {
@@ -159,18 +167,17 @@ const handleShortcuts = async (id) => {
 const controllRouter = () => {
 	// Sets variable path to the curent URL path
 	const path = window.location.pathname;
-	console.log(path);
 	// Checks if survey is open
-	if (path.startsWith("/survey/step-")) {
-		// Takes step from URL and sets it to state so its properly updated
-		const step = +path.split("-").pop();
-		model.state.survey.currentStep = step;
-		// Renders survey
-		controllSurvey();
-		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
-		StepsView.addHandlerSelectMultipliers(handleMultipliers);
-		return;
-	}
+	// if (path.startsWith("/survey/step-")) {
+	// 	// Takes step from URL and sets it to state so its properly updated
+	// 	const step = +path.split("-").pop();
+	// 	model.state.survey.currentStep = step;
+	// 	// Renders survey
+	// 	controllSurvey();
+	// 	StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
+	// 	StepsView.addHandlerSelectMultipliers(handleMultipliers);
+	// 	return;
+	// }
 
 	switch (path) {
 		case "/welcome":
@@ -182,6 +189,8 @@ const controllRouter = () => {
 		case "/add":
 			controllLogDrink();
 			break;
+		case "/survey":
+			controllSurvey();
 		default:
 			console.error("404: Page not found");
 	}

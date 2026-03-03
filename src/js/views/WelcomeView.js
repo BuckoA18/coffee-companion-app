@@ -20,10 +20,7 @@ class Welcome extends View {
 						<p class="login__description">Caffeine tracking made simple</p>
 					</div>
 					<div class="login__group login__group--actions">
-						<a
-							href="/survey/step-1"
-							data-link
-							class="login__link login__link--start"
+						<a href="/survey" data-link class="login__link login__link--start"
 							>Get Started</a
 						>
 						<a href="/" data-link class="login__link login__link--skip subtle"

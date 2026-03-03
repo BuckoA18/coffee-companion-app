@@ -11,8 +11,8 @@ export const getCurrentTime = () => {
 	return `${hours}:${minutes}`;
 };
 
-export const calcMaxCaffeine = (weight, metabolism) => {
-	const max = weight * metabolism;
+export const calcMaxCaffeine = (weight) => {
+	const max = weight * 6 * 1;
 	return max;
 };
 
@@ -66,4 +66,15 @@ export const calcCaffeine = () => {
 		0,
 	);
 	model.state.user.caffeine = caffeine;
+};
+
+export const getMultiplierValue = (values) => {
+	// Get result by multiplying selected multipliers
+	const valuesArray = values;
+	if (valuesArray.length <= 0) return 1;
+	const multiplier = valuesArray.reduce(
+		(accumulator, currentValue) => accumulator * currentValue,
+	);
+
+	return multiplier;
 };

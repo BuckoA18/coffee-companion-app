@@ -6,21 +6,25 @@ class Survey extends View {
 		return document.querySelector(".main-view");
 	}
 
-	addHandlerSurveyNav(handler) {
-		const nextButton = document.querySelector(".survey__button--next");
-		nextButton.addEventListener("click", () => {
-			handler();
-		});
-	}
-
 	_generateMarkup() {
 		const markup = html`
 			<main class="survey">
 				<div class="steps"></div>
-				<button class="survey__button survey__button--next">Next</button>
 			</main>
 		`;
 		return markup;
+	}
+
+	addHandlerSurveyNav(handler) {
+		this._parentElement
+			.querySelector(".steps")
+			.addEventListener("click", (e) => {
+				const nextButton = e.target.closest(".steps__button");
+				if (!nextButton) return;
+				console.log(nextButton);
+				handler();
+			});
+		handler();
 	}
 }
 

@@ -15,9 +15,4 @@
 		border-radius: 25px;
 		background-color: map.get(v.$colors, "primary");
 	}
-
-	&__button {
-		margin-top: auto;
-		@include mix.button-next;
-	}
 }

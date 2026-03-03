@@ -9,6 +9,8 @@ export const state = {
 		age: "",
 		metabolism: "",
 		maxCaffeine: 400,
+		halfLifeMultiplier: 1,
+		halfLife: "",
 		dailyDrinks: [],
 		caffeine: 0,
 		caffeineUntillLimit: "",

@@ -31,4 +31,9 @@
 		border: none;
 		box-shadow: 3px 8px 15px rgba(30, 20, 0, 0.05);
 	}
+
+	&__button {
+		margin-top: auto;
+		@include mix.button-next;
+	}
 }
