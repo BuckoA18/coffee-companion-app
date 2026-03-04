@@ -67,10 +67,9 @@ const controllWelcome = async () => {
 
 const controllSurvey = async () => {
 	try {
-		console.log(model.state.survey.currentStep);
 		// Render shell
 		SurveyView.render();
-
+		// Attach handler and imidietly call it
 		SurveyView.addHandlerSurveyNav(handleSurveyNav);
 	} catch (error) {
 		console.error(error);
@@ -78,52 +77,28 @@ const controllSurvey = async () => {
 };
 
 const handleSurveyNav = () => {
-	console.log("click");
-	const { currentStep } = model.state.survey;
-	StepsView.render(config.SURVEY_SCHEMA[currentStep - 1]);
+	// Get the current step from state
+	const { currentStep, maxSteps } = model.state.survey;
+	// After last step go to dashboard
+	if (currentStep > maxSteps) {
+		window.history.pushState(null, "", "/");
+		controllRouter();
+		return;
+	}
+	// Prep data, add lastStep property
+	const viewData = {
+		...config.SURVEY_SCHEMA[currentStep - 1],
+		isLastStep: currentStep === maxSteps,
+	};
+	// Render step markup based on given step
+	StepsView.render(viewData);
+	// update state
 	model.plusStep();
 };
-
-// const handleSurveyNav = async () => {
-// 	try {
-// 		const data = StepsView.getInputValues();
-// 		if (data) {
-// 			const { type, value } = data;
-// 			await helper.validateSurvey(data);
-// 			model.state.user[type] = value;
-// 			console.log(model.state.user);
-// 		}
-// 		// add +1 step before checking
-// 		model.plusStep();
-
-// 		if (model.state.survey.currentStep === model.state.survey.maxSteps) {
-// 			window.history.pushState(null, null, "/");
-// 			controllRouter();
-// 			return;
-// 		}
-// 		// Render
-// 		StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
-
-// 		// Call router to render step based on url
-// 		window.history.pushState(
-// 			null,
-// 			null,
-// 			`/survey/step-${model.state.survey.currentStep}`,
-// 		);
-// 		controllRouter();
-// 	} catch (error) {
-// 		ErrorView.renderError(error);
-// 		ErrorView.addHandlerCloseError(handleCloseError);
-// 	}
-// };
 
 const handleCloseError = () => {
 	ErrorView.closeError();
 };
-
-// const handleMultipliers = async (values) => {
-// 	model.state.user.halfLifeMultiplier = await helper.getMultiplierValue(values);
-// };
 
 const handleToggleDrinkEdit = async (id) => {
 	try {
@@ -167,6 +142,7 @@ const handleShortcuts = async (id) => {
 const controllRouter = () => {
 	// Sets variable path to the curent URL path
 	const path = window.location.pathname;
+	console.log(path);
 	// Checks if survey is open
 	// if (path.startsWith("/survey/step-")) {
 	// 	// Takes step from URL and sets it to state so its properly updated
@@ -191,6 +167,7 @@ const controllRouter = () => {
 			break;
 		case "/survey":
 			controllSurvey();
+			break;
 		default:
 			console.error("404: Page not found");
 	}

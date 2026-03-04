@@ -9,7 +9,7 @@ class Survey extends View {
 	_generateMarkup() {
 		const markup = html`
 			<main class="survey">
-				<div class="steps"></div>
+				<form class="steps"></form>
 			</main>
 		`;
 		return markup;

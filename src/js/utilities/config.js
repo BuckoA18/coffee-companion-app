@@ -1,7 +1,7 @@
 export const CAFFEINE_BAR_CIRCUMFERENCE = 879;
 export const CAFFEINE_THRESHOLD = 50;
 export const CAFFEINE_HALF_LIFE = 0.1;
-export const MAX_STEPS = 5;
+export const MAX_STEPS = 4;
 export const VALIDATION_RULES = {
 	AGE: {
 		MIN: 12,
