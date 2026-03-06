@@ -29,7 +29,7 @@ export const state = {
 		shortcuts: [],
 	},
 	survey: {
-		currentStep: 1,
+		currentStep: 0,
 		maxSteps: config.MAX_STEPS,
 	},
 	drinks: [],
@@ -212,6 +212,9 @@ export const nextStep = async () => {
 	state.survey.currentStep++;
 };
 
+export const prevStep = async () => {
+	state.survey.currentStep--;
+};
 // export const registerServiceWorker = async () => {
 // 	if ("serviceWorker" in navigator) {
 // 		try {

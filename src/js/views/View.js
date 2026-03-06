@@ -3,7 +3,7 @@ import { html } from "../utilities/helpers";
 class View {
 	_data;
 
-	render(data, params) {
+	render(data, error) {
 		if (Array.isArray(data) && data.length === 0) return;
 		this._data = data;
 
@@ -13,7 +13,7 @@ class View {
 		this.clear();
 		this._parentElement.insertAdjacentHTML(
 			"afterbegin",
-			this._generateMarkup(data, params),
+			this._generateMarkup(data, error),
 		);
 	}
 
@@ -23,7 +23,7 @@ class View {
 
 		this._parentElement.insertAdjacentHTML(
 			"afterbegin",
-			this._generateMarkup(data),
+			this._generateErrorMarkup(data),
 		);
 	}
 

@@ -123,39 +123,55 @@ const controllSurvey = async () => {
 };
 
 const handleSurveyNav = async (inputValue) => {
-	try {
-		// Get the current step from state
-		const { currentStep, maxSteps } = model.state.survey;
+	// Get the current step from state
+	const { currentStep, maxSteps } = model.state.survey;
+	console.log("Current step: ", currentStep);
 
-		if (inputValue) {
+	if (inputValue && inputValue.type) {
+		try {
 			const { type, value } = inputValue;
 			// Validate user input
 			await helper.validateSurvey(inputValue);
+			console.log("Validated!");
 			model.state.user[type] = value;
-		}
-
-		if (currentStep > maxSteps) {
-			// Navigate to dashboard
-			window.history.pushState(null, "", "/");
-			controllRouter();
+		} catch (error) {
+			// Prepare Data
+			console.log("Catched: ", error);
+			const ErrorViewData = {
+				...config.SURVEY_SCHEMA[currentStep - 1],
+				isLastStep: currentStep === maxSteps,
+			};
+			console.log(ErrorViewData);
+			StepsView.render(ErrorViewData, error);
+			StepsView.renderError(error);
+			StepsView.focusInput();
 			return;
 		}
-		// Prep data, add lastStep property
-		const viewData = {
-			...config.SURVEY_SCHEMA[currentStep - 1],
-			isLastStep: currentStep === maxSteps,
-		};
-		// Render step markup based on given step
-		StepsView.render(viewData);
-		// update state
-		model.nextStep();
-	} catch (error) {
-		console.error(error);
-		// need to rework error handling!!!
-		// maybe red button that wiggles? red border on input and small text ?
-		// ErrorView.renderError(error);
-		// ErrorView.addHandlerCloseError(handleCloseError);
 	}
+
+	// Check for last step
+	if (currentStep >= maxSteps) {
+		// Navigate to dashboard
+		window.history.pushState(null, "", "/");
+		controllRouter();
+		return;
+	}
+
+	// update state
+	console.log("reched next step");
+	model.nextStep();
+
+	// Prepare data
+	const nextStep = model.state.survey.currentStep;
+	const nextStepData = {
+		...config.SURVEY_SCHEMA[nextStep - 1],
+		isLastStep: currentStep === maxSteps,
+	};
+
+	// Render step markup based on given step
+	StepsView.render(nextStepData);
+
+	console.log("Next step: ", model.state.survey.currentStep);
 };
 
 const handleMultipliers = async (values) => {

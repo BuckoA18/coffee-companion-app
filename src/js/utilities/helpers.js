@@ -18,7 +18,9 @@ export const calcMaxCaffeine = (weight) => {
 
 export const validateSurvey = async (data) => {
 	try {
+		console.log(data);
 		const { type, value } = data;
+
 		const rules = VALIDATION_RULES[type.toUpperCase()];
 		const numericValue = Math.round(parseFloat(value));
 

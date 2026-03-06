@@ -30,6 +30,10 @@
 		background-color: map.get(v.$colors, "bg-secondary");
 		border: none;
 		box-shadow: 3px 8px 15px rgba(30, 20, 0, 0.05);
+
+		&--error {
+			outline-color: red;
+		}
 	}
 
 	&__button {
