@@ -9,6 +9,17 @@ class Survey extends View {
 	_generateMarkup() {
 		const markup = html`
 			<main class="survey">
+				<header class="header">
+					<div class="header__container header__container--survey">
+						<button
+							type="button"
+							class="header__back-btn"
+							aria-label="Next Step"
+						>
+							<i class="fa-solid fa-arrow-left"></i>
+						</button>
+					</div>
+				</header>
 				<form class="steps"></form>
 			</main>
 		`;

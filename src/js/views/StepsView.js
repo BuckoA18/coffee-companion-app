@@ -69,7 +69,7 @@ class StepsView extends View {
 				${data.multipliers ? this._generateMultipliersMarkup(data) : ""}
 			</div>
 			<button class="steps__button">
-				${data.isLastStep ? "Finish" : "Next"}
+				${data.isLastStep ? "Done" : "Next"}
 			</button>`;
 		return markup;
 	}

@@ -23,6 +23,10 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: map.get(v.$spacings, "lg");
+
+		&--survey {
+			justify-content: flex-end;
+		}
 	}
 
 	&__title {
@@ -30,6 +34,8 @@
 	}
 
 	&__back-btn {
+		width: 40px;
+		height: 40px;
 		background-color: map.get(v.$colors, "bg-primary");
 		border: none;
 		color: map.get(v.$colors, "text-secondary");
