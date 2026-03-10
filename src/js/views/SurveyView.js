@@ -25,12 +25,23 @@ class Survey extends View {
 		`;
 		return markup;
 	}
+
+	addHandlerNavigateBack(handler) {
+		this._parentElement
+			.querySelector(".survey")
+			.addEventListener("click", (e) => {
+				const button = e.target.closest(".header__back-btn");
+				if (!button) return;
+
+				handler();
+			});
+	}
+
 	addHandlerHandleMultipliers(handler) {
 		this._parentElement
 			.querySelector(".steps")
 			.addEventListener("click", (e) => {
 				const multiplierCard = e.target.closest(".multiplier__card");
-				console.log(multiplierCard);
 				if (!multiplierCard) return;
 
 				multiplierCard.classList.toggle("multiplier__card--selected");
@@ -71,6 +82,7 @@ class Survey extends View {
 
 				handler();
 			});
+
 		handler();
 	}
 }

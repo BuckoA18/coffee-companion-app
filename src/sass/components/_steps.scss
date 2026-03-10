@@ -45,12 +45,6 @@
 		@include mix.button(map.get(v.$colors, "primary"), #fff);
 	}
 
-	&__error {
-		position: fixed;
-		top: 0;
-		left: 0;
-	}
-
 	&__toggle {
 		display: flex;
 		background-color: map.get(v.$colors, "bg-secondary");

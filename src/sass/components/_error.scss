@@ -3,13 +3,25 @@
 @use "../abstracts/variables" as v;
 
 .error {
+	position: fixed;
+	left: 0;
+	top: 0;
+
+	transform: translateY(-100%);
+
 	width: 100%;
 	text-align: center;
 	background-color: map.get(v.$colors, "bg-error");
 	border-bottom: 2px solid #fee2e2;
 	padding: 2rem 2rem;
 	box-shadow: 0 4px 12px map.get(v.$colors, "bg-error");
+
+	transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	&__description {
 		font-weight: 500;
+	}
+
+	&--active {
+		transform: translateY(0);
 	}
 }

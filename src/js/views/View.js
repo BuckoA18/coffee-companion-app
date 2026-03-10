@@ -25,6 +25,16 @@ class View {
 			"afterbegin",
 			this._generateErrorMarkup(data),
 		);
+
+		const error = this._parentElement.querySelector(".error");
+		if (!error) return;
+
+		error.classList.add("error--active");
+		console.log(error);
+
+		setTimeout(() => {
+			error.classList.remove("error--active");
+		}, 3000);
 	}
 
 	clear() {

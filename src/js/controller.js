@@ -15,7 +15,6 @@ import DrinkEditorView from "./views/DrinkEditorView";
 import WelcomeView from "./views/WelcomeView";
 import SurveyView from "./views/SurveyView";
 import StepsView from "./views/StepsView";
-import ErrorView from "./views/ErrorView";
 
 const controllDashboard = async () => {
 	try {
@@ -116,62 +115,70 @@ const controllSurvey = async () => {
 		SurveyView.render();
 		// Attach handlers
 		SurveyView.addHandlerSurveyNav(handleSurveyNav);
+		SurveyView.addHandlerNavigateBack(handleNavigateBack);
 		SurveyView.addHandlerHandleMultipliers(handleMultipliers);
 	} catch (error) {
 		console.error(error);
 	}
 };
 
+const renderStepUI = () => {
+	const { currentStep, maxSteps } = model.state.survey;
+	// Prepare data
+	const StepData = {
+		...config.SURVEY_SCHEMA[currentStep - 1],
+		isLastStep: currentStep === maxSteps,
+	};
+
+	// Render NEXT markup based on given step
+	StepsView.render(StepData);
+};
+
 const handleSurveyNav = async (inputValue) => {
 	// Get the current step from state
-	const { currentStep, maxSteps } = model.state.survey;
-	console.log("Current step: ", currentStep);
+	const { maxSteps } = model.state.survey;
+	// console.log("Current step: ", currentStep);
 
-	if (inputValue && inputValue.type) {
+	if (inputValue?.type) {
 		try {
 			const { type, value } = inputValue;
 			// Validate user input
 			await helper.validateSurvey(inputValue);
+
 			console.log("Validated!");
 			model.state.user[type] = value;
 		} catch (error) {
-			// Prepare Data
-			console.log("Catched: ", error);
-			const ErrorViewData = {
-				...config.SURVEY_SCHEMA[currentStep - 1],
-				isLastStep: currentStep === maxSteps,
-			};
-			console.log(ErrorViewData);
-			StepsView.render(ErrorViewData, error);
+			// Render UI
+			renderStepUI();
+			// Render error
 			StepsView.renderError(error);
-			StepsView.focusInput();
 			return;
 		}
 	}
 
 	// Check for last step
-	if (currentStep >= maxSteps) {
-		// Navigate to dashboard
-		window.history.pushState(null, "", "/");
-		controllRouter();
+	if (model.state.survey.currentStep === maxSteps) {
+		navigateTo("/");
 		return;
 	}
 
-	// update state
-	console.log("reched next step");
+	// Update state +1
 	model.nextStep();
 
-	// Prepare data
-	const nextStep = model.state.survey.currentStep;
-	const nextStepData = {
-		...config.SURVEY_SCHEMA[nextStep - 1],
-		isLastStep: currentStep === maxSteps,
-	};
+	// Render UI
+	renderStepUI();
+};
 
-	// Render step markup based on given step
-	StepsView.render(nextStepData);
+const handleNavigateBack = () => {
+	// Update state -1
+	model.prevStep();
 
-	console.log("Next step: ", model.state.survey.currentStep);
+	if (model.state.survey.currentStep === 0) {
+		navigateTo("/welcome");
+		return;
+	}
+	// Render UI
+	renderStepUI();
 };
 
 const handleMultipliers = async (values) => {
@@ -180,11 +187,11 @@ const handleMultipliers = async (values) => {
 	model.state.user.halfLifeMultiplier = halfLifeMultiplier;
 };
 
-const handleCloseError = () => {
-	ErrorView.closeError();
-};
-
 // ---- ROUTER ---- //
+const navigateTo = (path) => {
+	window.history.pushState(null, "", path);
+	controllRouter();
+};
 
 const controllRouter = () => {
 	// Sets variable path to the curent URL path
