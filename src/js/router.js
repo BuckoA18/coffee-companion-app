@@ -1,3 +1,8 @@
+import { controllSurvey } from "./controllers/SurveyController";
+import { controllWelcome } from "./controllers/WelcomeController";
+import { controllDashboard } from "./controllers/DashboardController";
+import { controllLogDrink } from "./controllers/LogDrinkController";
+
 export const initRouter = (navigate) => {
 	window.addEventListener("popstate", () => {
 		console.log(
@@ -17,4 +22,31 @@ export const initRouter = (navigate) => {
 			navigate();
 		}, 10);
 	});
+};
+
+export const navigateTo = (path) => {
+	window.history.pushState(null, "", path);
+	controllRouter();
+};
+
+export const controllRouter = () => {
+	const path = window.location.pathname;
+	console.log(path);
+
+	switch (path) {
+		case "/welcome":
+			controllWelcome();
+			break;
+		case "/":
+			controllDashboard();
+			break;
+		case "/add":
+			controllLogDrink();
+			break;
+		case "/survey":
+			controllSurvey();
+			break;
+		default:
+			console.error("404: Page not found");
+	}
 };

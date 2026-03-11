@@ -78,3 +78,11 @@ export const getMultiplierValue = (values) => {
 
 	return multiplier;
 };
+
+export const convertToKilos = (weight, weightUnit) => {
+	console.log(weightUnit);
+	if (weightUnit === "kg") return weight;
+
+	const kilos = Math.round(weight / 2.205);
+	return kilos;
+};

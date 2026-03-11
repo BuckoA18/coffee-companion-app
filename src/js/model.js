@@ -4,15 +4,16 @@ import { db, seedDatabase } from "./db";
 import { initialDrinks } from "./InitialDrinks";
 
 export const state = {
+	maxCaffeineBarOffset: "",
+	monitorBar: "",
 	user: {
 		weight: "",
-		weightUnit: "",
+		weightUnit: "kg",
 		age: "",
-		metabolism: "",
-		maxCaffeine: "",
+		maxCaffeine: 400,
 		halfLifeMultipliers: [],
-		halfLifeMultiplier: "",
-		halfLife: "",
+		halfLifeMultiplier: 1,
+		halfLife: 5,
 		dailyDrinks: [],
 		caffeine: 0,
 		caffeineUntillLimit: "",
@@ -62,12 +63,12 @@ export const calcCaffeineProgress = () => {
 
 	if (percentage >= 100) return 0;
 
-	return offset;
+	state.maxCaffeineBarOffset = +offset;
 };
 
 export const calcMonitorProgress = () => {
 	const width = (state.user.caffeineInSystem / state.user.caffeine) * 100;
-	return width;
+	state.monitorBar = width;
 };
 
 export const calcCaffeineUntillLimit = () => {
@@ -78,7 +79,7 @@ export const calcCaffeineUntillLimit = () => {
 };
 
 export const calcCaffeineInSystem = () => {
-	const halfLife = config.CAFFEINE_HALF_LIFE;
+	const halfLife = state.user.halfLife;
 	const threshold = config.CAFFEINE_THRESHOLD;
 	const currentTime = new Date();
 	let totalCurrentCaffeine = 0;
@@ -96,12 +97,11 @@ export const calcCaffeineInSystem = () => {
 		}
 	});
 
-	//Calculate how many hours until safe sleep (for furute features?)
 	if (+totalCurrentCaffeine.toFixed(1) <= 0)
 		return clearInterval(caffeineTimer);
 	if (totalCurrentCaffeine > threshold) {
 		hoursUntilSafeSleep =
-			halfLife * (Math.log(threshold / totalCurrentCaffeine) / Math.log(0.5));
+			halfLife * (Math.log(threshold / totalCurrentCaffeine) / Math.log(0.5)); // deacy base
 	}
 
 	const bedTime = new Date(
@@ -114,6 +114,8 @@ export const calcCaffeineInSystem = () => {
 		hour: "2-digit",
 		minute: "2-digit",
 	});
+
+	calcMonitorProgress();
 	window.dispatchEvent(new CustomEvent("caffeineUpdated"));
 };
 
@@ -219,8 +221,8 @@ export const prevStep = async () => {
 };
 
 export const calcMaxCaffeine = async () => {
-	// Need to cap max caffeine to 200mg~ if pregnant
-	const { age, weight, isPregnant } = state.user;
+	// Need to cap max caffeine to 200mg~ if pregnant :P
+	const { age, weight, isPregnant, weightUnit } = state.user;
 	if (isPregnant) {
 		state.user.maxCaffeine = config.CAFFEINE_LIMITS.PREGNANCY.cap_mg;
 		return;
@@ -229,8 +231,10 @@ export const calcMaxCaffeine = async () => {
 		(limit) => limit.min_age <= age && limit.max_age >= age,
 	);
 
-	const weightBasedLimit = Math.round(weight * rule.multiplier);
-	console.log(weightBasedLimit);
+	const weightInKilos = helper.convertToKilos(weight, weightUnit);
+
+	const weightBasedLimit = Math.round(weightInKilos * rule.multiplier);
+	console.log(weightInKilos);
 
 	const finalLimit =
 		weightBasedLimit > rule.cap_mg ? rule.cap_mg : weightBasedLimit;

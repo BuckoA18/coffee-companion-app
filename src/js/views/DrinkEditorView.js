@@ -14,9 +14,11 @@ class DrinkEditorView extends View {
 
 			const amount = this._getCustomDrinkAmount();
 			const drinkDate = this._getCustomDrinkDate();
+			const id = this._data.id;
 
 			this._closeEditor();
-			handler(this._id, amount, drinkDate);
+
+			handler(id, amount, drinkDate);
 		});
 	}
 
@@ -44,7 +46,7 @@ class DrinkEditorView extends View {
 		const minutes = now.getMinutes();
 
 		const currentTime = `${hours}:${minutes}`;
-		console.log(currentTime);
+
 		return currentTime;
 	}
 
@@ -73,7 +75,6 @@ class DrinkEditorView extends View {
 	}
 
 	_generateMarkup() {
-		console.log(this._data);
 		const drink = this._data;
 		const markup = html`
 			<div class="drink-editor__grabber"></div>

@@ -11,7 +11,7 @@ class CaffeineMonitorView extends View {
 		const { bedTime } = this._data.user.safeSleep;
 		const markup = html`
 			<span class="caffeine-monitor__label subtle"
-				>~${caffeineInSystem}mg in the system</span
+				>~${caffeineInSystem}mg in the system now</span
 			>
 			<div class="caffeine-monitor__bar">
 				<svg
@@ -23,7 +23,7 @@ class CaffeineMonitorView extends View {
 				</svg>
 			</div>
 			<div class="caffeine-monitor__sleep">
-				<span class="caffeine-monitor__label subtle">Safe to sleep at</span>
+				<span class="caffeine-monitor__label subtle">Safe to sleep from</span>
 				<span class="caffeine-monitor__value">${bedTime}</span>
 			</div>
 		`;
@@ -32,7 +32,10 @@ class CaffeineMonitorView extends View {
 
 	updateProgressBar(width) {
 		const progressBar = document.querySelector(".caffeine-monitor__fill");
-		progressBar?.style.setProperty("--monitor-progress", `${width}%`);
+		if (!progressBar) return;
+		console.log(width);
+
+		progressBar.style.setProperty("--monitor-progress", `${width}%`);
 	}
 }
 
