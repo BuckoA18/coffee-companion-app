@@ -1,6 +1,6 @@
 import { VALIDATION_RULES } from "./config";
-import { setProfile } from "../model";
 import * as model from "../model";
+import * as config from "./config";
 
 export const html = String.raw;
 
@@ -71,9 +71,7 @@ export const calcCaffeine = () => {
 };
 
 export const getMultiplierValue = (values) => {
-	// Get result by multiplying selected multipliers
-	const basicValue = 1;
-	if (values.length <= 0) return basicValue; // return basic value = 1 if no multipliers selected
+	if (values.length <= 0) return config.METABOLIC_FACTORS.BASELINE_MULTIPLIER;
 	const multiplier = values.reduce(
 		(accumulator, currentValue) => accumulator * currentValue,
 	);

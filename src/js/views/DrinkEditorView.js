@@ -48,8 +48,7 @@ class DrinkEditorView extends View {
 		return currentTime;
 	}
 
-	toggleDrinkEditor(id) {
-		this._id = id;
+	toggleDrinkEditor() {
 		if (!this._parentElement.classList.contains("drink-editor--closed")) return;
 
 		this._parentElement.classList.remove("drink-editor--closed");

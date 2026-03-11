@@ -26,11 +26,22 @@ class StepsView extends View {
 			${isWeight
 				? html` <div class="steps__toggle">
 						<label class="steps__toggle-option">
-							<input type="radio" name="weight-unit" value="kg" checked />
+							<input
+								type="radio"
+								name="weight-unit"
+								value="kg"
+								class="steps__toggle-input"
+								checked
+							/>
 							<span>kg</span>
 						</label>
 						<label class="steps__toggle-option">
-							<input type="radio" name="weight-unit" value="lbs" />
+							<input
+								type="radio"
+								name="weight-unit"
+								class="steps__toggle-input"
+								value="lbs"
+							/>
 							<span>lbs</span>
 						</label>
 					</div>`
@@ -46,6 +57,7 @@ class StepsView extends View {
 						<li
 							class="multiplier__card"
 							data-multiplier="${multiplier.multiplier}"
+							data-name="${multiplier.name}"
 						>
 							<div class="multiplier__content">
 								<span class="multiplier__label">${multiplier.name}</span>

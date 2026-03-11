@@ -7,12 +7,14 @@ class IntakeLimitView extends View {
 	}
 
 	_generateMarkup() {
-		const { caffeineLeft } = this._data;
+		const caffeineUntillLimit = this._data;
 
 		const markup = html`
 			<span class="intake-limit__label subtle"
-				><span class="intake-limit__value">${Math.abs(caffeineLeft)}</span>
-				mg ${caffeineLeft < 0 ? "over" : "untill"} daily limit
+				><span class="intake-limit__value"
+					>${Math.abs(caffeineUntillLimit)}</span
+				>
+				mg ${caffeineUntillLimit < 0 ? "over" : "untill"} daily limit
 			</span>
 		`;
 		return markup;

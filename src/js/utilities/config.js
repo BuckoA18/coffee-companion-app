@@ -1,6 +1,12 @@
 export const CAFFEINE_BAR_CIRCUMFERENCE = 879;
 export const CAFFEINE_THRESHOLD = 50;
-export const CAFFEINE_HALF_LIFE = 0.1;
+export const METABOLIC_FACTORS = {
+	BASELINE_HALF_LIFE: 5,
+	BASELINE_MULTIPLIER: 1,
+	SMOKER_MULTIPLIER: 0.6,
+	CONTRACEPTIVE_MULTIPLIER: 2.0,
+	PREGNANCY_MULTIPLIER: 2.5,
+};
 export const MAX_STEPS = 4;
 export const VALIDATION_RULES = {
 	AGE: {
@@ -10,6 +16,54 @@ export const VALIDATION_RULES = {
 	WEIGHT: {
 		MIN: 30,
 		MAX: 300,
+	},
+};
+
+export const CAFFEINE_LIMITS = {
+	CHILDREN: {
+		id: "children",
+		name: "Children",
+		min_age: 0,
+		max_age: 11,
+		multiplier: 0,
+		cap_mg: 0,
+		source: "American Academy of Pediatrics (AAP)",
+	},
+	TEENS: {
+		id: "teens",
+		name: "Adolescents",
+		min_age: 12,
+		max_age: 17,
+		multiplier: 2.5,
+		cap_mg: 100,
+		source: "Health Canada / AAP",
+	},
+	ADULTS: {
+		id: "adults",
+		name: "Adults",
+		min_age: 18,
+		max_age: 64,
+		multiplier: 5.7,
+		cap_mg: 400,
+		source: "EFSA / FDA",
+	},
+	SENIORS: {
+		id: "seniors",
+		name: "Seniors",
+		min_age: 65,
+		max_age: 120,
+		multiplier: 3.0,
+		cap_mg: 300,
+		source: "General Clinical Consensus",
+	},
+	PREGNANCY: {
+		id: "pregnancy",
+		name: "Pregnancy / Nursing",
+		min_age: 18,
+		max_age: 50,
+		multiplier: null,
+		cap_mg: 200,
+		source: "ACOG / WHO",
 	},
 };
 
@@ -40,21 +94,21 @@ export const SURVEY_SCHEMA = [
 			{
 				id: "smoking",
 				name: "Smoking",
-				multiplier: 0.5,
+				multiplier: METABOLIC_FACTORS.SMOKER_MULTIPLIER,
 				description:
 					"Triggers enzymes that process caffeine twice as fast. You likely need more coffee to feel the same effect.",
 			},
 			{
 				id: "pregnancy",
 				name: "Pregnancy",
-				multiplier: 3,
+				multiplier: METABOLIC_FACTORS.PREGNANCY_MULTIPLIER,
 				description:
 					"Drastically slows clearance. By the third trimester, caffeine stays in your system three times longer.",
 			},
 			{
 				id: "contraceptives",
 				name: "Contraceptives",
-				multiplier: 1.5,
+				multiplier: METABOLIC_FACTORS.CONTRACEPTIVE_MULTIPLIER,
 				description:
 					"Reduces enzyme activity, effectively doubling caffeine's half-life and making its effects last much longer.",
 			},

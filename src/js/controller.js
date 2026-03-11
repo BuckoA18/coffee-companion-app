@@ -18,18 +18,18 @@ import StepsView from "./views/StepsView";
 
 const controllDashboard = async () => {
 	try {
+		helper.calcCaffeine();
+		model.calcCaffeineUntillLimit();
 		model.startCaffeineMonitor();
 
 		IntakeView.render(model.state);
-		helper.calcCaffeine();
 		ProgressBarView.render(model.state);
 		ProgressBarView.updateProgressBar(model.calcCaffeineProgress());
-
-		model.calcCaffeineUntillLimit();
-		IntakeLimitView.render(model.state.user);
-
+		IntakeLimitView.render(model.state.user.caffeineUntillLimit);
 		CaffieneMonitorView.render(model.state);
+
 		CaffieneMonitorView.updateProgressBar(model.calcMonitorProgress());
+
 		DailyLogView.render(model.state.user.dailyDrinks);
 	} catch (error) {
 		console.error(error);
@@ -62,7 +62,7 @@ const handleToggleDrinkEdit = async (id) => {
 	try {
 		await model.getDrinkData(id);
 		DrinkEditorView.render(model.state.user.currentDrink);
-		DrinkEditorView.toggleDrinkEditor(id);
+		DrinkEditorView.toggleDrinkEditor();
 	} catch (error) {
 		console.error(error);
 	}
@@ -72,8 +72,7 @@ const handleSaveLog = async (id, amount, newTime) => {
 	try {
 		await model.storeDrink(id, amount, newTime);
 		model.startCaffeineMonitor();
-		window.history.pushState({}, "", "/");
-		controllRouter();
+		navigateTo("/");
 	} catch (error) {
 		console.error(error);
 	}
@@ -117,6 +116,7 @@ const controllSurvey = async () => {
 		SurveyView.addHandlerSurveyNav(handleSurveyNav);
 		SurveyView.addHandlerNavigateBack(handleNavigateBack);
 		SurveyView.addHandlerHandleMultipliers(handleMultipliers);
+		SurveyView.addHandlerHandleUnitToggle(handleUnitToggle);
 	} catch (error) {
 		console.error(error);
 	}
@@ -146,6 +146,7 @@ const handleSurveyNav = async (inputValue) => {
 			await helper.validateSurvey(inputValue);
 
 			console.log("Validated!");
+
 			model.state.user[type] = value;
 		} catch (error) {
 			// Render UI
@@ -158,6 +159,8 @@ const handleSurveyNav = async (inputValue) => {
 
 	// Check for last step
 	if (model.state.survey.currentStep === maxSteps) {
+		await model.calcMaxCaffeine();
+		await model.calcHalfLife();
 		navigateTo("/");
 		return;
 	}
@@ -183,8 +186,18 @@ const handleNavigateBack = () => {
 
 const handleMultipliers = async (values) => {
 	if (!values) return;
-	const halfLifeMultiplier = await helper.getMultiplierValue(values);
-	model.state.user.halfLifeMultiplier = halfLifeMultiplier;
+
+	model.state.user.isPregnant = values.some(
+		(value) => value.name === "Pregnancy",
+	);
+
+	const halfLifeMultipliers = values;
+	model.state.user.halfLifeMultipliers = halfLifeMultipliers;
+};
+
+const handleUnitToggle = (value) => {
+	if (!value) return;
+	model.state.user.weightUnit = value;
 };
 
 // ---- ROUTER ---- //
@@ -194,20 +207,8 @@ const navigateTo = (path) => {
 };
 
 const controllRouter = () => {
-	// Sets variable path to the curent URL path
 	const path = window.location.pathname;
 	console.log(path);
-	// Checks if survey is open
-	// if (path.startsWith("/survey/step-")) {
-	// 	// Takes step from URL and sets it to state so its properly updated
-	// 	const step = +path.split("-").pop();
-	// 	model.state.survey.currentStep = step;
-	// 	// Renders survey
-	// 	controllSurvey();
-	// 	StepsView.render(cfg.SURVEY_SCHEMA, model.state.survey.currentStep);
-	// 	StepsView.addHandlerSelectMultipliers(handleMultipliers);
-	// 	return;
-	// }
 
 	switch (path) {
 		case "/welcome":

@@ -6,16 +6,19 @@ import { initialDrinks } from "./InitialDrinks";
 export const state = {
 	user: {
 		weight: "",
+		weightUnit: "",
 		age: "",
 		metabolism: "",
-		maxCaffeine: 400,
-		halfLifeMultiplier: 1,
+		maxCaffeine: "",
+		halfLifeMultipliers: [],
+		halfLifeMultiplier: "",
 		halfLife: "",
 		dailyDrinks: [],
 		caffeine: 0,
 		caffeineUntillLimit: "",
 		caffeineInSystem: 0,
 		currentDrink: "",
+		isPregnant: false,
 		safeSleep: {
 			bedTime: "",
 			hoursToBedTime: "",
@@ -68,8 +71,9 @@ export const calcMonitorProgress = () => {
 };
 
 export const calcCaffeineUntillLimit = () => {
-	const caffeineLeft = state.user.maxCaffeine - state.user.caffeine;
-	state.user.caffeineLeft = caffeineLeft;
+	const caffeineUntillLimit = state.user.maxCaffeine - state.user.caffeine;
+	state.user.caffeineUntillLimit = caffeineUntillLimit;
+	console.log(caffeineUntillLimit);
 	// console.log("Caffeine left: ", caffeineLeft);
 };
 
@@ -173,8 +177,6 @@ export const searchShortcuts = async (shortcutId) => {
 	}
 };
 
-export const setProfile = () => {};
-
 export const checkDate = async () => {
 	try {
 		const currentDate = new Date().toLocaleDateString();
@@ -215,23 +217,36 @@ export const nextStep = async () => {
 export const prevStep = async () => {
 	state.survey.currentStep--;
 };
-// export const registerServiceWorker = async () => {
-// 	if ("serviceWorker" in navigator) {
-// 		try {
-// 			const registration = await navigator.serviceWorker.register("/sw.js", {
-// 				scope: "/",
-// 			});
-// 			if (registration.installing) {
-// 				console.log("Service worker installing");
-// 			}
-// 			if (registration.waiting) {
-// 				console.log("Service worker installed");
-// 			}
-// 			if (registration.active) {
-// 				console.log("Service worker active");
-// 			}
-// 		} catch (error) {
-// 			throw error;
-// 		}
-// 	}
-// };
+
+export const calcMaxCaffeine = async () => {
+	// Need to cap max caffeine to 200mg~ if pregnant
+	const { age, weight, isPregnant } = state.user;
+	if (isPregnant) {
+		state.user.maxCaffeine = config.CAFFEINE_LIMITS.PREGNANCY.cap_mg;
+		return;
+	}
+	const rule = Object.values(config.CAFFEINE_LIMITS).find(
+		(limit) => limit.min_age <= age && limit.max_age >= age,
+	);
+
+	const weightBasedLimit = Math.round(weight * rule.multiplier);
+	console.log(weightBasedLimit);
+
+	const finalLimit =
+		weightBasedLimit > rule.cap_mg ? rule.cap_mg : weightBasedLimit;
+
+	state.user.maxCaffeine = finalLimit;
+};
+
+export const calcHalfLife = async () => {
+	const multiplierValues = state.user.halfLifeMultipliers.map(
+		(mult) => mult.value,
+	);
+	const finalMultiplier = helper.getMultiplierValue(multiplierValues);
+
+	const halfLife =
+		finalMultiplier * config.METABOLIC_FACTORS.BASELINE_HALF_LIFE;
+
+	state.user.halfLifeMultiplier = halfLife;
+	console.log("half life:", halfLife);
+};

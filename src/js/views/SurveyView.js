@@ -48,10 +48,24 @@ class Survey extends View {
 
 				const values = Array.from(
 					this._parentElement.querySelectorAll(".multiplier__card--selected"),
-				).map((multiplier) => +multiplier.dataset.multiplier);
+				).map((multiplier) => ({
+					name: multiplier.dataset.name,
+					value: +multiplier.dataset.multiplier,
+				}));
 
-				// console.log(multipliers);
+				console.log(values);
 				handler(values);
+			});
+	}
+
+	addHandlerHandleUnitToggle(handler) {
+		this._parentElement
+			.querySelector(".steps")
+			.addEventListener("click", (e) => {
+				const input = e.target.closest(".steps__toggle-input");
+				if (!input) return;
+				const value = input.value;
+				handler(value);
 			});
 	}
 
