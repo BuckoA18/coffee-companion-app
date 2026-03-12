@@ -7,7 +7,7 @@ class ProgressBarView extends View {
 	}
 
 	_generateMarkup() {
-		const caffeine = this._data;
+		const caffeine = this._data.caffeine;
 
 		const markup = html`
 			<div class="progress-bar__outer">
@@ -29,7 +29,6 @@ class ProgressBarView extends View {
 
 		setTimeout(() => {
 			progressBar.style.setProperty("--caff-progress", `${offset}`);
-			console.log("first");
 		}, 100);
 	}
 }

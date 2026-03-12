@@ -9,32 +9,31 @@
 	width: 100%;
 	background-color: $background-color;
 	color: $color;
-	border-radius: map.get(v.$border-radius, "sm");
-	padding: map.get(v.$spacings, "md");
-	box-shadow: 0 4px 12px rgba(30, 20, 0, 0.05);
+	border-radius: 24px;
+	padding: map.get(v.$spacings, "lg");
+	box-shadow:
+		0 2px 4px rgba(0, 0, 0, 0.02),
+		0 10px 20px rgba(0, 0, 0, 0.04),
+		0 20px 40px rgba(0, 0, 0, 0.04);
+
+	overflow: hidden;
 }
 
-@mixin button-save {
-	border: none;
-	padding: 1.4rem;
-	width: 100%;
-	background-color: #63bf3c;
-	color: white;
-	border-radius: map.get(v.$border-radius, "md");
-	font-size: 1rem;
-}
-
-@mixin button($background-color, $color) {
+@mixin button($background-color, $color: #fff, $width: 100%, $padding: 1rem) {
 	font-weight: 600;
 	font-size: 1.4rem;
 	border: none;
-	padding: 1.2rem;
-	width: 100%;
+	padding: $padding;
+	width: $width;
 	background-color: $background-color;
 	color: $color;
-	box-shadow: 0 2px 8px
+	box-shadow: 0 2px 4px
 		color.adjust($background-color, $lightness: -20%, $saturation: 10%);
 	border-radius: 50px;
+
+	&:active {
+		transform: scale(0.9);
+	}
 }
 
 @mixin input {

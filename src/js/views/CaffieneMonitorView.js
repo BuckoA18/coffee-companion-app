@@ -7,8 +7,9 @@ class CaffeineMonitorView extends View {
 	}
 
 	_generateMarkup() {
-		const { caffeineInSystem } = this._data.user;
-		const { bedTime } = this._data.user.safeSleep;
+		const { caffeineInSystem } = this._data;
+		const { bedTime } = this._data;
+		console.log(bedTime);
 		const markup = html`
 			<span class="caffeine-monitor__label subtle"
 				>~${caffeineInSystem}mg in the system now</span

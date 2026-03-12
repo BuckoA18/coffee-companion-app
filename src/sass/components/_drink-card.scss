@@ -4,7 +4,7 @@
 
 .drink-card {
 	@include mix.card;
-	width: 100%;
+
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -14,9 +14,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		// padding: map.get(v.$spacings, "md");
 		border-radius: map.get(v.$border-radius, "round");
-		// background-color: map.get(v.$colors, "track");
 	}
 
 	&__details {
@@ -24,7 +22,7 @@
 		flex-direction: column;
 		gap: 0.4rem;
 
-		&-name {
+		&-title {
 			font-size: 1.2rem;
 		}
 		&-time {

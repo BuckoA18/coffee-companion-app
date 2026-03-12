@@ -5,49 +5,58 @@ class DrinkEditorView extends View {
 	get _parentElement() {
 		return document.querySelector(".drink-editor");
 	}
-	addHandlerSaveLog(handler) {
-		this._parentElement?.addEventListener("click", (e) => {
-			const saveButton = this._parentElement.querySelector(
-				".drink-editor__button--save",
+
+	addHandlerEditorActions(handler) {
+		this._parentElement.addEventListener("click", (e) => {
+			// 1. Handle Save Button
+			const saveBtn = e.target.closest(".drink-editor__button--save");
+			if (saveBtn) {
+				const servings = this._getDrinkServings();
+				const consumptionTime = this._getDrinkConsumptionTime();
+				this._closeEditor();
+				return handler(this._data.id, servings, consumptionTime);
+			}
+
+			const plusBtn = e.target.closest(".drink-editor__button--plus");
+			const minusBtn = e.target.closest(".drink-editor__button--minus");
+			const input = this._parentElement.querySelector(
+				".drink-editor__input--amount",
 			);
-			if (e.target !== saveButton) return;
 
-			const amount = this._getCustomDrinkAmount();
-			const drinkDate = this._getCustomDrinkDate();
-			const id = this._data.id;
-
-			this._closeEditor();
-
-			handler(id, amount, drinkDate);
+			if (plusBtn) input.value = Number(input.value) + 1;
+			if (minusBtn && input.value > 1) input.value = Number(input.value) - 1;
 		});
 	}
 
-	_getCustomDrinkAmount() {
-		const amount = +document.querySelector(".drink-editor__input--amount")
-			.value;
+	_getDrinkServings() {
+		const amount = +this._parentElement.querySelector(
+			".drink-editor__input--amount",
+		)?.value;
 		return amount;
 	}
 
-	_getCustomDrinkDate() {
-		const time = this._parentElement.querySelector(
+	_getDrinkConsumptionTime() {
+		const timeInput = this._parentElement.querySelector(
 			".drink-editor__input--time",
 		).value;
-
 		const drinkDate = new Date();
-		const [hours, minutes] = time.split(":");
+		const [hours, minutes] = timeInput.split(":");
 
 		drinkDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+		console.log(drinkDate);
+
+		const now = new Date();
+
+		if (drinkDate > now) {
+			return now;
+		}
+
 		return drinkDate;
 	}
 
-	_setDrinkTime() {
-		const now = new Date();
-		const hours = now.getHours();
-		const minutes = now.getMinutes();
-
-		const currentTime = `${hours}:${minutes}`;
-
-		return currentTime;
+	_getDefaultTime() {
+		return new Date().toTimeString().slice(0, 5);
 	}
 
 	toggleDrinkEditor() {
@@ -76,58 +85,73 @@ class DrinkEditorView extends View {
 
 	_generateMarkup() {
 		const drink = this._data;
-		const markup = html`
+		const now = this._getDefaultTime(); // Using the bulletproof helper
+
+		return html`
 			<div class="drink-editor__grabber"></div>
 
-			<div class="drink-editor__header">
+			<header class="drink-editor__header">
 				<div class="drink-editor__icon">
 					<i class="fa-solid fa-mug-hot fa-xl"></i>
 				</div>
 				<h2 class="drink-editor__title">${drink.name}</h2>
-
-				<span class="drink-editor__caffeine subtle"
-					><span class="highlight">+${drink.caffeine_mg}</span> mg</span
-				>
-			</div>
+				<div class="drink-editor__caffeine subtle">
+					<span class="highlight">+${drink.caffeine_mg}</span> mg
+				</div>
+			</header>
 
 			<div class="drink-editor__fields">
 				<div class="drink-editor__field">
-					<label for="${drink.id}" class="drin k-editor__label"
-						>${drink.serving_style}s:</label
-					>
-					<input
-						type="number"
-						name="amount"
-						id="${drink.id}"
-						class="drink-editor__input drink-editor__input--amount"
-						value="1"
-					/>
+					<label for="amount" class="drink-editor__label">
+						${drink.serving_style}s
+					</label>
+
 					<div class="drink-editor__wrapper">
-						<button class="drink-editor__button drink-editor__button--plus">
-							+</button
-						><button class="drink-editor__button drink-editor__button--minus">
-							-
+						<button
+							type="button"
+							class="drink-editor__button drink-editor__button--minus"
+							aria-label="Decrease amount"
+						>
+							<i class="fa-solid fa-minus"></i>
+						</button>
+
+						<input
+							type="number"
+							id="amount"
+							class="drink-editor__input drink-editor__input--amount"
+							value="1"
+							min="1"
+							readonly
+						/>
+
+						<button
+							type="button"
+							class="drink-editor__button drink-editor__button--plus"
+							aria-label="Increase amount"
+						>
+							<i class="fa-solid fa-plus"></i>
 						</button>
 					</div>
 				</div>
+
 				<div class="drink-editor__field">
-					<label for="consumption" class="drink-editor__label"
-						>Time of consumption:</label
-					>
+					<label for="consumption" class="drink-editor__label">
+						Consumption Time
+					</label>
 					<input
 						type="time"
-						name="consumption"
 						id="consumption"
 						class="drink-editor__input drink-editor__input--time"
-						value=${this._setDrinkTime()}
+						value="${now}"
+						max="${now}"
 					/>
 				</div>
-				<div class="drink-editor__field">
-					<button class="drink-editor__button--save btn btn--save">Save</button>
+
+				<div class="drink-editor__actions">
+					<button class="drink-editor__button--save ">Log Drink</button>
 				</div>
 			</div>
 		`;
-		return markup;
 	}
 }
 

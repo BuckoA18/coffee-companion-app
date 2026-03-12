@@ -3,6 +3,7 @@
 @use "../abstracts/variables" as v;
 
 .log {
+	padding: 1rem;
 	width: 100%;
 	margin-bottom: map.get(v.$spacings, "xxl");
 	transition: filter 0.4s ease-in-out;

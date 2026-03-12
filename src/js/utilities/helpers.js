@@ -4,18 +4,6 @@ import * as config from "./config";
 
 export const html = String.raw;
 
-export const getCurrentTime = () => {
-	const date = new Date();
-	const hours = String(date.getHours()).padStart(2, "0");
-	const minutes = String(date.getMinutes()).padStart(2, "0");
-	return `${hours}:${minutes}`;
-};
-
-export const calcMaxCaffeine = (weight) => {
-	const max = weight * 6 * 1;
-	return max;
-};
-
 export const validateSurvey = async (data) => {
 	try {
 		console.log(data);
@@ -62,14 +50,6 @@ export const createShortcuts = () => {
 	];
 };
 
-export const calcCaffeine = () => {
-	const caffeine = model.state.user.dailyDrinks.reduce(
-		(accumulator, currentValue) => accumulator + currentValue.caffeine_mg,
-		0,
-	);
-	model.state.user.caffeine = caffeine;
-};
-
 export const getMultiplierValue = (values) => {
 	if (values.length <= 0) return config.METABOLIC_FACTORS.BASELINE_MULTIPLIER;
 	const multiplier = values.reduce(
@@ -85,4 +65,26 @@ export const convertToKilos = (weight, weightUnit) => {
 
 	const kilos = Math.round(weight / 2.205);
 	return kilos;
+};
+
+export const getElapsedHours = (currentTime, drinkTime) => {
+	const elapsedMs = currentTime.getTime() - drinkTime.getTime();
+	return Math.max(0, elapsedMs / (1000 * 60 * 60));
+};
+
+export const calcRemainingCaffeine = (
+	initialCaffeine,
+	elapsedHours,
+	halfLife,
+) => {
+	return initialCaffeine * Math.pow(0.5, elapsedHours / halfLife);
+};
+
+export const calcHoursUntilThreshold = (
+	currentCaffeine,
+	threshold,
+	halfLife,
+) => {
+	if (currentCaffeine <= threshold) return 0;
+	return halfLife * (Math.log(threshold / currentCaffeine) / Math.log(0.5));
 };

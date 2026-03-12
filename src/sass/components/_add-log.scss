@@ -1,9 +1,0 @@
-@use "sass:map";
-@use "../abstracts/mixins" as mix;
-@use "../abstracts/variables" as v;
-
-.add-log {
-	position: fixed;
-	bottom: 1rem;
-	right: 1rem;
-}

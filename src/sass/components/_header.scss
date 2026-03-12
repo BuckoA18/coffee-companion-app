@@ -3,8 +3,9 @@
 @use "../abstracts/variables" as v;
 
 .header {
+	padding: 1rem;
 	width: 100%;
-	margin-bottom: map.get(v.$spacings, "lg");
+	margin-bottom: map.get(v.$spacings, "md");
 	transition: filter 0.4s ease-in-out;
 
 	&__content {

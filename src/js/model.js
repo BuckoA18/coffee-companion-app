@@ -3,9 +3,9 @@ import * as config from "./utilities/config";
 import { db, seedDatabase } from "./db";
 import { initialDrinks } from "./InitialDrinks";
 
+// ---- State ---- //
+
 export const state = {
-	maxCaffeineBarOffset: "",
-	monitorBar: "",
 	user: {
 		weight: "",
 		weightUnit: "kg",
@@ -16,14 +16,10 @@ export const state = {
 		halfLife: 5,
 		dailyDrinks: [],
 		caffeine: 0,
-		caffeineUntillLimit: "",
 		caffeineInSystem: 0,
 		currentDrink: "",
 		isPregnant: false,
-		safeSleep: {
-			bedTime: "",
-			hoursToBedTime: "",
-		},
+		bedTime: "",
 		progressPerc: 0,
 		profileReady: false,
 	},
@@ -53,7 +49,9 @@ export const setInitialState = async () => {
 	}
 };
 
-export const calcCaffeineProgress = () => {
+// ---- Getters ---- //
+
+export const getCaffeineProgress = () => {
 	const percentage = Math.round(
 		(state.user.caffeine / state.user.maxCaffeine) * 100,
 	);
@@ -62,71 +60,142 @@ export const calcCaffeineProgress = () => {
 		(percentage / 100) * config.CAFFEINE_BAR_CIRCUMFERENCE;
 
 	if (percentage >= 100) return 0;
+	console.log(offset);
 
-	state.maxCaffeineBarOffset = +offset;
+	return offset;
 };
 
-export const calcMonitorProgress = () => {
+export const getMonitorProgress = () => {
 	const width = (state.user.caffeineInSystem / state.user.caffeine) * 100;
-	state.monitorBar = width;
+	return width;
 };
 
-export const calcCaffeineUntillLimit = () => {
+export const getCaffeineUntillLimit = () => {
 	const caffeineUntillLimit = state.user.maxCaffeine - state.user.caffeine;
-	state.user.caffeineUntillLimit = caffeineUntillLimit;
-	console.log(caffeineUntillLimit);
-	// console.log("Caffeine left: ", caffeineLeft);
+	return caffeineUntillLimit;
+};
+
+// ---- Setters ---- //
+
+const setCaffeine = (caffeine) => {
+	state.user.caffeine = caffeine;
+};
+
+const setCaffeineInSystem = (amount) => {
+	state.user.caffeineInSystem = amount;
+};
+
+const setBedTime = (timeString) => {
+	state.user.bedTime = timeString;
+};
+
+const setMaxCaffeine = (maxCaffeine) => {
+	state.user.maxCaffeine = maxCaffeine;
+};
+
+const setHalfLife = (halfLife) => {
+	state.user.halfLife = halfLife;
+};
+
+// ---- Calculations Logicc ---- //
+
+export const calcCaffeine = () => {
+	const caffeine = state.user.dailyDrinks.reduce(
+		(accumulator, currentValue) => accumulator + currentValue.caffeine_mg,
+		0,
+	);
+	setCaffeine(caffeine);
 };
 
 export const calcCaffeineInSystem = () => {
-	const halfLife = state.user.halfLife;
+	const { halfLife, dailyDrinks } = state.user;
 	const threshold = config.CAFFEINE_THRESHOLD;
 	const currentTime = new Date();
+
 	let totalCurrentCaffeine = 0;
-	let hoursUntilSafeSleep = 0;
 
-	//Calculate remaining caffeine for every drink logged
-	state.user.dailyDrinks?.forEach((drink) => {
-		const elapsedMs = currentTime.getTime() - drink.time.getTime();
-		const elapsedHours = elapsedMs / (1000 * 60 * 60);
-
-		if (elapsedHours >= 0) {
-			const remaining =
-				drink.caffeine_mg * Math.pow(0.5, elapsedHours / halfLife);
-			totalCurrentCaffeine += remaining;
-		}
+	// Calculate remaining caffeine for every drink logged
+	dailyDrinks?.forEach((drink) => {
+		const elapsedHours = helper.getElapsedHours(
+			currentTime,
+			drink.consumptionTime,
+		);
+		totalCurrentCaffeine += helper.calcRemainingCaffeine(
+			drink.caffeine_mg,
+			elapsedHours,
+			halfLife,
+		);
 	});
 
-	if (+totalCurrentCaffeine.toFixed(1) <= 0)
+	// Check if we can stop the timer
+	if (+totalCurrentCaffeine.toFixed(1) <= 0) {
+		setCaffeineInSystem(0);
 		return clearInterval(caffeineTimer);
-	if (totalCurrentCaffeine > threshold) {
-		hoursUntilSafeSleep =
-			halfLife * (Math.log(threshold / totalCurrentCaffeine) / Math.log(0.5)); // deacy base
 	}
 
-	const bedTime = new Date(
-		currentTime.getTime() + hoursUntilSafeSleep * 60 * 60 * 1000,
+	// Calculate safe sleep time using helpers
+	const hoursUntilSafeSleep = helper.calcHoursUntilThreshold(
+		totalCurrentCaffeine,
+		threshold,
+		halfLife,
 	);
 
-	state.user.caffeineInSystem = Math.round(totalCurrentCaffeine);
-	state.user.safeSleep.hoursToBedTime = hoursUntilSafeSleep.toFixed(1);
-	state.user.safeSleep.bedTime = bedTime.toLocaleTimeString([], {
+	const bedTimeDate = new Date(
+		currentTime.getTime() + hoursUntilSafeSleep * 60 * 60 * 1000,
+	);
+	const formattedBedTime = bedTimeDate.toLocaleTimeString([], {
 		hour: "2-digit",
 		minute: "2-digit",
 	});
 
-	calcMonitorProgress();
+	setCaffeineInSystem(Math.round(totalCurrentCaffeine));
+	setBedTime(formattedBedTime);
+
 	window.dispatchEvent(new CustomEvent("caffeineUpdated"));
 };
 
-export const storeDrink = async (id, amount, newTime) => {
+export const calcMaxCaffeine = async () => {
+	// Need to cap max caffeine to 200mg~ if pregnant :P
+	const { age, weight, isPregnant, weightUnit } = state.user;
+	if (isPregnant) {
+		state.user.maxCaffeine = config.CAFFEINE_LIMITS.PREGNANCY.cap_mg;
+		return;
+	}
+	const rule = Object.values(config.CAFFEINE_LIMITS).find(
+		(limit) => limit.min_age <= age && limit.max_age >= age,
+	);
+
+	const weightInKilos = helper.convertToKilos(weight, weightUnit);
+
+	const weightBasedLimit = Math.round(weightInKilos * rule.multiplier);
+	console.log(weightInKilos);
+
+	const finalLimit =
+		weightBasedLimit > rule.cap_mg ? rule.cap_mg : weightBasedLimit;
+
+	setMaxCaffeine(finalLimit);
+};
+
+export const calcHalfLife = async () => {
+	const multiplierValues = state.user.halfLifeMultipliers.map(
+		(mult) => mult.value,
+	);
+	const finalMultiplier = helper.getMultiplierValue(multiplierValues);
+
+	const halfLife =
+		finalMultiplier * config.METABOLIC_FACTORS.BASELINE_HALF_LIFE;
+
+	setHalfLife(halfLife);
+};
+
+export const storeDrink = async (id, servings, consumptionTime) => {
 	const baseDrink = await getDrinkData(id);
-	const newCaffeineValue = amount * baseDrink.caffeine_mg;
+	const newCaffeineValue = servings * baseDrink.caffeine_mg;
 	const currentDrink = {
 		...baseDrink,
 		caffeine_mg: !newCaffeineValue ? baseDrink.caffeine_mg : newCaffeineValue,
-		time: newTime,
-		servings: amount,
+		consumptionTime,
+		servings,
 	};
 
 	db.consumption.add(currentDrink);
@@ -142,7 +211,7 @@ export const startCaffeineMonitor = () => {
 
 	caffeineTimer = setInterval(() => {
 		calcCaffeineInSystem();
-	}, 5000);
+	}, 10000);
 };
 
 export const searchDrinks = async (drinkQuery) => {
@@ -202,7 +271,6 @@ export const getDrinkData = async (drinkId) => {
 
 		const newEntry = {
 			...currentDrink,
-			time: new Date(),
 		};
 
 		state.user.currentDrink = newEntry;
@@ -218,39 +286,4 @@ export const nextStep = async () => {
 
 export const prevStep = async () => {
 	state.survey.currentStep--;
-};
-
-export const calcMaxCaffeine = async () => {
-	// Need to cap max caffeine to 200mg~ if pregnant :P
-	const { age, weight, isPregnant, weightUnit } = state.user;
-	if (isPregnant) {
-		state.user.maxCaffeine = config.CAFFEINE_LIMITS.PREGNANCY.cap_mg;
-		return;
-	}
-	const rule = Object.values(config.CAFFEINE_LIMITS).find(
-		(limit) => limit.min_age <= age && limit.max_age >= age,
-	);
-
-	const weightInKilos = helper.convertToKilos(weight, weightUnit);
-
-	const weightBasedLimit = Math.round(weightInKilos * rule.multiplier);
-	console.log(weightInKilos);
-
-	const finalLimit =
-		weightBasedLimit > rule.cap_mg ? rule.cap_mg : weightBasedLimit;
-
-	state.user.maxCaffeine = finalLimit;
-};
-
-export const calcHalfLife = async () => {
-	const multiplierValues = state.user.halfLifeMultipliers.map(
-		(mult) => mult.value,
-	);
-	const finalMultiplier = helper.getMultiplierValue(multiplierValues);
-
-	const halfLife =
-		finalMultiplier * config.METABOLIC_FACTORS.BASELINE_HALF_LIFE;
-
-	state.user.halfLifeMultiplier = halfLife;
-	console.log("half life:", halfLife);
 };

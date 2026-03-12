@@ -10,11 +10,12 @@ const init = async () => {
 		await model.setInitialState();
 
 		window.addEventListener("caffeineUpdated", () => {
-			CaffieneMonitorView.render(model.state);
-			CaffieneMonitorView.updateProgressBar(model.state.monitorBar);
+			const { user } = model.state;
+			CaffieneMonitorView.render(user);
+			CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
 		});
 
-		window.history.pushState(null, null, "/welcome");
+		router.navigateTo("/welcome");
 
 		router.initRouter(router.controllRouter);
 		router.controllRouter();

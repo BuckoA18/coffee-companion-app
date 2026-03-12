@@ -20,7 +20,7 @@ export const controllLogDrink = async () => {
 		SearchBarView.addHandlerClearSearchBar(handleSearch);
 		SearchShortcutsView.addHandlerGetShortcutId(handleShortcuts);
 		DrinksListView.addHandlerToggleDrinkEdit(handleToggleDrinkEdit);
-		DrinkEditorView.addHandlerSaveLog(handleSaveLog);
+		DrinkEditorView.addHandlerEditorActions(handleEditorActions);
 	} catch (error) {
 		console.error(error);
 	}
@@ -36,9 +36,9 @@ const handleToggleDrinkEdit = async (id) => {
 	}
 };
 
-const handleSaveLog = async (id, amount, newTime) => {
+const handleEditorActions = async (id, servings, consumptionTime) => {
 	try {
-		await model.storeDrink(id, amount, newTime);
+		await model.storeDrink(id, servings, consumptionTime);
 		model.startCaffeineMonitor();
 		router.navigateTo("/");
 	} catch (error) {
