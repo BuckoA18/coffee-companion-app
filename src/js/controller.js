@@ -15,7 +15,7 @@ const init = async () => {
 			CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
 		});
 
-		router.navigateTo("/welcome");
+		router.navigateTo("/add");
 
 		router.initRouter(router.controllRouter);
 		router.controllRouter();

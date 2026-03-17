@@ -8,26 +8,30 @@ class LogDrinkView extends View {
 
 	_generateMarkup() {
 		const markup = html`
-			<header class="header">
-				<div class="header__content header__content--log">
-					<div class="header__container">
-						<h2 class="header__title">Log Your Drink</h2>
-						<a href="/" data-link
-							><button class="header__back-btn btn">
-								<i class="fa-solid fa-arrow-left header__icon"></i></button
-						></a>
-					</div>
-					<form class="search"></form>
-
-					<div class="shortcuts"></div>
+			<header class="header ">
+				<div class="header__container">
+					<h2 class="header__title">Log Your Drink</h2>
+					<a href="/" data-link class="header__back-btn">
+						<i class="fa-solid fa-arrow-left"></i>
+					</a>
 				</div>
 			</header>
 
-			<div class="log">
-				<ul class="log-list"></ul>
-			</div>
+			<main class="log ">
+				<div class="log__container">
+					<section class="log__toolbar">
+						<form class="search">
+							<input type="text" placeholder="Search drinks..." />
+						</form>
+						<div class="shortcuts"></div>
+					</section>
 
-			<div class="drink-editor drink-editor--closed"></div>
+					<div class="log">
+						<ul class="log-list"></ul>
+						<div class="drink-editor drink-editor--closed"></div>
+					</div>
+				</div>
+			</main>
 		`;
 		return markup;
 	}

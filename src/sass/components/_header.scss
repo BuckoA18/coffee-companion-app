@@ -5,32 +5,38 @@
 .header {
 	padding: 1rem;
 	width: 100%;
-	margin-bottom: map.get(v.$spacings, "md");
-	transition: filter 0.4s ease-in-out;
 
-	&__content {
-		width: 100%;
-
-		&--log {
-			position: static;
-			top: 0;
-		}
+	@media (min-width: map.get(v.$breakpoints, "tablet")) {
+		box-shadow:
+			0 4px 20px rgba(0, 0, 0, 0.05),
+			0 1px 2px rgba(0, 0, 0, 0.03);
 	}
 
 	&__container {
-		height: 45px;
+		margin: 0 auto;
+		height: 50px;
 		width: 100%;
+		max-width: 800px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: map.get(v.$spacings, "lg");
-
-		&--survey {
-			justify-content: flex-end;
-		}
 	}
 
 	&__title {
 		font-weight: 800;
+	}
+
+	&__button {
+		display: none;
+
+		@media (min-width: map.get(v.$breakpoints, "tablet")) {
+			display: flex;
+			@include mix.button(
+				map.get(v.$colors, "primary"),
+				#fff,
+				fit-content,
+				0.8rem 1rem
+			);
+		}
 	}
 }

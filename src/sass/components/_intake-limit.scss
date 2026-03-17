@@ -3,6 +3,7 @@
 @use "../abstracts/variables" as v;
 
 .intake-limit {
+	text-align: center;
 	margin-top: map.get(v.$spacings, "md");
 	color: map.get(v.$colors, "text-secondary");
 }

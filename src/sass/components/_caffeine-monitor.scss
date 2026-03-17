@@ -12,6 +12,11 @@
 
 	margin-top: map.get(v.$spacings, "md");
 
+	@media (min-width: map.get(v.$breakpoints, "tablet")) {
+		height: fit-content;
+		margin: auto 0;
+	}
+
 	&__bar {
 		width: 100%;
 		height: 15px;

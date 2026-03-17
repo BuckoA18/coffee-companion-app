@@ -11,6 +11,10 @@
 	overflow-x: scroll;
 	white-space: nowrap;
 
+	@media (min-width: map.get(v.$breakpoints, "tablet")) {
+		overflow: hidden;
+	}
+
 	.shortcut-btn {
 		box-shadow: 0 4px 12px rgba(30, 20, 0, 0.05);
 		flex-grow: 1;
