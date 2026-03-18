@@ -32,7 +32,6 @@ self.addEventListener("activate", (e) => {
 
 const deleteOldCache = async () => {
 	const allCaches = await caches.keys();
-	// Allow both your static and dynamic caches to live!
 	const cacheWhitelist = [staticCache, dynamicCache];
 
 	const deletionPromise = allCaches.map((key) => {

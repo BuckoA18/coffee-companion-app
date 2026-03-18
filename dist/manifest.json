@@ -1,7 +1,7 @@
 {
 	"name": "Brew",
 	"short_name:": "Brew",
-	"start_url": "/welcome",
+	"start_url": "/",
 	"background_color": "#faf9f7",
 	"theme_color": "#faf9f7",
 	"display": "standalone",
