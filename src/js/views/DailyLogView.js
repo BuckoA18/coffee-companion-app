@@ -9,15 +9,24 @@ class DailyLogView extends View {
 	addHandlerHandleCardActions(handler) {
 		this._parentElement.addEventListener("click", (e) => {
 			const currentCard = e.target.closest(".drink-card");
-			const allCards = Array.from(
-				this._parentElement.querySelectorAll(".drink-card"),
-			);
+			const deleteButton = e.target.closest(".drink-card__button");
 			if (!currentCard) return;
+
+			if (deleteButton) {
+				const id = currentCard.dataset.id;
+
+				console.log(id);
+				return handler(id);
+			}
 
 			if (!currentCard.classList.contains("drink-card--closed")) {
 				currentCard.classList.add("drink-card--closed");
 				return handler();
 			}
+
+			const allCards = Array.from(
+				this._parentElement.querySelectorAll(".drink-card"),
+			);
 
 			allCards.map((card) => {
 				if (card.classList.contains("drink-card--closed")) return;
@@ -34,7 +43,11 @@ class DailyLogView extends View {
 		const markup = this._data.dailyDrinks
 			.map((drink) => {
 				return html`
-					<li class="drink-card drink-card--closed">
+					<li
+						class="drink-card drink-card--closed"
+						data-id="${drink.id}"
+						data-timestamp="${drink.consumptionTime}"
+					>
 						<div class="drink-card__container">
 							<div class="drink-card__icon">
 								<i class="fa-solid fa-mug-hot fa-xl"></i>

@@ -2,9 +2,9 @@ import Dexie from "dexie";
 
 export const db = new Dexie("CaffeineTrackerDB_v2");
 
-db.version(1).stores({
+db.version(4).stores({
 	drinks: "id, name, category",
-	consumption: "++id, drinkId, timestamp",
+	consumption: "++id, drinkId, consumptionTime, [drinkId+consumptionTime]",
 	settings: "key",
 });
 

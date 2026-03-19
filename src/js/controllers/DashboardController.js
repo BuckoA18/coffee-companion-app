@@ -16,9 +16,6 @@ export const controllDashboard = async () => {
 
 		updateDashboardUI();
 
-		ProgressBarView.updateProgressBar(model.getCaffeineProgress());
-		CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
-
 		DailyLogView.addHandlerHandleCardActions(handleCardActions);
 	} catch (error) {
 		console.error(error);
@@ -27,12 +24,21 @@ export const controllDashboard = async () => {
 
 const updateDashboardUI = () => {
 	const { user } = model.state;
+
 	ProgressBarView.render(user);
 	IntakeLimitView.render(model.getCaffeineUntillLimit());
 	CaffieneMonitorView.render(user);
 	DailyLogView.render(user);
+
+	ProgressBarView.updateProgressBar(model.getCaffeineProgress());
+	CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
 };
 
-const handleCardActions = () => {
-	console.log("first");
+const handleCardActions = async (id) => {
+	if (!id) return;
+	await model.deleteDrink(id);
+	model.calcCaffeine();
+	await model.calcCaffeineInSystem();
+	console.log(model.state.user.bedTime);
+	updateDashboardUI();
 };
