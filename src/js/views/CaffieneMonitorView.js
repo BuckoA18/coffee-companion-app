@@ -10,8 +10,6 @@ class CaffeineMonitorView extends View {
 		const { caffeineInSystem } = this._data;
 		const { bedTime } = this._data;
 
-		console.log(bedTime);
-
 		const markup = html`
 			<span class="caffeine-monitor__label subtle"
 				>~${caffeineInSystem}mg in the system now</span

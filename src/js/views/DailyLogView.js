@@ -12,35 +12,38 @@ class DailyLogView extends View {
 			const deleteButton = e.target.closest(".drink-card__button");
 			if (!currentCard) return;
 
-			if (deleteButton) {
-				const id = currentCard.dataset.id;
+			if (deleteButton) this._handleDelete(handler, currentCard);
 
-				console.log(id);
-				return handler(id);
-			}
-
-			if (!currentCard.classList.contains("drink-card--closed")) {
-				currentCard.classList.add("drink-card--closed");
-				return handler();
-			}
-
-			const allCards = Array.from(
-				this._parentElement.querySelectorAll(".drink-card"),
-			);
-
-			allCards.map((card) => {
-				if (card.classList.contains("drink-card--closed")) return;
-				card.classList.add("drink-card--closed");
-			});
-			currentCard.classList.remove("drink-card--closed");
-			handler();
+			this._handleToggle(handler, currentCard);
 		});
 	}
 
+	_handleDelete(handler, currentCard) {
+		const id = currentCard.dataset.id;
+		return handler(id);
+	}
+
+	_handleToggle(handler, currentCard) {
+		if (!currentCard.classList.contains("drink-card--closed")) {
+			currentCard.classList.add("drink-card--closed");
+			return handler();
+		}
+
+		const allCards = Array.from(
+			this._parentElement.querySelectorAll(".drink-card"),
+		);
+
+		allCards.map((card) => {
+			if (card.classList.contains("drink-card--closed")) return;
+			card.classList.add("drink-card--closed");
+		});
+		currentCard.classList.remove("drink-card--closed");
+		handler();
+	}
+
 	_generateMarkup() {
-		console.log(this._data.dailyDrinks);
-		// need id and time
-		const markup = this._data.dailyDrinks
+		console.log(this._data);
+		const markup = this._data
 			.map((drink) => {
 				return html`
 					<li
