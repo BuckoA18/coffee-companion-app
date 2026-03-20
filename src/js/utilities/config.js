@@ -1,5 +1,5 @@
 export const CAFFEINE_BAR_CIRCUMFERENCE = 879;
-export const CAFFEINE_THRESHOLD = 50;
+export const CAFFEINE_THRESHOLD = 25;
 export const METABOLIC_FACTORS = {
 	BASELINE_HALF_LIFE: 5,
 	BASELINE_MULTIPLIER: 1,
@@ -17,6 +17,12 @@ export const VALIDATION_RULES = {
 		MIN: 30,
 		MAX: 300,
 	},
+};
+
+export const EVENTS = {
+	CAFFEINE_TOTAL_UPDATED: "caffeineTotalUpdated",
+	CAFFEINE_IN_SYSTEM_UPDATED: "caffeineInSystemUpdated",
+	DRINKS_CHANGED: "drinksChanged",
 };
 
 export const CAFFEINE_LIMITS = {

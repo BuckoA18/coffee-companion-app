@@ -15,7 +15,7 @@ class IntakeView extends View {
 				</div>
 			</header>
 
-			<div class="dashboard">
+			<main class="dashboard">
 				<div class="dashboard__container">
 					<div class="dashboard__group">
 						<div class="dashboard__wrapper">
@@ -34,7 +34,7 @@ class IntakeView extends View {
 						<i class="fa-solid fa-plus"></i>
 					</a>
 				</div>
-			</div>
+			</main>
 		`;
 		return markup;
 	}

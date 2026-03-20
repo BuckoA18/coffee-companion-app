@@ -2,9 +2,28 @@ import * as model from "../model";
 import IntakeView from "../views/IntakeView";
 import ProgressBarView from "../views/ProgressBarView";
 import IntakeLimitView from "../views/IntakeLimitView";
-import CaffieneMonitorView from "../views/CaffieneMonitorView";
+import CaffeineMonitorView from "../views/CaffeineMonitorView";
 import DailyLogView from "../views/DailyLogView";
 
+const updateDashboardUI = async () => {
+	const { user } = model.state;
+
+	try {
+		const drinks = await model.getDailyDrinks();
+		DailyLogView.render(drinks);
+	} catch (error) {
+		console.error("UI Update Error :", error);
+	}
+
+	// Render components
+	ProgressBarView.render(user);
+	IntakeLimitView.render(model.getCaffeineUntillLimit());
+	CaffeineMonitorView.render(user);
+
+	// Update progress animations
+	ProgressBarView.updateProgressBar(model.getCaffeineProgress());
+	CaffeineMonitorView.updateProgressBar(model.getMonitorProgress());
+};
 export const controllDashboard = async () => {
 	try {
 		// Calc caffeine
@@ -16,39 +35,17 @@ export const controllDashboard = async () => {
 		// Render shell
 		IntakeView.render();
 
-		updateDashboardUI();
-
+		// Add handler for deleteing drinks
 		DailyLogView.addHandlerHandleCardActions(handleDeleteDrink);
-	} catch (error) {
-		console.error(error);
-	}
-};
 
-const updateDashboardUI = async () => {
-	const { user } = model.state;
-	const data = await model.getDailyDrinks();
-	console.log(data);
-	try {
-		DailyLogView.render(data);
+		model.subscribe("caffeineTotalUpdated", updateDashboardUI);
+		model.notify("caffeineTotalUpdated");
 	} catch (error) {
-		console.log(error);
+		console.error("Dashboard init error: ", error);
 	}
-	ProgressBarView.render(user);
-	IntakeLimitView.render(model.getCaffeineUntillLimit());
-	CaffieneMonitorView.render(user);
-	ProgressBarView.updateProgressBar(model.getCaffeineProgress());
-	CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
 };
 
 const handleDeleteDrink = async (id) => {
 	if (!id) return;
-	// Delete drink
-	await model.deleteDrink(id);
-
-	// Recalculate caffeine
-	await model.calcCaffeine();
-	await model.calcCaffeineInSystem();
-
-	// Rerender
-	await updateDashboardUI();
+	await model.deleteDrinkAndRecalculate(id);
 };

@@ -35,6 +35,22 @@ export const state = {
 	drinks: [],
 };
 
+const subscribers = {
+	[config.EVENTS.CAFFEINE_TOTAL_UPDATED]: [],
+	[config.EVENTS.CAFFEINE_IN_SYSTEM_UPDATED]: [],
+	[config.EVENTS.DRINKS_CHANGED]: [],
+};
+
+export const subscribe = (type, handler) => {
+	console.log(type);
+	if (!subscribers[type]) return;
+	subscribers[type].push(handler);
+};
+
+export const notify = (type) => {
+	subscribers[type].forEach((func) => func());
+};
+
 let caffeineTimer = null;
 
 export const saveUserProfile = async () => {
@@ -132,6 +148,8 @@ const setCaffeine = (caffeine) => {
 
 const setCaffeineInSystem = (amount) => {
 	state.user.caffeineInSystem = amount;
+
+	notify("caffeineInSystemUpdated");
 };
 
 const setBedTime = (timeString) => {
@@ -206,8 +224,6 @@ export const calcCaffeineInSystem = async () => {
 
 	setCaffeineInSystem(Math.round(totalCurrentCaffeine));
 	setBedTime(formattedBedTime);
-
-	window.dispatchEvent(new CustomEvent("caffeineUpdated"));
 };
 
 export const calcMaxCaffeine = async () => {
@@ -241,7 +257,12 @@ export const calcHalfLife = async () => {
 
 	setHalfLife(halfLife);
 };
+export const deleteDrinkAndRecalculate = async (id) => {
+	await deleteDrink(id);
+	Promise.all([calcCaffeine(), calcCaffeineInSystem()]);
 
+	notify("caffeineTotalUpdated");
+};
 export const deleteDrink = async (id) => {
 	await db.consumption.delete(+id);
 	state.user.dailyDrinks = await db.consumption.toArray();
