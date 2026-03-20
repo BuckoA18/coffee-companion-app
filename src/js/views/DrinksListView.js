@@ -23,18 +23,20 @@ class DrinksListView extends View {
 			.map((drink) => {
 				return html`
 					<li class="drink-card" data-id="${drink.id}">
-						<div class="drink-card__icon">
-							<i class="fa-solid fa-mug-hot fa-xl"></i>
-						</div>
-						<div class="drink-card__details">
-							<span class="drink-card__details-title">${drink.name}</span>
-							<span class="drink-card__details-amount subtle"
-								>${drink.volume_ml} ml</span
+						<div class="drink-card__container">
+							<div class="drink-card__icon">
+								<i class="fa-solid fa-mug-hot fa-xl"></i>
+							</div>
+							<div class="drink-card__details">
+								<span class="drink-card__details-title">${drink.name}</span>
+								<span class="drink-card__details-amount subtle"
+									>${drink.volume_ml} ml</span
+								>
+							</div>
+							<span class="drink-card__caffeine subtle"
+								><span class="highlight">+${drink.caffeine_mg}</span> mg</span
 							>
 						</div>
-						<span class="drink-card__caffeine subtle"
-							><span class="highlight">+${drink.caffeine_mg}</span> mg</span
-						>
 					</li>
 				`;
 			})

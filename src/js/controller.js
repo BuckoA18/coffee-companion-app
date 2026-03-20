@@ -21,7 +21,6 @@ const init = async () => {
 				console.log("Service worker active");
 			}
 		}
-		// Register SW
 
 		await model.loadUserProfile();
 		await model.checkDate();

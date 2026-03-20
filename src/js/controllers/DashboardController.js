@@ -8,31 +8,47 @@ import DailyLogView from "../views/DailyLogView";
 export const controllDashboard = async () => {
 	try {
 		// Calc caffeine
-		model.calcCaffeine();
+		await model.calcCaffeine();
+
 		// Start monitor, if NOT running already
 		model.startCaffeineMonitor();
 
-		IntakeView.render(); // Render shell
+		// Render shell
+		IntakeView.render();
 
 		updateDashboardUI();
 
-		ProgressBarView.updateProgressBar(model.getCaffeineProgress());
-		CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
-
-		DailyLogView.addHandlerHandleCardActions(handleCardActions);
+		DailyLogView.addHandlerHandleCardActions(handleDeleteDrink);
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-const updateDashboardUI = () => {
+const updateDashboardUI = async () => {
 	const { user } = model.state;
+	const data = await model.getDailyDrinks();
+	console.log(data);
+	try {
+		DailyLogView.render(data);
+	} catch (error) {
+		console.log(error);
+	}
 	ProgressBarView.render(user);
 	IntakeLimitView.render(model.getCaffeineUntillLimit());
 	CaffieneMonitorView.render(user);
-	DailyLogView.render(user);
+	ProgressBarView.updateProgressBar(model.getCaffeineProgress());
+	CaffieneMonitorView.updateProgressBar(model.getMonitorProgress());
 };
 
-const handleCardActions = () => {
-	console.log("first");
+const handleDeleteDrink = async (id) => {
+	if (!id) return;
+	// Delete drink
+	await model.deleteDrink(id);
+
+	// Recalculate caffeine
+	await model.calcCaffeine();
+	await model.calcCaffeineInSystem();
+
+	// Rerender
+	await updateDashboardUI();
 };

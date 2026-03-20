@@ -1,6 +1,7 @@
 import { VALIDATION_RULES } from "./config";
 import * as model from "../model";
 import * as config from "./config";
+import { db } from "../db";
 
 export const html = String.raw;
 
@@ -86,4 +87,11 @@ export const calcHoursUntilThreshold = (
 ) => {
 	if (currentCaffeine <= threshold) return 0;
 	return halfLife * (Math.log(threshold / currentCaffeine) / Math.log(0.5));
+};
+
+export const getCaffeine = (drinksArray) => {
+	return drinksArray.reduce(
+		(accumulator, currentValue) => accumulator + currentValue.caffeine_mg,
+		0,
+	);
 };

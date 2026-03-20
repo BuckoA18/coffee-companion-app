@@ -59,6 +59,7 @@ export const saveUserProfile = async () => {
 export const loadUserProfile = async () => {
 	try {
 		const profileData = await db.settings.get("profile");
+		if (!profileData) return;
 		setUserProfileData(profileData);
 	} catch (error) {
 		console.error("Failed to load user profile");
@@ -119,11 +120,11 @@ export const getCaffeineUntillLimit = () => {
 	return caffeineUntillLimit;
 };
 
-// ---- Setters ---- //
-
-const setProfileReady = () => {
-	state.user.profileReady = true;
+export const getDailyDrinks = async () => {
+	return await db.consumption.toArray();
 };
+
+// ---- Setters ---- //
 
 const setCaffeine = (caffeine) => {
 	state.user.caffeine = caffeine;
@@ -151,18 +152,19 @@ const setShortcutResults = (results) => {
 
 // ---- Calculations Logicc ---- //
 
-export const calcCaffeine = () => {
-	const caffeine = state.user.dailyDrinks.reduce(
-		(accumulator, currentValue) => accumulator + currentValue.caffeine_mg,
-		0,
-	);
+export const calcCaffeine = async () => {
+	const dailyDrinks = await db.consumption.toArray();
+	const caffeine = helper.getCaffeine(dailyDrinks);
 	setCaffeine(caffeine);
 };
 
-export const calcCaffeineInSystem = () => {
-	const { halfLife, dailyDrinks } = state.user;
+export const calcCaffeineInSystem = async () => {
+	const { halfLife } = state.user;
 	const threshold = config.CAFFEINE_THRESHOLD;
 	const currentTime = new Date();
+	const dailyDrinks = await db.consumption.toArray();
+
+	// console.log("dailyDrinks: ", dailyDrinks);
 
 	let totalCurrentCaffeine = 0;
 
@@ -182,6 +184,8 @@ export const calcCaffeineInSystem = () => {
 	// Check if we can stop the timer
 	if (+totalCurrentCaffeine.toFixed(1) <= 0) {
 		setCaffeineInSystem(0);
+		setBedTime("");
+		// console.log("bedtime from calcCaffeineInSystem: ", state.user.bedTime);
 		return clearInterval(caffeineTimer);
 	}
 
@@ -238,19 +242,27 @@ export const calcHalfLife = async () => {
 	setHalfLife(halfLife);
 };
 
+export const deleteDrink = async (id) => {
+	await db.consumption.delete(+id);
+	state.user.dailyDrinks = await db.consumption.toArray();
+};
+
 export const storeDrink = async (id, servings, consumptionTime) => {
 	const baseDrink = await getDrinkData(id);
 	const newCaffeineValue = servings * baseDrink.caffeine_mg;
 	const currentDrink = {
 		...baseDrink,
+		drinkId: baseDrink.id,
 		caffeine_mg: !newCaffeineValue ? baseDrink.caffeine_mg : newCaffeineValue,
 		consumptionTime,
 		servings,
 	};
 
-	db.consumption.add(currentDrink);
+	delete currentDrink.id; // delete the id so db.consumption can auto increment the next one
+	await db.consumption.add(currentDrink);
 
-	state.user.caffeine += currentDrink.caffeine_mg;
+	const caffeine = (state.user.caffeine += currentDrink.caffeine_mg);
+	setCaffeine(caffeine);
 	state.user.dailyDrinks.push(currentDrink);
 };
 

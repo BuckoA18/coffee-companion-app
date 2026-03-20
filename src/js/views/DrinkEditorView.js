@@ -73,7 +73,7 @@ class DrinkEditorView extends View {
 
 	_generateMarkup() {
 		const drink = this._data;
-		const now = this._getDefaultTime(); // Using the bulletproof helper
+		const now = this._getDefaultTime();
 
 		return html`
 			<div class="drink-editor__container">
