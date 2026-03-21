@@ -1,0 +1,407 @@
+[
+	{
+		"id": "espresso-single",
+		"name": "Espresso (Single)",
+		"category": "Coffee",
+		"serving_style": "Shot",
+		"caffeine_mg": 63,
+		"volume_ml": 30,
+		"description": "A single shot of concentrated coffee."
+	},
+	{
+		"id": "espresso-double",
+		"name": "Espresso (Double)",
+		"category": "Coffee",
+		"serving_style": "Shot",
+		"caffeine_mg": 126,
+		"volume_ml": 60,
+		"description": "Two shots of espresso."
+	},
+	{
+		"id": "americano",
+		"name": "Americano",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 150,
+		"volume_ml": 350,
+		"description": "Espresso shots with hot water."
+	},
+	{
+		"id": "cappuccino",
+		"name": "Cappuccino",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 150,
+		"volume_ml": 240,
+		"description": "Equal parts espresso, steamed milk, and foam."
+	},
+	{
+		"id": "latte",
+		"name": "Caffe Latte",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 150,
+		"volume_ml": 470,
+		"description": "Espresso with plenty of steamed milk and a light foam."
+	},
+	{
+		"id": "flat-white",
+		"name": "Flat White",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 130,
+		"volume_ml": 240,
+		"description": "Double shot of espresso with microfoam."
+	},
+	{
+		"id": "cold-brew",
+		"name": "Cold Brew",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 200,
+		"volume_ml": 470,
+		"description": "Steeped in cold water for 12+ hours; high caffeine."
+	},
+	{
+		"id": "iced-coffee",
+		"name": "Iced Coffee",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 165,
+		"volume_ml": 470,
+		"description": "Brewed hot coffee served over ice."
+	},
+	{
+		"id": "mocha",
+		"name": "Caffe Mocha",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 175,
+		"volume_ml": 470,
+		"description": "Espresso, chocolate, and steamed milk."
+	},
+	{
+		"id": "macchiato",
+		"name": "Espresso Macchiato",
+		"category": "Coffee",
+		"serving_style": "Shot",
+		"caffeine_mg": 63,
+		"volume_ml": 60,
+		"description": "Espresso stained with a dollop of foam."
+	},
+	{
+		"id": "cortado",
+		"name": "Cortado",
+		"category": "Coffee",
+		"serving_style": "Shot",
+		"caffeine_mg": 126,
+		"volume_ml": 130,
+		"description": "Equal parts espresso and warm milk."
+	},
+	{
+		"id": "drip-coffee",
+		"name": "Drip/Brewed Coffee",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 155,
+		"volume_ml": 350,
+		"description": "Classic filter coffee."
+	},
+	{
+		"id": "filter-coffee",
+		"name": "Filter Coffee",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 145,
+		"volume_ml": 240,
+		"description": "Smooth, light-bodied coffee brewed by dripping hot water over grounds."
+	},
+	{
+		"id": "nitro-cold-brew",
+		"name": "Nitro Cold Brew",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 280,
+		"volume_ml": 470,
+		"description": "Cold brew infused with nitrogen gas for a creamy, stout-like effect."
+	},
+	{
+		"id": "frappuccino",
+		"name": "Coffee Frappuccino",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 95,
+		"volume_ml": 470,
+		"description": "Ice-blended sweet coffee drink topped with whipped cream."
+	},
+	{
+		"id": "turkish-coffee",
+		"name": "Turkish Coffee",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 50,
+		"volume_ml": 60,
+		"description": "Unfiltered coffee prepared by finely grinding beans and simmering."
+	},
+	{
+		"id": "vietnamese-iced-coffee",
+		"name": "Vietnamese Iced Coffee",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 120,
+		"volume_ml": 240,
+		"description": "Strong dark roast coffee mixed with sweetened condensed milk over ice."
+	},
+	{
+		"id": "affogato",
+		"name": "Affogato",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 63,
+		"volume_ml": 100,
+		"description": "A scoop of vanilla gelato drowned in a shot of hot espresso."
+	},
+	{
+		"id": "irish-coffee",
+		"name": "Irish Coffee",
+		"category": "Coffee",
+		"serving_style": "Cup",
+		"caffeine_mg": 90,
+		"volume_ml": 240,
+		"description": "Hot coffee, Irish whiskey, and sugar, topped with cream."
+	},
+	{
+		"id": "monster-energy",
+		"name": "Monster Energy",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 160,
+		"volume_ml": 500,
+		"description": "Iconic 'Green' Monster with a heavy caffeine punch."
+	},
+	{
+		"id": "celsius-live-fit",
+		"name": "Celsius",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 200,
+		"volume_ml": 355,
+		"description": "Fitness-focused energy drink with ginger and green tea."
+	},
+	{
+		"id": "reign-total-body",
+		"name": "Reign",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 300,
+		"volume_ml": 500,
+		"description": "High-performance fuel with BCAAs and 300mg caffeine."
+	},
+	{
+		"id": "red-bull",
+		"name": "Red Bull",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 80,
+		"volume_ml": 250,
+		"description": "The classic energy drink that gives you wings."
+	},
+	{
+		"id": "bang-energy",
+		"name": "Bang Energy",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 300,
+		"volume_ml": 473,
+		"description": "Zero calorie, high caffeine energy drink with creatine and BCAAs."
+	},
+	{
+		"id": "ghost-energy",
+		"name": "Ghost Energy",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 200,
+		"volume_ml": 473,
+		"description": "Nootropic energy drink with authentic flavor collaborations."
+	},
+	{
+		"id": "rockstar-energy",
+		"name": "Rockstar Energy",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 160,
+		"volume_ml": 473,
+		"description": "Guarana and B-vitamin infused classic energy drink."
+	},
+	{
+		"id": "prime-energy",
+		"name": "Prime Energy",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 200,
+		"volume_ml": 355,
+		"description": "Fruity energy drink packed with electrolytes and 200mg of caffeine."
+	},
+	{
+		"id": "nos-energy",
+		"name": "NOS Energy",
+		"category": "Energy",
+		"serving_style": "Can",
+		"caffeine_mg": 160,
+		"volume_ml": 473,
+		"description": "High-octane energy drink with taurine and guarana."
+	},
+	{
+		"id": "english-breakfast",
+		"name": "English Breakfast Tea",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 50,
+		"volume_ml": 240,
+		"description": "Robust black tea, usually served with milk."
+	},
+	{
+		"id": "earl-grey",
+		"name": "Earl Grey",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 45,
+		"volume_ml": 240,
+		"description": "Black tea flavored with oil of bergamot."
+	},
+	{
+		"id": "green-tea",
+		"name": "Green Tea (Sencha)",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 35,
+		"volume_ml": 240,
+		"description": "Unoxidized leaves with a fresh, grassy flavor."
+	},
+	{
+		"id": "matcha-latte",
+		"name": "Matcha Latte",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 70,
+		"volume_ml": 350,
+		"description": "Ground green tea powder whisked with milk."
+	},
+	{
+		"id": "yerba-mate",
+		"name": "Yerba Mate",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 85,
+		"volume_ml": 240,
+		"description": "Traditional South American herbal tea with a strong kick."
+	},
+	{
+		"id": "chai-latte",
+		"name": "Chai Tea Latte",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 70,
+		"volume_ml": 350,
+		"description": "Spiced black tea concentrate mixed with steamed milk."
+	},
+	{
+		"id": "oolong-tea",
+		"name": "Oolong Tea",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 40,
+		"volume_ml": 240,
+		"description": "Partially oxidized traditional Chinese tea."
+	},
+	{
+		"id": "white-tea",
+		"name": "White Tea",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 28,
+		"volume_ml": 240,
+		"description": "Delicate, minimally processed tea made from young leaves."
+	},
+	{
+		"id": "boba-milk-tea",
+		"name": "Boba Milk Tea",
+		"category": "Tea",
+		"serving_style": "Cup",
+		"caffeine_mg": 50,
+		"volume_ml": 500,
+		"description": "Classic black milk tea with tapioca pearls."
+	},
+	{
+		"id": "kombucha",
+		"name": "Kombucha",
+		"category": "Tea",
+		"serving_style": "Bottle",
+		"caffeine_mg": 15,
+		"volume_ml": 450,
+		"description": "Fermented, lightly effervescent sweetened black or green tea."
+	},
+	{
+		"id": "lipton-iced-tea",
+		"name": "Lipton Iced Tea",
+		"category": "Tea",
+		"serving_style": "Bottle",
+		"caffeine_mg": 25,
+		"volume_ml": 500,
+		"description": "Commercial bottled sweet iced tea."
+	},
+	{
+		"id": "coca-cola",
+		"name": "Coca-Cola",
+		"category": "Soda",
+		"serving_style": "Can",
+		"caffeine_mg": 34,
+		"volume_ml": 355,
+		"description": "The classic, crisp cola beverage."
+	},
+	{
+		"id": "diet-coke",
+		"name": "Diet Coke",
+		"category": "Soda",
+		"serving_style": "Can",
+		"caffeine_mg": 46,
+		"volume_ml": 355,
+		"description": "Zero-calorie cola with a slightly higher caffeine content than classic."
+	},
+	{
+		"id": "pepsi",
+		"name": "Pepsi",
+		"category": "Soda",
+		"serving_style": "Can",
+		"caffeine_mg": 38,
+		"volume_ml": 355,
+		"description": "Sweet, refreshing cola with a hint of citrus."
+	},
+	{
+		"id": "mountain-dew",
+		"name": "Mountain Dew",
+		"category": "Soda",
+		"serving_style": "Can",
+		"caffeine_mg": 54,
+		"volume_ml": 355,
+		"description": "Citrus-flavored soda known for its high caffeine kick."
+	},
+	{
+		"id": "dr-pepper",
+		"name": "Dr Pepper",
+		"category": "Soda",
+		"serving_style": "Can",
+		"caffeine_mg": 41,
+		"volume_ml": 355,
+		"description": "Unique blend of 23 flavors in a dark soda."
+	},
+	{
+		"id": "cherry-coke",
+		"name": "Cherry Coke",
+		"category": "Soda",
+		"serving_style": "Can",
+		"caffeine_mg": 34,
+		"volume_ml": 355,
+		"description": "Classic Coca-Cola infused with cherry flavor."
+	}
+]

@@ -8,7 +8,7 @@ import {
 	CAFFEINE_BAR_CIRCUMFERENCE,
 } from "./utilities/config";
 import { db, seedDatabase } from "./db";
-import { initialDrinks } from "./InitialDrinks";
+import "./InitialDrinks";
 
 // ---- State ---- //
 
@@ -104,9 +104,21 @@ const setUserProfileData = (data) => {
 	calcMaxCaffeine();
 };
 
+const fetchDrinks = async () => {
+	try {
+		const repsonse = await fetch("./src/js/InitialDrinks.json");
+		if (repsonse.ok) {
+			const data = await repsonse.json();
+			return data;
+		}
+	} catch (error) {
+		console.error("Failed to fetch: ", error);
+	}
+};
 export const setInitialState = async () => {
 	try {
-		await seedDatabase(initialDrinks);
+		const data = await fetchDrinks();
+		await seedDatabase(data);
 		state.user.dailyDrinks = await db.consumption.toArray();
 	} catch (error) {
 		throw error;
