@@ -38,13 +38,18 @@
 	}
 
 	&__button-back {
+		z-index: 2;
 		position: fixed;
 		top: 1rem;
 		right: 1rem;
-		width: 40px;
-		height: 40px;
+		width: 44px;
+		height: 44px;
 		background-color: map.get(v.$colors, "bg-primary");
 		border: none;
 		color: map.get(v.$colors, "text-secondary");
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 }

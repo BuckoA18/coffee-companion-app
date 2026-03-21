@@ -1,8 +1,17 @@
 export const CAFFEINE_BAR_CIRCUMFERENCE = 879;
-export const CAFFEINE_THRESHOLD = 50;
+export const CAFFEINE_THRESHOLD = 25;
+export const BASELINE = {
+	WEIGHT: 70,
+	AGE: 25,
+	MAX_CAFFEINE: 400,
+	HALF_LIFE: 5,
+	MULTIPLIER: 1,
+	IS_PREGNANT: false,
+	CAFFEINE: 0,
+	CAFFEINE_IN_SYSTEM: 0,
+	BEDTIME: "",
+};
 export const METABOLIC_FACTORS = {
-	BASELINE_HALF_LIFE: 5,
-	BASELINE_MULTIPLIER: 1,
 	SMOKER_MULTIPLIER: 0.6,
 	CONTRACEPTIVE_MULTIPLIER: 2.0,
 	PREGNANCY_MULTIPLIER: 2.5,
@@ -17,6 +26,13 @@ export const VALIDATION_RULES = {
 		MIN: 30,
 		MAX: 300,
 	},
+};
+
+export const EVENTS = {
+	CAFFEINE_TOTAL_UPDATED: "caffeineTotalUpdated",
+	CAFFEINE_IN_SYSTEM_UPDATED: "caffeineInSystemUpdated",
+	DRINKS_CHANGED: "drinksChanged",
+	STEPS_UPDATED: "stepsUpdated",
 };
 
 export const CAFFEINE_LIMITS = {

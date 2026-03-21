@@ -56,8 +56,6 @@ class DrinkEditorView extends View {
 
 		drinkDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
-		console.log(drinkDate);
-
 		const now = new Date();
 
 		if (drinkDate > now) {

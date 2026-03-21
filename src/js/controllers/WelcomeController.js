@@ -4,6 +4,6 @@ export const controllWelcome = async () => {
 	try {
 		WelcomeView.render();
 	} catch (error) {
-		console.error(error);
+		console.error("UI render error: ", error);
 	}
 };

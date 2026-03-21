@@ -1,41 +1,58 @@
 import * as helper from "./utilities/helpers";
-import * as config from "./utilities/config";
+import {
+	BASELINE,
+	MAX_STEPS,
+	EVENTS,
+	CAFFEINE_LIMITS,
+	CAFFEINE_THRESHOLD,
+	CAFFEINE_BAR_CIRCUMFERENCE,
+} from "./utilities/config";
 import { db, seedDatabase } from "./db";
-import { initialDrinks } from "./InitialDrinks";
 
 // ---- State ---- //
 
 export const state = {
 	user: {
-		weight: "",
+		weight: BASELINE.WEIGHT,
 		weightUnit: "kg",
-		age: "",
-		maxCaffeine: 400,
+		age: BASELINE.AGE,
+		maxCaffeine: BASELINE.MAX_CAFFEINE,
 		halfLifeMultipliers: [],
-		halfLifeMultiplier: 1,
-		halfLife: 5,
+		halfLifeMultiplier: BASELINE.MULTIPLIER,
+		halfLife: BASELINE.HALF_LIFE,
 		dailyDrinks: [],
-		caffeine: 0,
-		caffeineInSystem: 0,
-		currentDrink: "",
-		isPregnant: false,
-		bedTime: "",
+		caffeine: BASELINE.CAFFEINE,
+		caffeineInSystem: BASELINE.CAFFEINE_IN_SYSTEM,
+		isPregnant: BASELINE.IS_PREGNANT,
+		bedTime: BASELINE.BEDTIME,
 		profileReady: false,
 	},
 	search: {
-		query: "",
 		results: [],
-		categoryResults: [],
-		shortcuts: [],
 	},
 	survey: {
 		currentStep: 0,
-		maxSteps: config.MAX_STEPS,
+		maxSteps: MAX_STEPS,
 	},
-	drinks: [],
 };
 
 let caffeineTimer = null;
+
+const subscribers = {
+	[EVENTS.CAFFEINE_TOTAL_UPDATED]: [],
+	[EVENTS.CAFFEINE_IN_SYSTEM_UPDATED]: [],
+	[EVENTS.DRINKS_CHANGED]: [],
+	[EVENTS.STEPS_UPDATED]: [],
+};
+
+export const subscribe = (type, handler) => {
+	if (!subscribers[type]) return;
+	subscribers[type].push(handler);
+};
+
+export const notify = (type) => {
+	subscribers[type].forEach((func) => func());
+};
 
 export const saveUserProfile = async () => {
 	try {
@@ -51,6 +68,8 @@ export const saveUserProfile = async () => {
 			isPregnant,
 			profileReady: true,
 		});
+
+		// console.log(state.user);
 	} catch (error) {
 		console.error("Failed to save profile");
 	}
@@ -84,13 +103,22 @@ const setUserProfileData = (data) => {
 	calcMaxCaffeine();
 };
 
+const fetchDrinks = async () => {
+	try {
+		const repsonse = await fetch("/InitialDrinks.json");
+		if (repsonse.ok) {
+			const data = await repsonse.json();
+			return data;
+		}
+	} catch (error) {
+		console.error("Failed to fetch: ", error);
+	}
+};
 export const setInitialState = async () => {
 	try {
-		await seedDatabase(initialDrinks);
-		state.drinks = await db.drinks.toArray();
+		const data = await fetchDrinks();
+		await seedDatabase(data);
 		state.user.dailyDrinks = await db.consumption.toArray();
-
-		helper.createShortcuts();
 	} catch (error) {
 		throw error;
 	}
@@ -103,8 +131,8 @@ export const getCaffeineProgress = () => {
 		(state.user.caffeine / state.user.maxCaffeine) * 100,
 	);
 	const offset =
-		config.CAFFEINE_BAR_CIRCUMFERENCE -
-		(percentage / 100) * config.CAFFEINE_BAR_CIRCUMFERENCE;
+		CAFFEINE_BAR_CIRCUMFERENCE -
+		(percentage / 100) * CAFFEINE_BAR_CIRCUMFERENCE;
 
 	if (percentage >= 100) return 0;
 	return offset;
@@ -124,14 +152,28 @@ export const getDailyDrinks = async () => {
 	return await db.consumption.toArray();
 };
 
+export const getShortcuts = async () => {
+	const drinks = await db.drinks.toArray();
+	return [
+		"All",
+		...new Set(
+			drinks.map((drink) => {
+				return drink.category;
+			}),
+		),
+	];
+};
+
 // ---- Setters ---- //
 
 const setCaffeine = (caffeine) => {
 	state.user.caffeine = caffeine;
+	notify(EVENTS.CAFFEINE_TOTAL_UPDATED);
 };
 
 const setCaffeineInSystem = (amount) => {
 	state.user.caffeineInSystem = amount;
+	notify(EVENTS.CAFFEINE_IN_SYSTEM_UPDATED);
 };
 
 const setBedTime = (timeString) => {
@@ -150,6 +192,14 @@ const setShortcutResults = (results) => {
 	state.search.results = results;
 };
 
+export const setIsPregnant = (value) => {
+	state.user.isPregnant = value;
+};
+
+export const setHalfLifeMultipliers = (values) => {
+	state.user.halfLifeMultipliers = values;
+};
+
 // ---- Calculations Logicc ---- //
 
 export const calcCaffeine = async () => {
@@ -160,7 +210,7 @@ export const calcCaffeine = async () => {
 
 export const calcCaffeineInSystem = async () => {
 	const { halfLife } = state.user;
-	const threshold = config.CAFFEINE_THRESHOLD;
+	const threshold = CAFFEINE_THRESHOLD;
 	const currentTime = new Date();
 	const dailyDrinks = await db.consumption.toArray();
 
@@ -206,18 +256,16 @@ export const calcCaffeineInSystem = async () => {
 
 	setCaffeineInSystem(Math.round(totalCurrentCaffeine));
 	setBedTime(formattedBedTime);
-
-	window.dispatchEvent(new CustomEvent("caffeineUpdated"));
 };
 
 export const calcMaxCaffeine = async () => {
 	// Need to cap max caffeine to 200mg~ if pregnant :P
 	const { age, weight, isPregnant, weightUnit } = state.user;
 	if (isPregnant) {
-		state.user.maxCaffeine = config.CAFFEINE_LIMITS.PREGNANCY.cap_mg;
+		state.user.maxCaffeine = CAFFEINE_LIMITS.PREGNANCY.cap_mg;
 		return;
 	}
-	const rule = Object.values(config.CAFFEINE_LIMITS).find(
+	const rule = Object.values(CAFFEINE_LIMITS).find(
 		(limit) => limit.min_age <= age && limit.max_age >= age,
 	);
 
@@ -236,12 +284,16 @@ export const calcHalfLife = async () => {
 	);
 	const finalMultiplier = helper.getMultiplierValue(multiplierValues);
 
-	const halfLife =
-		finalMultiplier * config.METABOLIC_FACTORS.BASELINE_HALF_LIFE;
+	const halfLife = finalMultiplier
+		? finalMultiplier * BASELINE.HALF_LIFE
+		: BASELINE.HALF_LIFE;
 
 	setHalfLife(halfLife);
 };
-
+export const deleteDrinkAndRecalculate = async (id) => {
+	await deleteDrink(id);
+	Promise.all([calcCaffeine(), calcCaffeineInSystem()]);
+};
 export const deleteDrink = async (id) => {
 	await db.consumption.delete(+id);
 	state.user.dailyDrinks = await db.consumption.toArray();
@@ -339,8 +391,10 @@ export const getDrinkData = async (drinkId) => {
 
 export const nextStep = async () => {
 	state.survey.currentStep++;
+	notify("stepsUpdated");
 };
 
 export const prevStep = async () => {
 	state.survey.currentStep--;
+	notify("stepsUpdated");
 };

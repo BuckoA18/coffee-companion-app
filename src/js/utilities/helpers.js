@@ -7,7 +7,6 @@ export const html = String.raw;
 
 export const validateSurvey = async (data) => {
 	try {
-		console.log(data);
 		const { type, value } = data;
 
 		const rules = VALIDATION_RULES[type.toUpperCase()];
@@ -40,19 +39,8 @@ export const validateSurvey = async (data) => {
 	}
 };
 
-export const createShortcuts = () => {
-	model.state.search.shortcuts = [
-		"All",
-		...new Set(
-			model.state.drinks.map((drink) => {
-				return drink.category;
-			}),
-		),
-	];
-};
-
 export const getMultiplierValue = (values) => {
-	if (values.length <= 0) return config.METABOLIC_FACTORS.BASELINE_MULTIPLIER;
+	if (values.length === 0) return;
 	const multiplier = values.reduce(
 		(accumulator, currentValue) => accumulator * currentValue,
 	);

@@ -15,7 +15,6 @@ class StepsView extends View {
 
 	_generateInputMarkup(data, error) {
 		const isWeight = data.id === "weight";
-		console.log(data);
 		const markup = html`<input
 				class="steps__input ${error ? "steps__input--error" : ""}"
 				type=${data.input}

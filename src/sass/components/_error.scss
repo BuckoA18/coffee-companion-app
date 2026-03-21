@@ -3,6 +3,7 @@
 @use "../abstracts/variables" as v;
 
 .error {
+	z-index: 3;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -10,6 +11,7 @@
 	transform: translateY(-100%);
 
 	width: 100%;
+
 	text-align: center;
 	background-color: map.get(v.$colors, "bg-error");
 	border-bottom: 2px solid #fee2e2;

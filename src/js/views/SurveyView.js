@@ -56,7 +56,6 @@ class Survey extends View {
 					value: +multiplier.dataset.multiplier,
 				}));
 
-				console.log(values);
 				handler(values);
 			});
 	}

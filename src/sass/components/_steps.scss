@@ -79,6 +79,10 @@
 			color: map.get(v.$colors, "text-secondary");
 			transition: color 0.3s ease;
 
+			&:hover {
+				cursor: pointer;
+			}
+
 			input {
 				display: none;
 			}

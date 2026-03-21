@@ -1,35 +1,39 @@
 import * as model from "../model";
 import * as helper from "../utilities/helpers";
-import * as config from "../utilities/config";
+import { SURVEY_SCHEMA, EVENTS } from "../utilities/config";
 import * as router from "../router";
-import { db } from "../db";
 import SurveyView from "../views/SurveyView";
 import StepsView from "../views/StepsView";
-
-export const controllSurvey = async () => {
-	try {
-		// Render shell
-		SurveyView.render();
-		// Attach handlers
-		SurveyView.addHandlerSurveyNav(handleSurveyNav);
-		SurveyView.addHandlerNavigateBack(handleNavigateBack);
-		SurveyView.addHandlerHandleMultipliers(handleMultipliers);
-		SurveyView.addHandlerHandleUnitToggle(handleUnitToggle);
-	} catch (error) {
-		console.error(error);
-	}
-};
 
 const renderStepUI = () => {
 	const { currentStep, maxSteps } = model.state.survey;
 	// Prepare data
 	const StepData = {
-		...config.SURVEY_SCHEMA[currentStep - 1],
+		...SURVEY_SCHEMA[currentStep - 1],
 		isLastStep: currentStep === maxSteps,
 	};
 
 	// Render NEXT markup based on given step
 	StepsView.render(StepData);
+};
+
+export const controllSurvey = async () => {
+	try {
+		// Render shell
+		SurveyView.render();
+
+		// Attach handlers
+		SurveyView.addHandlerSurveyNav(handleSurveyNav);
+		SurveyView.addHandlerNavigateBack(handleNavigateBack);
+		SurveyView.addHandlerHandleMultipliers(handleMultipliers);
+		SurveyView.addHandlerHandleUnitToggle(handleUnitToggle);
+
+		model.subscribe(EVENTS.STEPS_UPDATED, renderStepUI);
+
+		renderStepUI();
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 const handleSurveyNav = async (inputValue) => {
@@ -42,8 +46,6 @@ const handleSurveyNav = async (inputValue) => {
 			const { type, value } = inputValue;
 			// Validate user input
 			await helper.validateSurvey(inputValue);
-
-			console.log("Validated!");
 
 			model.state.user[type] = value;
 		} catch (error) {
@@ -59,46 +61,31 @@ const handleSurveyNav = async (inputValue) => {
 	if (model.state.survey.currentStep === maxSteps) {
 		await model.calcMaxCaffeine();
 		await model.calcHalfLife();
-
 		await model.saveUserProfile();
 
-		console.log(db.settings.toArray());
 		router.navigateTo("/");
 		return;
 	}
 
-	// Update state +1
+	// Update and render
 	model.nextStep();
-
-	// Render UI
-	renderStepUI();
 };
 
 const handleNavigateBack = () => {
-	// Update state -1
+	// Update and render
 	model.prevStep();
 
 	if (model.state.survey.currentStep === 0) {
 		router.navigateTo("/welcome");
 		return;
 	}
-	// Render UI
-	renderStepUI();
 };
 
 const handleMultipliers = async (values) => {
 	if (!values) return;
-
-	model.state.user.isPregnant = values.some(
-		(value) => value.name === "Pregnancy",
-	);
-
-	const halfLifeMultipliers = values;
-	model.state.user.halfLifeMultipliers = halfLifeMultipliers;
 };
 
 const handleUnitToggle = (value) => {
 	if (!value) return;
-	console.log(value);
 	model.state.user.weightUnit = value;
 };

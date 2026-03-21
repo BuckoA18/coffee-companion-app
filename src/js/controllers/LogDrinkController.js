@@ -24,10 +24,10 @@ export const controllLogDrink = async () => {
 	}
 };
 
-const updateLogDrinkUI = () => {
-	const { results, shortcuts } = model.state.search;
+const updateLogDrinkUI = async () => {
+	const { results } = model.state.search;
 	SearchBarView.render();
-	SearchShortcutsView.render(shortcuts);
+	SearchShortcutsView.render(await model.getShortcuts());
 	DrinksListView.render(results);
 };
 
