@@ -26,6 +26,10 @@
 
 		transition: all 0.2s ease;
 
+		&:hover {
+			cursor: pointer;
+		}
+
 		&--active {
 			@include mix.focus-ring();
 		}

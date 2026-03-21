@@ -47,8 +47,6 @@ const handleSurveyNav = async (inputValue) => {
 			// Validate user input
 			await helper.validateSurvey(inputValue);
 
-			console.log("Validated!");
-
 			model.state.user[type] = value;
 		} catch (error) {
 			// Render UI

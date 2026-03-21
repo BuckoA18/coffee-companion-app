@@ -47,5 +47,9 @@
 		background-color: map.get(v.$colors, "bg-primary");
 		border: none;
 		color: map.get(v.$colors, "text-secondary");
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 }

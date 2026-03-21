@@ -70,7 +70,7 @@ export const saveUserProfile = async () => {
 			profileReady: true,
 		});
 
-		console.log(state.user);
+		// console.log(state.user);
 	} catch (error) {
 		console.error("Failed to save profile");
 	}
@@ -285,7 +285,9 @@ export const calcHalfLife = async () => {
 	);
 	const finalMultiplier = helper.getMultiplierValue(multiplierValues);
 
-	const halfLife = finalMultiplier * BASELINE.HALF_LIFE;
+	const halfLife = finalMultiplier
+		? finalMultiplier * BASELINE.HALF_LIFE
+		: BASELINE.HALF_LIFE;
 
 	setHalfLife(halfLife);
 };

@@ -27,10 +27,11 @@ self.addEventListener("install", (e) => {
 	self.skipWaiting();
 	// Wait until promise resovled
 	e.waitUntil(addToCache(staticCache, shellAssets));
-	console.log(
-		"Service worker intalled and assets added to static cache: ",
-		shellAssets,
-	);
+
+	// console.log(
+	// 	"Service worker intalled and assets added to static cache: ",
+	// 	shellAssets,
+	// );
 });
 
 const addToCache = async (cacheName, assets) => {
