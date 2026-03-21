@@ -36,10 +36,9 @@ const init = async () => {
 		model.subscribe(EVENTS.CAFFEINE_IN_SYSTEM_UPDATED, updateCaffeineMonitor);
 
 		const initilRoute = model.state.user.profileReady ? "/" : "/welcome";
-		router.navigateTo(initilRoute);
 
 		router.initRouter(router.controllRouter);
-		router.controllRouter();
+		router.navigateTo(initilRoute);
 	} catch (error) {
 		console.error("Initialization error: ", error);
 	}
