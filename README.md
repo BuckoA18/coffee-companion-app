@@ -1,30 +1,25 @@
 # Brew 
+Personalized Caffeine Tracking
 https://brewtest.netlify.app/
 
-Brew was mainly build to strenghten my vanilla js understanding and best practices in a real project.
+Brew is a real-time caffeine metabolism tracker designed to move beyond generic daily limits. Originally started as a deep-dive into Vanilla JS best practices, it evolved into a functional tool that models caffeine decay based on individual user data.
 
 ## Technologies
 
 - **Vanilla JavaScript (ES6+)**
 - **Vite**
 - **SCSS**
-- **IndexedDB (Dexie)**
 - **Service Workers**
+- **IndexedDB (Dexie)**
 
 ## Features
-
--  **Progressive Web App**: Install on any device, works offline
--  **Real-time monitoring**: See how much coffeine you currently have in bloodstream
--  **Sleep predictions**: Know exactly when it's safe to sleep
--  **Offline functionality**: Keep tracking even without internet ;)
--  **Personalized tracking**: Daily caffeine recommendations and caffeine half-life calculations based on your profile
+- **Instalable PWA:** Brew can work fully offline due to simple SW logic and caching
+- **Pure Vanilla JS:** Built to demonstrate clean DOM manipulation, state management, separation of concerns and best practices using standard ES6+ features
+- **Custom tracking:** Unlike static trackers, Brew adjusts your maximum daily intake based on age, weight, and metabolic profile
+- **Real time tracking:** Real-time tracking of caffeine to help you understand exactly when the 4:00 PM espresso will actually leave your system
 
 
-## Architecture 
-
-### **Clean and scalable code
-- I have tried to follow indrustries best practices in building this app
- 
+## Architecture  
 
 ### **MVC Architecture**
 - **Model** : State management and business logic
@@ -39,9 +34,14 @@ Brew was mainly build to strenghten my vanilla js understanding and best practic
 ## Limitations and future improvements
 
 - Daily caffeine intake and caffeine monitor BOTH resets at midnight
+- To reset data you must clear browser CACHE
 - No custom drinks
 - No test implementation
-- Simple error handling 
+- Simple error handling
+- Could have widgets and notifications
+- Could implement more features so the dashboard isnt as empty
+- Could implement stats!
+  
 
 
 
