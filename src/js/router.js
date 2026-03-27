@@ -43,5 +43,6 @@ export const controllRouter = () => {
 			break;
 		default:
 			console.error("404: Page not found");
+		// TODO Page not found page?
 	}
 };
