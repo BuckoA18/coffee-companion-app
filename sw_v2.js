@@ -1,16 +1,5 @@
 const staticCache = "app-static-v3";
 const dynamicCache = "app-dynamic-v3";
-// const shellAssets = [
-// 	"/",
-// 	"/index.html",
-// 	"/manifest.json",
-// 	"/assets/index-CWqhASGL.js",
-// 	"/assets/index-uxMApYNs.css",
-// 	"/images/coffee_bean.png",
-// 	"/images/undraw_coffee-run_kfzq.svg",
-// 	"/images/undraw_coffee-with-friends_ocg2 (1).svg",
-// 	"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap",
-// ];
 
 const injectedAssets = self.__WB_MANIFEST || [];
 
@@ -40,7 +29,6 @@ const addToCache = async (cacheName, assets) => {
 };
 
 self.addEventListener("activate", (e) => {
-	// Wrapped in Promise.all() so waitUntil knows what to do
 	e.waitUntil(Promise.all([deleteOldCache(), self.clients.claim()]));
 });
 

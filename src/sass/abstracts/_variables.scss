@@ -1,6 +1,5 @@
 @use "sass:map";
 
-// --- Fonts --- //
 $font-primary: "Roboto", sans-serif;
 
 $breakpoints: (
@@ -23,7 +22,6 @@ $font-sizes: (
 	"xl": 3.6rem,
 );
 
-// --- Spacings --- //
 $spacings: (
 	"none": 0,
 	"xs": 0.2rem,
@@ -34,7 +32,6 @@ $spacings: (
 	"xxl": 8rem,
 );
 
-// --- Colors --- //
 $colors: (
 	"shadow": #1e14000d,
 	"bg-primary": #faf9f7,
@@ -48,8 +45,6 @@ $colors: (
 	"text-error": #991b1b,
 	"btn-secondary": #e8e2da,
 );
-
-// --- Border radius //
 
 $border-radius: (
 	"bar": 15px,
