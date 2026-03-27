@@ -37,26 +37,16 @@ $spacings: (
 // --- Colors --- //
 $colors: (
 	"shadow": #1e14000d,
-
 	"bg-primary": #faf9f7,
 	"bg-secondary": #fdfdfd,
 	"bg-error": #fef2f2,
-
 	"primary": #e09539,
 	"primary-light": #f7aa4d,
 	"track": #e8e2da,
-
 	"text-primary": #2c1e1a,
 	"text-secondary": #8c7873,
 	"text-error": #991b1b,
-
 	"btn-secondary": #e8e2da,
-);
-
-// --- Shadows --- //
-$box-shadows: (
-	"md": 0 0px 15px -1px rgba(0, 0, 0, 0.1),
-	"inset": inset 0 0px 15px -1px rgba(0, 0, 0, 0.1),
 );
 
 // --- Border radius //
@@ -67,10 +57,4 @@ $border-radius: (
 	"md": 25px,
 	"lg": 32px,
 	"round": 50%,
-);
-
-$max-widths: (
-	"sm": 360px,
-	"md": 400px,
-	"lg": 600px,
 );
